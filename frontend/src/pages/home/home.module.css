@@ -1,0 +1,6 @@
+.home{
+    height:100%;
+    width:100%;
+    display:flex;
+    border:2px solid pink;
+}
