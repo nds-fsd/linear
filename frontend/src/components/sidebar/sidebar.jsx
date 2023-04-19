@@ -31,11 +31,14 @@ const Sidebar = () => {
               style={({ isActive }) => {
                 return {
                   fontWeight: isActive ? "bold" : "",
-                  borderBottom: isActive ? "2px solid black" : "",
+                  borderBottom: isActive ? "2px solid var(--accent-color)" : "",
+                  color: isActive ? "var(--accent-color)" : ""
+
                 };
               }}
             >
-              <ListAltOutlinedIcon />
+              <ListAltOutlinedIcon 
+              className={sideBarStyles.icon}/>
               My issues
             </NavLink>
           </li>
@@ -46,11 +49,13 @@ const Sidebar = () => {
               style={({ isActive }) => {
                 return {
                   fontWeight: isActive ? "bold" : "",
-                  borderBottom: isActive ? "2px solid black" : "",
+                  borderBottom: isActive ? "2px solid var(--accent-color)" : "",
+                  color: isActive ? "var(--accent-color)" : ""
                 };
               }}
             >
-              <AssignmentOutlinedIcon />
+              <AssignmentOutlinedIcon 
+              className={sideBarStyles.icon}/>
               Projects
             </NavLink>
           </li>
@@ -61,11 +66,13 @@ const Sidebar = () => {
               style={({ isActive }) => {
                 return {
                   fontWeight: isActive ? "bold" : "",
-                  borderBottom: isActive ? "2px solid black" : "",
+                  borderBottom: isActive ? "2px solid var(--accent-color)" : "",
+                  color: isActive ? "var(--accent-color)" : ""
                 };
               }}
             >
-              <QueryBuilderOutlinedIcon />
+              <QueryBuilderOutlinedIcon 
+              className={sideBarStyles.icon}/>
               Cycles
             </NavLink>
           </li>
@@ -76,11 +83,13 @@ const Sidebar = () => {
               style={({ isActive }) => {
                 return {
                   fontWeight: isActive ? "bold" : "",
-                  borderBottom: isActive ? "2px solid black" : "",
+                  borderBottom: isActive ? "2px solid var(--accent-color)" : "",
+                  color: isActive ? "var(--accent-color)" : ""
                 };
               }}
             >
-              <InboxOutlinedIcon />
+              <InboxOutlinedIcon
+              className={sideBarStyles.icon} />
               Inbox
             </NavLink>
           </li>
@@ -91,11 +100,13 @@ const Sidebar = () => {
               style={({ isActive }) => {
                 return {
                   fontWeight: isActive ? "bold" : "",
-                  borderBottom: isActive ? "2px solid black" : "",
+                  borderBottom: isActive ? "2px solid var(--accent-color)" : "",
+                  color: isActive ? "var(--accent-color)" : ""
                 };
               }}
             >
-              <SettingsOutlinedIcon />
+              <SettingsOutlinedIcon
+              className={sideBarStyles.icon} />
               Settings
             </NavLink>
           </li>
@@ -103,7 +114,8 @@ const Sidebar = () => {
       </nav>
       <div className={sideBarStyles.logOut}>
         <div className={sideBarStyles.link}>
-          <LogoutOutlinedIcon />
+          <LogoutOutlinedIcon
+          className={sideBarStyles.icon} />
           Log out
         </div>
       </div>
