@@ -22,6 +22,7 @@ const Home = () => {
   return (
     <div className={homeStyles.home}>
       <Sidebar />
+      
       <Routes>
         <Route path={HOME} element={<Outlet />}>        
               <Route path={MY_ISSUES} element={<MyIssues />} />

@@ -1,4 +1,5 @@
 import React from "react";
+import UserDatacard from "../userdatacard/userdatacard";
 import { NavLink } from "react-router-dom";
 import ListAltOutlinedIcon from "@mui/icons-material/ListAltOutlined";
 import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
@@ -6,6 +7,7 @@ import QueryBuilderOutlinedIcon from "@mui/icons-material/QueryBuilderOutlined";
 import InboxOutlinedIcon from "@mui/icons-material/InboxOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
+import userImage from "../../assets/imageUser.jpeg"
 import {
   HOME,
   USERS,
@@ -21,7 +23,8 @@ import sideBarStyles from "./sidebar.module.css";
 const Sidebar = () => {
   return (
     <div className={sideBarStyles.sidebarContainer}>
-      <div className={sideBarStyles.userData}>UserData</div>
+      <UserDatacard/>
+
       <nav className={sideBarStyles.navBar}>
         <ul className={sideBarStyles.list}>
           <li className={sideBarStyles.listItem}>
