@@ -1,10 +1,22 @@
-import React from 'react'
-import myIssuesStyle from './myissues.module.css'
+import { useState } from "react";
+import myIssuesStyle from "./myissues.module.css";
+import PageHeader from '../pageheader/pageheader.jsx'
 
 const MyIssues = () => {
-  return (
-    <div className={myIssuesStyle.myIssues}>myissues</div>
-  )
-}
+  const [activeView, setActiveview] = useState("kanban");
 
-export default MyIssues
+  return (
+    <div className={myIssuesStyle.myIssues}>
+      <PageHeader
+      activeView={activeView}
+      setActiveview={setActiveview}
+      title="My Issues"
+      btntitle="Issue"
+      />
+
+      KanBan
+    </div>
+  );
+};
+
+export default MyIssues;
