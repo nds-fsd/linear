@@ -15,9 +15,11 @@
   --main-bg-color: #E9EBF0;
   --accent-color:  #3361FF;
   --gray-color:   #C7CED9;
-  --darkgray-color: #B8BFCC;
-  
-
+  --darkgray-color: rgba(0, 0, 0, 0.5);
+  --yellow-color: #EAB308;
+  --pink-color: #DB2777;
+  --purple-color: #9333EA;
+  --green-color: #16A34A;
 }
 
 *{
