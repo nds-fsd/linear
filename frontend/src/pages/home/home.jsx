@@ -1,5 +1,5 @@
 import {useEffect} from "react";
-import { Routes, Route, redirect } from "react-router-dom";
+import { Routes, Route, redirect, Navigate, Outlet } from "react-router-dom";
 import Sidebar from '../../components/sidebar/sidebar'
 import MyIssues from "../../components/myissues/myissues";
 import Projects from "../../components/projects/projects"
@@ -13,7 +13,8 @@ import {
   MY_ISSUES,
   CYCLES,
   SETTINGS,
-  INBOX
+  INBOX,
+  HOME
 } from "../../route-path";
 
 const Home = () => {
@@ -26,11 +27,12 @@ const Home = () => {
     <div className={homeStyles.home}>
       <Sidebar />
       <Routes>
-        <Route path={MY_ISSUES} element={<MyIssues />} />
-        <Route path={PROJECTS} element={<Projects />} />
-        <Route path={CYCLES} element={<Cycles />} />
-        <Route path={`${USER_ID}/${INBOX}`} element={<Inbox />} />
-        <Route path={`${USER_ID}/${SETTINGS}`} element={<Settings />} />
+          <Route path='' element={<Navigate to={MY_ISSUES}/>} />
+          <Route path={MY_ISSUES} element={<MyIssues />} />
+          <Route path={PROJECTS} element={<Projects />} />
+          <Route path={CYCLES} element={<Cycles />} />
+          <Route path={`${USER_ID}/${INBOX}`} element={<Inbox />} />
+          <Route path={`${USER_ID}/${SETTINGS}`} element={<Settings />} />
       </Routes>
     </div>
   );

@@ -9,8 +9,9 @@ function App() {
     return (
     <div className="app">
         <Routes>
+          {/* if logged in <Route path='' element={<Navigate to=`${HOME}/*`/>} /> */}
           <Route index element={<Login />} />
-          <Route path={HOME + "/*"} element={<Home />} />
+          <Route path={`${HOME}/*`} element={<Home />} />
         </Routes>
     </div>
 
