@@ -1,0 +1,9 @@
+.kanbanArea{
+    width:100%;
+    height:calc(100% - 150px);
+    background-color: beige;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    gap:3em;
+}
