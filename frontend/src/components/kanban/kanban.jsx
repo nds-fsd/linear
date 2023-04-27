@@ -7,13 +7,13 @@ function Kanban() {
   //   Hacer que pueda recibir un array con "estados" y generar una columna y un useState para cada uno
   //   con el objetivo de hacerlo más reutilizable
 
-  const [groupOneWidgets, setGroupOneWidgets] = useState(["Jhon", "Talabot"]);
-  const [groupTwoWidgets, setGroupTwoWidgets] = useState(["Indio", "Solari"]);
+  const [groupOneWidgets, setGroupOneWidgets] = useState(["1", "2"]);
+  const [groupTwoWidgets, setGroupTwoWidgets] = useState(["3", "4"]);
   const [groupThreeWidgets, setGroupThreeWidgets] = useState([
-    "Peter",
-    "Parker",
+    "5",
+    "6",
   ]);
-  const [groupFourWidgets, setGroupFourWidgets] = useState(["Mick", "Jagger"]);
+  const [groupFourWidgets, setGroupFourWidgets] = useState(["7", "8"]);
 
   return (
     <div className={kanbanStyle.kanbanArea}>
