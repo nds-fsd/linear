@@ -1,7 +1,7 @@
 import {useState} from 'react'
 import projectsStyle from './projects.module.css'
 import PageHeader from '../pageheader/pageheader'
-
+import Card from "../card/card.jsx"
 const Projects = () => {
   const [activeView, setActiveview] = useState("list");
 
@@ -17,7 +17,7 @@ const Projects = () => {
       btntitle="Project"
       />
 
-      projects
+   <Card/>
     </div>
   )
 }
