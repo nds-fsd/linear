@@ -1,0 +1,11 @@
+.page{
+  height:500px;
+  width:300px;
+  border: 2px dotted red;
+  padding:1em;
+  display:flex;
+  flex-direction:column;
+  gap:1em;
+  overflow-y: scroll;
+}
+
