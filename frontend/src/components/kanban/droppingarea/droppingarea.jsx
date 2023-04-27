@@ -2,7 +2,7 @@ import { useState } from "react";
 import droppingAreaStyle from './droppingarea.module.css'
 
 
-const DroppingArea = ({ children, setWidgets, widgets }) => {
+const DroppingArea = ({ children, setWidgets, widgets, columnType }) => {
   function handleOnDrop(e) {
     const widget = e.dataTransfer.getData("widgetTitle").toString();
     setWidgets([...widgets, widget]);
@@ -13,7 +13,8 @@ const DroppingArea = ({ children, setWidgets, widgets }) => {
   }
 
   return (
-    <div className={droppingAreaStyle.page} onDrop={handleOnDrop} onDragOver={handleDragOver}>
+    <div className={droppingAreaStyle.column} onDrop={handleOnDrop} onDragOver={handleDragOver}>
+      <h2 className={droppingAreaStyle.header}>{columnType}</h2>
       {children}
     </div>
   );

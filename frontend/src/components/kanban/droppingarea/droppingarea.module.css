@@ -1,4 +1,4 @@
-.page{
+.column{
   height:500px;
   width:300px;
   border: 2px dotted red;
@@ -7,5 +7,8 @@
   flex-direction:column;
   gap:1em;
   overflow-y: scroll;
+}
+.header{
+  text-align:center;
 }
 

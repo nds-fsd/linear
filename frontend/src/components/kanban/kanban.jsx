@@ -17,7 +17,11 @@ function Kanban() {
 
   return (
     <div className={kanbanStyle.kanbanArea}>
-      <DroppingArea setWidgets={setGroupOneWidgets} widgets={groupOneWidgets}>
+      <DroppingArea 
+      setWidgets={setGroupOneWidgets} 
+      widgets={groupOneWidgets}
+      columnType={"Backlog"}
+      >
         {groupOneWidgets?.map((widget, index) => (
           <DraggableWidget
             widgetList={groupOneWidgets}
@@ -29,7 +33,9 @@ function Kanban() {
         ))}
       </DroppingArea>
 
-      <DroppingArea setWidgets={setGroupTwoWidgets} widgets={groupTwoWidgets}>
+      <DroppingArea 
+      columnType={"To do"}
+      setWidgets={setGroupTwoWidgets} widgets={groupTwoWidgets}>
         {groupTwoWidgets?.map((widget, index) => (
           <DraggableWidget
             widgetList={groupTwoWidgets}
@@ -41,6 +47,7 @@ function Kanban() {
         ))}
       </DroppingArea>
       <DroppingArea
+        columnType={"In progress"}
         setWidgets={setGroupThreeWidgets}
         widgets={groupThreeWidgets}
       >
@@ -54,7 +61,9 @@ function Kanban() {
           />
         ))}
       </DroppingArea>
-      <DroppingArea setWidgets={setGroupFourWidgets} widgets={groupFourWidgets}>
+      <DroppingArea 
+        columnType={"Done"}
+      setWidgets={setGroupFourWidgets} widgets={groupFourWidgets}>
         {groupFourWidgets?.map((widget, index) => (
           <DraggableWidget
             widgetList={groupFourWidgets}
