@@ -1,0 +1,33 @@
+.header {
+    display: flex;
+    width: 100%;
+    height: 5%;
+    border: 2px solid red;
+
+}
+
+.logo {
+    width:20%;
+    border: 2px solid red;
+
+
+}
+
+
+.loginContainer{
+    display:flex;
+    align-items: center;
+    justify-content: right;
+    padding: 1em;
+    width: 80%;
+    border: 2px solid green;
+}
+
+.buttonLogin{
+    border-radius: 5px;
+
+}
+
+.buttonSubmit{
+    border-radius: 5px;
+}
