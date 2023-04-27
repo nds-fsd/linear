@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import DroppingArea from "./droppingarea/droppingarea";
 import DraggableWidget from "./draggablewidget/draggablewidget";
 import kanbanStyle from "./kanban.module.css";
@@ -15,6 +15,8 @@ function Kanban() {
   ]);
   const [groupFourWidgets, setGroupFourWidgets] = useState(["7", "8"]);
 
+
+
   return (
     <div className={kanbanStyle.kanbanArea}>
       <DroppingArea 
@@ -29,6 +31,7 @@ function Kanban() {
             title={widget}
             key={index}
             index={index}
+            id={widget}
           />
         ))}
       </DroppingArea>
@@ -40,12 +43,13 @@ function Kanban() {
           <DraggableWidget
             widgetList={groupTwoWidgets}
             updateWidgetList={setGroupTwoWidgets}
-            title={widget}
             key={index}
             index={index}
+            id={widget}
           />
         ))}
       </DroppingArea>
+  
       <DroppingArea
         columnType={"In progress"}
         setWidgets={setGroupThreeWidgets}
@@ -58,9 +62,11 @@ function Kanban() {
             title={widget}
             key={index}
             index={index}
+            id={widget}
           />
         ))}
       </DroppingArea>
+
       <DroppingArea 
         columnType={"Done"}
       setWidgets={setGroupFourWidgets} widgets={groupFourWidgets}>
@@ -71,6 +77,7 @@ function Kanban() {
             title={widget}
             key={index}
             index={index}
+            id={widget}
           />
         ))}
       </DroppingArea>

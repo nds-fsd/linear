@@ -3,8 +3,12 @@ import droppingAreaStyle from './droppingarea.module.css'
 
 
 const DroppingArea = ({ children, setWidgets, widgets, columnType }) => {
+
+
+
+
   function handleOnDrop(e) {
-    const widget = e.dataTransfer.getData("widgetTitle").toString();
+    const widget = e.dataTransfer.getData("widgetId").toString();
     setWidgets([...widgets, widget]);
   }
 
