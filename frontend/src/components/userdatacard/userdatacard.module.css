@@ -1,0 +1,38 @@
+
+.userData{
+    display: flex;
+    align-items: center;
+    gap:1em;
+    height:150px;
+    border-bottom:1px solid var(--gray-color) ;
+    padding: 0.5em;
+}
+
+.img{
+    border-radius:  50%;
+    height: 70px;
+    border: 2px solid var(--accent-color);
+    padding: 0.3em;
+}
+
+.userDataContainer{
+    
+    display: flex;
+    flex-direction: column;     
+}
+
+.userDataContainer > h3{
+    padding: 0;
+    margin: 0;
+
+
+ }
+
+.userDataContainer > p {
+
+    padding: 0;
+    margin: 0;
+    color: var(--darkgray-color);
+    font-weight: bold;
+
+}
