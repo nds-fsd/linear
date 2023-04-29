@@ -13,5 +13,11 @@
   "devDependencies": {
     "dotenv-cli": "^7.0.0",
     "turbo": "^1.9.1"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@mui/icons-material": "^5.11.16",
+    "@mui/material": "^5.12.1"
   }
 }
