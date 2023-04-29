@@ -1,18 +1,19 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import draggableWidgetStyle from "./draggablewidget.module.css";
+import grabbingHand from '../../../assets/hold.png'
 
 const DraggableWidget = ({ id, widgetList }) => {
   const [isBeingDragged, setIsBeingDragged] = useState(false);
 
   //me parece que para modificar el css durante el dragging voy a necesitar usar useRef
 
+  const draggedItem = useRef()
+
   function handleOnDragStart(e, i) {
     const widgetIndex = widgetList.findIndex((element) => element === id);
     widgetList.splice(widgetIndex, 1);
     setIsBeingDragged(true);
     console.log(`task ${id} started being dragged`);
-    e.dataTransfer.setData("widgetId", id);
-
   }
 
   function handleOnDragEnter(e) {
@@ -29,8 +30,11 @@ const DraggableWidget = ({ id, widgetList }) => {
     console.log("Item stopped being dragged");
   }
 
+
+
   return (
     <div
+      ref={draggedItem}
       className={
         isBeingDragged
           ? `${draggableWidgetStyle.beingDragged} ${draggableWidgetStyle.widget}`
