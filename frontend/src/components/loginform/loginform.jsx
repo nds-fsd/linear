@@ -18,9 +18,11 @@ const LoginForm = () => {
         
         <form className={loginFormStyles.formContainer} onSubmit={handleSubmit(onSubmit)}>
         
-            <input className={loginFormStyles.userData} type="email" placeholder="Correo electrónico" {...register("example")} />
+            <input className={loginFormStyles.userData} type="email" 
+            placeholder="Correo electrónico" {...register("example")} />
             <div>
-                <input className={loginFormStyles.userData} type={shown ? 'text' : 'password'} placeholder="Contraseña"{...register("exampleRequired", { required: true })} />
+                <input className={loginFormStyles.userData} type={shown ? 'text' : 'password'} 
+                placeholder="Contraseña"{...register("exampleRequired", { required: true })} />
                 {
                     shown ? 
                     <VisibilityIcon className={loginFormStyles.icon}
@@ -38,7 +40,7 @@ const LoginForm = () => {
             <br></br>
             <div className={loginFormStyles.linea}></div>
             <div className={loginFormStyles.positionNewUser}>
-            <input className={loginFormStyles.newUser} type="button" value="Crear cuenta nueva" />
+                <input className={loginFormStyles.newUser} type="button" value="Crear cuenta nueva" />
             </div>
         </form>
     

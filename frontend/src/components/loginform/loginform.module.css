@@ -3,9 +3,9 @@
 .formContainer {
     display: flex;
     flex-direction:column;
-    width: 350px;
+    width: 500px;
     height: 350px;
-    border: 2px solid #363636;
+    /* border: 2px solid #363636; */
     border-radius: 10px;
     box-shadow: 5px 5px 0.5px 0.5px #00000033;
     background:var(--main-bg-color);
@@ -52,18 +52,12 @@
     color: blue; 
 
 }
+
 .forgetPass:hover {
+
     text-decoration:underline
 }
 
-/* .linea {
-
-    border-top: 1px solid black;
-    height: 2px;
-    max-width: 200px;
-    padding: 0;
-    margin: 20px auto 0 auto;
-} */
 
 .newUser {
     display:flex;

@@ -1,14 +1,20 @@
-import registerStyles from './pages/register/register.modules.css';
-import {useForm} from 'react-hook-form';
+import registerStyles from './register.module.css';
+import NewRegister from '../../components/newregister/newregister';
+import ResetPassHeader from '../../components/resetpassheader/resetpassheader';
+import Footer from '../../components/footer/footer';
 
-// const Register =() => {
+const Register = () => {
 
-//     const { register, handleSubmit, watch, formState: { errors } } = useForm();
-//     const onSubmit = data => console.log(data);
-//     console.log(watch("example"));
+            
+        return (
+          <div className={registerStyles.container}>
+            <ResetPassHeader/>
+            <div className={registerStyles.newRegister}>
+              <NewRegister/>
+            </div>
+            <Footer />
+          </div>
+        );
+      }
 
-//     return (
-
-        
-//     )
-// }
+  export default Register;

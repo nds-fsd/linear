@@ -12,7 +12,9 @@ const Login = () => {
         
     <div className={loginStyles.loginContainer}>
         <LoginHeader/>
-        <LoginForm/> 
+        <div className={loginStyles.formContainer}>
+            <LoginForm/> 
+        </div>
         <Footer/>
     </div>
     
