@@ -4,7 +4,7 @@ const taskRouter = express.Router();
 
 
 //Gets all of the tasks
-taskRouter.get("/tasks", async (req, res) => {
+taskRouter.get("/", async (req, res) => {
   try {
     const allTasks = await Task.find();
     if (allTasks.length === 0) {
@@ -22,16 +22,8 @@ taskRouter.get("/tasks/:id", async (req, res) => {
   res.json(selectedTasks);
 });
 
-//Gets a single task by title
-// taskRouter.get("/tasks/query/:title", async (req, res) => {
-//   const filter=req.params.title
-//   const selectedTasks = await Task.find(filter);
-//   res.json(selectedTasks);
-  
-// });
-
 //Posts a single task
-taskRouter.post("/tasks", async (req, res) => {
+taskRouter.post("/", async (req, res) => {
   const { 
     title, author, status } = req.body;
   const data = { title, author, status} ;
@@ -42,18 +34,10 @@ taskRouter.post("/tasks", async (req, res) => {
 
 
 //Deletes a single task by ID
-taskRouter.delete("/tasks/:id", async (req, res) => {
+taskRouter.delete("/:id", async (req, res) => {
   const selectedTask = await Task.findByIdAndDelete(req.params.id);
   res.json(selectedTask);
 });
-
-//Deletes a single task by title
-// taskRouter.delete("/tasks/query/:title", async (req, res) => {
-//   const filter=req.params.title
-//   const selectedTask = await Task.findOneAndDelete(req.params.title);
-//   res.json(selectedTask);
-// });
-
 
 //Updates the status of a single task by id
 taskRouter.patch("/:id", async (req, res) => {
@@ -63,9 +47,9 @@ taskRouter.patch("/:id", async (req, res) => {
 });
 
 // Updates the status of a single project by title
-taskRouter.patch("/tasks/query/:status", async (req, res) => {
-  const filter=req.params.status
-  const selectedTask = await Task.findOneAndUpdate(filter,req.body);
+taskRouter.patch("/:id", async (req, res) => {
+  const filter = req.data.status
+  const selectedTask = await Task.findOneAndUpdate(filter,req.body.id);
   res.json(selectedTask);
 });
 
