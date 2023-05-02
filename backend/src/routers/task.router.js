@@ -23,12 +23,12 @@ taskRouter.get("/tasks/:id", async (req, res) => {
 });
 
 //Gets a single task by title
-taskRouter.get("/tasks/query/:title", async (req, res) => {
-  const filter=req.params.title
-  const selectedTasks = await Task.find(filter);
-  res.json(selectedTasks);
+// taskRouter.get("/tasks/query/:title", async (req, res) => {
+//   const filter=req.params.title
+//   const selectedTasks = await Task.find(filter);
+//   res.json(selectedTasks);
   
-});
+// });
 
 //Posts a single task
 taskRouter.post("/tasks", async (req, res) => {
@@ -48,15 +48,15 @@ taskRouter.delete("/tasks/:id", async (req, res) => {
 });
 
 //Deletes a single task by title
-taskRouter.delete("/tasks/query/:title", async (req, res) => {
-  const filter=req.params.title
-  const selectedTask = await Task.findOneAndDelete(req.params.title);
-  res.json(selectedTask);
-});
+// taskRouter.delete("/tasks/query/:title", async (req, res) => {
+//   const filter=req.params.title
+//   const selectedTask = await Task.findOneAndDelete(req.params.title);
+//   res.json(selectedTask);
+// });
 
 
 //Updates the status of a single task by id
-taskRouter.patch("/tasks/:id", async (req, res) => {
+taskRouter.patch("/:id", async (req, res) => {
   const filter=req.params.id
   const selectedTask = await Task.findByIdAndUpdate(filter,req.body);
   res.json(selectedTask);
