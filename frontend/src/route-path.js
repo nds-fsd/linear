@@ -1,4 +1,4 @@
-export const HOME = "/";
+export const HOME = "home";
 export const PROJECTS = "projects";
 export const USERS = "users";
 export const USER_ID = ":userid";

@@ -1,0 +1,46 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Program Files\nodejs\node_modules\yarn\bin\yarn.js add bcrypt
+
+PATH: 
+  C:\Program Files (x86)\Eclipse Foundation\jdk-8.0.302.8-hotspot\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\xampp\php;C:\ProgramData\ComposerSetup\bin;C:\Program Files\dotnet\;C:\Program Files\Inkscape\bin;C:\Users\Benja\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Program Files\Git\cmd;C:\Program Files\GitHub CLI\;C:\Program Files\Docker\Docker\resources\bin;C:\Users\Benja\AppData\Local\Microsoft\WindowsApps;C:\Users\Benja\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Benja\AppData\Roaming\Composer\vendor\bin;C:\Users\Benja\AppData\Local\GitHubDesktop\bin;C:\Users\Benja\AppData\Roaming\nvm;C:\Program Files\nodejs
+
+Yarn version: 
+  1.22.19
+
+Node version: 
+  18.16.0
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: EPERM: operation not permitted, unlink 'C:\Users\Benja\Desktop\Coding\repos\linear\node_modules\@esbuild\win32-x64\esbuild.exe'
+
+npm manifest: 
+  {
+    "name": "@monorepo/backend",
+    "version": "0.0.0",
+    "description": "> TODO: description",
+    "author": "Jose Manuel Cano <jmcano94@gmail.com>",
+    "homepage": "",
+    "license": "ISC",
+    "scripts": {
+      "dev": "npx nodemon src/index.js",
+      "start": "node src/index.js"
+    },
+    "devDependencies": {
+      "nodemon": "^2.0.20"
+    },
+    "dependencies": {
+      "cors": "^2.8.5",
+      "dotenv": "^16.0.3",
+      "express": "^4.18.2",
+      "mongoose": "^6.10.0"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
