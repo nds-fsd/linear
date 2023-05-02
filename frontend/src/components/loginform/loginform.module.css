@@ -1,0 +1,81 @@
+
+
+.formContainer {
+    display: flex;
+    flex-direction:column;
+    width: 500px;
+    height: 350px;
+    /* border: 2px solid #363636; */
+    border-radius: 10px;
+    box-shadow: 5px 5px 0.5px 0.5px #00000033;
+    background:var(--main-bg-color);
+
+    /* color:#1c1e21 */
+}
+
+.userData {
+    all:unset;
+    border-radius: 5px;
+    padding: 1em;
+    margin: 10px;
+    color: rgb(97, 93, 93);
+    border: 1px solid #dadde1;
+
+}
+
+.icon {
+    cursor:pointer
+}
+.login {
+    margin: 10px;
+    padding: 1em;
+    border-radius: 5px;
+    /* background-color: #3361FF; */
+    background-color: #1877f2;
+    color: whitesmoke;
+    cursor: pointer;
+    border: #363636;
+    border-bottom: 1px solid #dadde1;
+} 
+.login:hover {
+    background: blue; 
+    /* color: white;  */
+}
+    
+
+
+.forgetPass {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration:none;
+    color: blue; 
+
+}
+
+.forgetPass:hover {
+
+    text-decoration:underline
+}
+
+
+.newUser {
+    display:flex;
+    justify-content: center;
+    cursor: pointer;
+    width: 200px;
+    padding: 1em;
+    border-radius: 5px;
+    background-color: #42b72a;
+    color: whitesmoke;
+    border: #363636;
+    border-bottom: 1px solid #dadde1;
+
+}
+.newUser:hover {
+    background: rgb(54, 196, 101); 
+}
+.positionNewUser {
+    display:flex;
+    justify-content: center;
+}
