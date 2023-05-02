@@ -5,6 +5,10 @@ const jwt = require("jsonwebtoken");
 const User = require("../mongo/schemas/user.schema");
 const jwtSecret = process.env.JWT_SECRET;
 
+
+
+const regex =  [/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/]
+
 const authRouter = express.Router();
 
 authRouter.post("/register", async (req, res) => {
@@ -21,6 +25,11 @@ authRouter.post("/register", async (req, res) => {
       .status(400)
       .json({ error: { email: "Email already registered" } });
   } else {
+    if (!data.email.match(regex)){
+      return res
+      .status(400)
+      .json({ error: { email: "Insert a valid email" } });
+    }
     const newUser = new User({
       email: data.email,
       password: data.password,

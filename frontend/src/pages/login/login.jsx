@@ -6,18 +6,15 @@ import Footer from '../../components/footer/footer';
 
 
 const Login = () => {
-    
-    
-    return (
-        
+       
+    return (        
     <div className={loginStyles.loginContainer}>
         <LoginHeader/>
         <div className={loginStyles.formContainer}>
             <LoginForm/> 
         </div>
         <Footer/>
-    </div>
-    
+    </div>   
     );
 }
 
