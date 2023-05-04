@@ -11,8 +11,12 @@ console.log(dbUrl)
 exports.connectDB = async () => {
   mongoose.set("strictQuery", false);
   try {
+<<<<<<< HEAD
     await mongoose.connect(dbUrl);
 
+=======
+    mongoose.connect(dbUrl);
+>>>>>>> Sprint-2
     const mongo = mongoose.connection;
     mongo.on("error", (error) => console.error(error));
   } catch (e) {
