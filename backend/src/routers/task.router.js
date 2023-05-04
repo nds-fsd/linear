@@ -33,8 +33,8 @@ taskRouter.get("/tasks/query/:title", async (req, res) => {
 //Posts a single task
 taskRouter.post("/tasks", async (req, res) => {
   const { 
-    title, author, status } = req.body;
-  const data = { title, author, status} ;
+    title, author, status, description } = req.body;
+  const data = { title, author, status, description} ;
   const newTask = new Task(data);
   await newTask.save();
   res.json(newTask);

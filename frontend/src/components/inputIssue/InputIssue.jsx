@@ -1,6 +1,6 @@
 import {React,useState} from 'react'
 import IssueStyle from './inputIssue.module.css'
-
+import axios from 'axios'
 
 
 const InputIssue = () => {
@@ -13,11 +13,32 @@ const InputIssue = () => {
     const [selected2, setSelected2] = useState(options2[0])
 
     const handleSubmit=(e)=>{
-        e.preventDefault(); 
-        alert(`form submitted ${title} 
-        ${desc}
-        ${selected}
-        ${selected2}`);
+        // e.preventDefault(); 
+        // alert(`form submitted ${title} 
+        // ${desc}
+        // ${selected}
+        // ${selected2}`);
+
+
+        const formData={
+            title:title,
+            author:selected2,
+            status:selected,
+            description:desc
+        }
+        const addElement = (formData) => {
+            const options = {
+              method:'POST',
+              headers: {
+                  'Content-Type': "application/json; charset=utf-8",
+                  'Authorization': JWToken
+                }
+            }
+          const url = 'http://localhost:3001/tasks'
+          axios.post( url, formData, options)
+          }
+         
+          addElement(formData)
        }
 
   return (
@@ -49,7 +70,7 @@ const InputIssue = () => {
             </div>
 
             <div >
-                <label for='status' className={IssueStyle.labels}>Status</label>
+                <label htmlFor='status' className={IssueStyle.labels}>Status</label>
                 <select 
                 name='status'
                 className={IssueStyle.select_data} 
@@ -60,7 +81,7 @@ const InputIssue = () => {
                     (<option value={value} key={value}>{value}</option>))
                     }
                 </select>   
-                <label for='author' className={IssueStyle.labels}>Asignado a</label>
+                <label htmlFor='author' className={IssueStyle.labels}>Asignado a</label>
                   <select 
                 name='author'  
                 className={IssueStyle.select_data} 
