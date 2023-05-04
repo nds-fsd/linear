@@ -20,6 +20,7 @@ function App() {
           {/* if logged in <Route path='' element={<Navigate to=`${HOME}/*`/>} /> */}
           <Route path={`${HOME}/*`} element={<Home />} />
         </Routes>
+       
     </div>
 
 
