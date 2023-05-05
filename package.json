@@ -20,6 +20,9 @@
     "@mui/icons-material": "^5.11.16",
     "@mui/material": "^5.12.1",
     "jsonwebtoken": "^9.0.0",
-    "react-beautiful-dnd": "^13.1.1"
+    "react-beautiful-dnd": "^13.1.1",
+    "axios": "^1.4.0",
+    "react-select": "^5.7.2",
+    "styled-components": "^5.3.10"
   }
 }

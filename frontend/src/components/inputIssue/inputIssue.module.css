@@ -1,0 +1,83 @@
+
+.container {
+    margin:0px  auto;
+    margin-top: 150px;
+    display: flex;
+    flex-direction: column;
+    background-color: #FFFFFF;
+    width: 700px;
+    height: 25%;
+    align-items: flex-start;
+    border-radius: 10px;
+    box-shadow: rgba(59, 130, 246, 0.1);
+    border:1px solid black;
+}
+.container1 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 450px;
+    height: 40px;
+}
+
+.card_title{
+  display:flex;
+  padding-left: 40px;
+  
+ 
+}
+
+
+.input_container{
+    display:flex;
+    padding: 0.3em;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 650px;
+    gap:0.2em;
+    padding-left: 40px;
+   
+  }
+  
+  .input_data{
+    all:unset;
+    border-radius: 5px;
+    padding: 0.3em;
+    margin: 10px;
+    color: rgb(97, 93, 93);
+    border: 1px solid #dadde1;
+    width: 100%;
+    
+  }
+  .select_data{
+    all:unset;
+    border-radius: 5px;
+    padding: 0.3em;
+    margin: 10px;
+    color: rgb(97, 93, 93);
+    border: 1px solid #dadde1;
+    width: 150px;
+    margin-left: 40px;
+    
+  }
+  .button_data{
+   margin-left: 600px;
+  }
+  button{
+        margin: 10px;
+        padding: 0.5em;
+        border-radius: 5px;
+        /* background-color: #3361FF; */
+        background-color: #1877f2;
+        color: whitesmoke;
+        cursor: pointer;
+        border: #363636;
+        border-bottom: 1px solid #dadde1;
+    
+  }
+
+  .labels{
+    margin-left: 40px;
+    text-align: center;}
