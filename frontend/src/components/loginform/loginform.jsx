@@ -3,13 +3,15 @@ import {useForm} from 'react-hook-form';
 import {useState} from 'react';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import {HOME} from '../../route-path'
+import {Link} from 'react-router-dom'
+import { login } from '../../queryhooks/loginquery';
 
 
 const LoginForm = () => {
     
-    const { register, handleSubmit, watch, formState: {} } = useForm();
-    const onSubmit = data => console.log(data);
-    console.log(watch("example"));
+    const { register, handleSubmit, watch, formState } = useForm();
+    const onSubmit = data => login(data);
     const [shown, setShown] = useState(false);
 
 
@@ -36,11 +38,15 @@ const LoginForm = () => {
             {/* {errors.exampleRequired && <span>This field is required</span>} */}
             <input className={loginFormStyles.login} type="submit" value="Iniciar sesión" />
             <br></br>
-            <a className={loginFormStyles.forgetPass} href="#">¿Has olvidado la contraseña?</a>
+            <Link className={loginFormStyles.forgetPass} 
+            to="/home">
+                ¿Has olvidado la contraseña?
+            </Link>
             <br></br>
             <div className={loginFormStyles.linea}></div>
             <div className={loginFormStyles.positionNewUser}>
-                <input className={loginFormStyles.newUser} type="button" value="Crear cuenta nueva" />
+                <Link className={loginFormStyles.newUser} to={HOME}> Crear cuenta nueva
+                </Link>
             </div>
         </form>
     
