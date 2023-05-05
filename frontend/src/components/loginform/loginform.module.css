@@ -20,7 +20,13 @@
     margin: 10px;
     color: rgb(97, 93, 93);
     border: 1px solid #dadde1;
+    display: flex;
+    justify-content: space-between;
 
+}
+
+.userData input{
+    all:unset;
 }
 
 .icon {

@@ -1,12 +1,12 @@
 import loginHeaderStyles from './loginheader.module.css'
+import logo from '../../assets/logo-no-background.svg'
 
 const LoginHeader = () => {
 
     return (
 
         <div className={loginHeaderStyles.header}>
-            <li className={loginHeaderStyles.logo}><a href="#">Logo</a></li>
-            <p>About Us</p>
+            <img className={loginHeaderStyles.logo} src={logo}/>
         </div>
     )
 };

@@ -7,7 +7,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 
 const LoginForm = () => {
     
-    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const { register, handleSubmit, watch, formState: {} } = useForm();
     const onSubmit = data => console.log(data);
     console.log(watch("example"));
     const [shown, setShown] = useState(false);
@@ -19,10 +19,10 @@ const LoginForm = () => {
         <form className={loginFormStyles.formContainer} onSubmit={handleSubmit(onSubmit)}>
         
             <input className={loginFormStyles.userData} type="email" 
-            placeholder="Correo electrónico" {...register("example")} />
-            <div>
-                <input className={loginFormStyles.userData} type={shown ? 'text' : 'password'} 
-                placeholder="Contraseña"{...register("exampleRequired", { required: true })} />
+            placeholder="Correo electrónico" {...register("email")} />
+            <div className={loginFormStyles.userData}>
+                <input  type={shown ? 'text' : 'password'} 
+                placeholder="Contraseña"{...register("password", { required: true })} />
                 {
                     shown ? 
                     <VisibilityIcon className={loginFormStyles.icon}
