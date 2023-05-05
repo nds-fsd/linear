@@ -1,5 +1,5 @@
 const widgetList = {
-    "todo": [
+    todo: [
       {
         id: "widget-1",
         content: "hello"
@@ -17,7 +17,7 @@ const widgetList = {
         content: "so99ynoodles"
       }
     ],
-    "inProgress": [
+    inProgress: [
       {
         id: "widget-5",
         content: "I am"
