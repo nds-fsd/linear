@@ -1,7 +1,8 @@
 import { useState } from "react";
 import myIssuesStyle from "./myissues.module.css";
 import PageHeader from '../pageheader/pageheader.jsx'
-import Kanban from "../kanban/kanban";
+import Kanban from "../kanban/kanban"
+import KanbanDnd from "../kanban-dnd/kanban-dnd";
 
 const MyIssues = () => {
   const [activeView, setActiveview] = useState("kanban");
@@ -14,7 +15,8 @@ const MyIssues = () => {
       title="My Issues"
       btntitle="Issue"
       />
-      <Kanban/>
+      {/* <Kanban/> */}
+      <KanbanDnd />
     </div>
   );
 };
