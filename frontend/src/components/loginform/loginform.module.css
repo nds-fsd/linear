@@ -1,16 +1,16 @@
 
 
 .formContainer {
+    padding:1em;
     display: flex;
     flex-direction:column;
+    align-items: center;
+    justify-content: center;
     width: 500px;
-    height: 350px;
-    /* border: 2px solid #363636; */
+    min-height: 350px;
     border-radius: 10px;
     box-shadow: 5px 5px 0.5px 0.5px #00000033;
     background:var(--main-bg-color);
-
-    /* color:#1c1e21 */
 }
 
 .userData {
@@ -22,6 +22,7 @@
     border: 1px solid #dadde1;
     display: flex;
     justify-content: space-between;
+    width:93%;
 
 }
 
@@ -41,6 +42,7 @@
     cursor: pointer;
     border: #363636;
     border-bottom: 1px solid #dadde1;
+    width:100%;
 } 
 .login:hover {
     background: blue; 
@@ -82,4 +84,11 @@
 .positionNewUser {
     display:flex;
     justify-content: center;
+}
+
+.logInError{
+    color:red;
+    padding:0;
+    margin:0;
+
 }

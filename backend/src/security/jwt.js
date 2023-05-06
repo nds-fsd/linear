@@ -35,7 +35,7 @@ authRouter.post("/register", async (req, res) => {
       password: data.password,
       firstname: data.firstname,
       lastname: data.lastname,
-      genre:  data.genre,
+      pronouns:  data.pronouns,
       birthday:data.birthday,
     });
     const savedUser = await newUser.save();
@@ -46,7 +46,7 @@ authRouter.post("/register", async (req, res) => {
           email: savedUser.email,
           firstname: savedUser.firstname,
           lastname: savedUser.lastname,
-          genre:savedUser.genre,
+          pronouns:savedUser.pronouns,
           birthday:savedUser.birthday,
           id: savedUser._id,
         },
@@ -87,7 +87,8 @@ authRouter.post("/login", async (req, res) => {
         email: foundUser.email,
         name: foundUser.name,
         lastname: foundUser.lastname,
-        genre:foundUser.genre,
+        firstname: foundUser.firstname,
+        pronouns:foundUser.pronouns,
         birthday:foundUser.birthday,
         id: foundUser._id,
       },

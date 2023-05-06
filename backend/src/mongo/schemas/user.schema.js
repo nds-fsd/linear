@@ -11,7 +11,7 @@ const UserSchema = new Schema(
     lastname: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    genre: {String},
+    pronouns: {String},
     birthday:{Date}
   },
   { timestamps: true }

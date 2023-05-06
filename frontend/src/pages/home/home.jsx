@@ -1,4 +1,5 @@
-import {useEffect} from "react";
+import {useContext} from 'react'
+import { Context } from "../../Context";
 import { Routes, Route, redirect, Navigate, Outlet } from "react-router-dom";
 import Sidebar from '../../components/sidebar/sidebar'
 import MyIssues from "../../components/myissues/myissues";
@@ -14,14 +15,20 @@ import {
   CYCLES,
   SETTINGS,
   INBOX,
-  HOME
+  HOME,
+  LOGIN
 } from "../../route-path";
 
 const Home = () => {
 
+  const context = useContext(Context)
+  const {userSessionContext} = context
 
-  useEffect(()=> {redirect(MY_ISSUES)}, [])
 
+
+  if(!userSessionContext){
+    return <Navigate to={LOGIN}/>
+  }
 
   return (
     <div className={homeStyles.home}>

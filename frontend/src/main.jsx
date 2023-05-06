@@ -5,19 +5,20 @@ import './index.css'
 import { BrowserRouter } from "react-router-dom";
 import {QueryClientProvider, QueryClient} from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools'
+import { ContextProvider } from './Context';
 
 
 const queryClient = new QueryClient
 
-
-
 ReactDOM.createRoot(document.getElementById('root')).render(
     // <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-        <BrowserRouter>
-          <App />
-          <ReactQueryDevtools/>
-        </BrowserRouter>
-    </QueryClientProvider>
+          <BrowserRouter>
+            <ContextProvider>
+              <QueryClientProvider client={queryClient}>
+                    <App />
+                    <ReactQueryDevtools/>
+              </QueryClientProvider>
+            </ContextProvider>
+          </BrowserRouter>
     // </React.StrictMode>
 )
