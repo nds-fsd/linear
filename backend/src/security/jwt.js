@@ -36,6 +36,7 @@ authRouter.post("/register", async (req, res) => {
       firstname: data.firstname,
       lastname: data.lastname,
       pronouns:  data.pronouns,
+      teamrole: data.teamrole,
       birthday:data.birthday,
     });
     const savedUser = await newUser.save();
@@ -47,6 +48,7 @@ authRouter.post("/register", async (req, res) => {
           firstname: savedUser.firstname,
           lastname: savedUser.lastname,
           pronouns:savedUser.pronouns,
+          teamrole: savedUser.teamrole,
           birthday:savedUser.birthday,
           id: savedUser._id,
         },
@@ -90,6 +92,7 @@ authRouter.post("/login", async (req, res) => {
         firstname: foundUser.firstname,
         pronouns:foundUser.pronouns,
         birthday:foundUser.birthday,
+        teamrole:foundUser.teamrole,
         id: foundUser._id,
       },
     });

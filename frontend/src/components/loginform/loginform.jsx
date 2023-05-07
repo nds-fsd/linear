@@ -1,4 +1,5 @@
 import { useContext, useState } from "react";
+import { useQuery, useQueryClient, useMutation } from "react-query";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Context } from "../../Context";
@@ -8,11 +9,10 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import Spinner from "../spinner/spinner";
 
-
-
 const LoginForm = () => {
   const { register, handleSubmit } = useForm();
   const [shown, setShown] = useState(false);
+  const [missingInfoMessage, setMissingInfoMessage] = useState("");
   const context = useContext(Context);
 
   const { logIn, invalidLogIn, isLoginIn } = context;
@@ -20,7 +20,17 @@ const LoginForm = () => {
   return (
     <form
       className={loginFormStyles.formContainer}
-      onSubmit={handleSubmit(logIn)}
+      onSubmit={handleSubmit((data) => {
+        if (!data.email) {
+          setMissingInfoMessage("please enter a valid email");
+          return;
+        } else if (!data.password) {
+          setMissingInfoMessage("please enter you password");
+          return;
+        }
+        setMissingInfoMessage("")
+        logIn(data);
+      })}
     >
       {!isLoginIn ? (
         <>
@@ -34,7 +44,7 @@ const LoginForm = () => {
             <input
               type={shown ? "text" : "password"}
               placeholder="Contraseña"
-              {...register("password", { required: true })}
+              {...register("password")}
             />
             {shown ? (
               <VisibilityIcon
@@ -57,6 +67,11 @@ const LoginForm = () => {
             type="submit"
             value="Iniciar sesión"
           />
+          {missingInfoMessage  && (
+            <p className={loginFormStyles.logInError}>
+              {missingInfoMessage}
+            </p>
+          )}
           {invalidLogIn && (
             <p className={loginFormStyles.logInError}>
               invalid username or password
@@ -64,19 +79,19 @@ const LoginForm = () => {
           )}
           <br></br>
           <Link className={loginFormStyles.forgetPass} to="/home">
-            ¿Has olvidado la contraseña?
+            Forgot your password?
           </Link>
           <br></br>
           <div className={loginFormStyles.linea}></div>
           <div className={loginFormStyles.positionNewUser}>
             <Link className={loginFormStyles.newUser} to={REGISTER}>
               {" "}
-              Crear cuenta nueva
+              Register
             </Link>
           </div>
         </>
       ) : (
-        <Spinner/>
+        <Spinner />
       )}
     </form>
   );

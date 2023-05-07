@@ -11,8 +11,9 @@ const UserSchema = new Schema(
     lastname: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    pronouns: {String},
-    birthday:{Date}
+    pronouns: { trype: String},
+    teamrole:{ type: String},
+    birthday:{type: Date}
   },
   { timestamps: true }
 );
