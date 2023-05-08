@@ -41,8 +41,12 @@ const Register = () => {
           registerUser(data);
         })}
       >
-        <select className={registerFormStyles.input} {...register("pronouns")}>
-          <option value="" disabled selected hidden>
+        <select
+          defaultValue=""
+          className={registerFormStyles.input}
+          {...register("pronouns")}
+        >
+          <option value="" disabled hidden>
             How should we adress you?
           </option>
           <option value="mr">Mr</option>
@@ -61,8 +65,12 @@ const Register = () => {
           placeholder="Last name"
           {...register("lastname")}
         />
-        <select className={registerFormStyles.input} {...register("teamrole")}>
-          <option value="" disabled selected hidden>
+        <select
+          defaultValue=""
+          className={registerFormStyles.input}
+          {...register("teamrole")}
+        >
+          <option value="" disabled hidden>
             Whats your role in the team?
           </option>
           <option value="projectmanager">Project Manager</option>

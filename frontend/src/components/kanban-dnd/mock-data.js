@@ -1,34 +1,42 @@
+
+
+
+
 const widgetList = {
     todo: [
       {
         id: "widget-1",
-        content: "hello"
+        content: "IT"
       },
       {
         id: "widget-2",
-        content: "this"
+        content: "LOOKS"
       },
       {
         id: "widget-3",
-        content: "is"
+        content: "LIKE"
       },
       {
         id: "widget-4",
-        content: "so99ynoodles"
+        content: "YOU"
       }
     ],
     inProgress: [
       {
         id: "widget-5",
-        content: "I am"
+        content: "DONT"
       },
       {
         id: "widget-6",
-        content: "a Web"
+        content: "HAVE"
       },
       {
         id: "widget-7",
-        content: "developer"
+        content: "ANY"
+      },
+      {
+        id: "widget-8",
+        content: "TASKS ;)"
       }
     ]
   };

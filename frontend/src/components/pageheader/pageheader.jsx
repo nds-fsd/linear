@@ -13,11 +13,10 @@ const PageHeader = ({
 }) => {
 
 
-  
+
   return (
     <div className={headerStyle.header}>
       <h1>{title}</h1>
-
       <div className={headerStyle.toolBar}>
         <div className={headerStyle.searchDialog}>
           <label htmlFor="searchinput">

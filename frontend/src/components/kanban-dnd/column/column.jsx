@@ -4,7 +4,7 @@ import Widget from '../widget/widget';
 
 
 const WidgetList = memo(function WidgetList({ widgets }) {
-    return widgets.map((widget, index) => (
+    return widgets?.map((widget, index) => (
       <Widget widget={widget} index={index} key={widget.id} />
     ));
   });

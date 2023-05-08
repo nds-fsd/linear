@@ -13,7 +13,6 @@ const authRouter = express.Router();
 
 authRouter.post("/register", async (req, res) => {
   const data = req.body;
-  console.log(req.body);
   // * Make sure request has the email
   if (!data.email) {
     return res.status(400).json({ error: { register: "Email not recieved" } });
