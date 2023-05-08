@@ -1,5 +1,4 @@
 import { useContext, useState } from "react";
-import { useQuery, useQueryClient, useMutation } from "react-query";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Context } from "../../Context";

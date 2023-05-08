@@ -3,17 +3,19 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const secret = process.env.JWT_SECRET;
 
-//const regex =  [/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/, 'Please enter a valid email']
-
 const UserSchema = new Schema(
   {
     firstname: { type: String, required: true },
     lastname: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    pronouns: { trype: String},
-    teamrole:{ type: String},
-    birthday:{type: Date}
+    pronouns: { trype: String },
+    teamrole: {
+      type: String,
+      enum: ["projectmanager", "cyclemanager", "tecnicstaff"],
+      required: true,
+    },
+    birthday: { type: Date },
   },
   { timestamps: true }
 );
@@ -27,10 +29,8 @@ UserSchema.pre("save", function (next) {
   //brcypt es una libreria que genera "hashes", encriptamos la contraseña
   bcrypt.genSalt(10, function (err, salt) {
     if (err) return next(err);
-
     bcrypt.hash(user.password, salt, function (err, hash) {
       if (err) return next(err);
-
       // si no ha habido error en el encryptado, guardamos
       user.password = hash;
       next();

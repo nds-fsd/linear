@@ -2,7 +2,6 @@ const express = require("express");
 const Task = require("../mongo/schemas/task.schema.js");
 const taskRouter = express.Router();
 
-
 //Gets all of the tasks
 taskRouter.get("/", async (req, res) => {
   try {
@@ -17,21 +16,19 @@ taskRouter.get("/", async (req, res) => {
 });
 
 // Gets a single task by id
-taskRouter.get("/tasks/:id", async (req, res) => {
+taskRouter.get("/:id", async (req, res) => {
   const selectedTasks = await Task.findById(req.params.id);
   res.json(selectedTasks);
 });
 
 //Posts a single task
 taskRouter.post("/", async (req, res) => {
-  const { 
-    title, author, status, description } = req.body;
-  const data = { title, author, status, description} ;
+  const { title, status, description } = req.body;
+  const data = { title, status, description, project, user };
   const newTask = new Task(data);
   await newTask.save();
   res.json(newTask);
 });
-
 
 //Deletes a single task by ID
 taskRouter.delete("/:id", async (req, res) => {
@@ -41,15 +38,15 @@ taskRouter.delete("/:id", async (req, res) => {
 
 //Updates the status of a single task by id
 taskRouter.patch("/:id", async (req, res) => {
-  const filter=req.params.id
-  const selectedTask = await Task.findByIdAndUpdate(filter,req.body);
+  const filter = req.params.id;
+  const selectedTask = await Task.findByIdAndUpdate(filter, req.body);
   res.json(selectedTask);
 });
 
 // Updates the status of a single project by title
 taskRouter.patch("/:id", async (req, res) => {
-  const filter = req.data.status
-  const selectedTask = await Task.findOneAndUpdate(filter,req.body.id);
+  const filter = req.data.status;
+  const selectedTask = await Task.findOneAndUpdate(filter, req.body.id);
   res.json(selectedTask);
 });
 

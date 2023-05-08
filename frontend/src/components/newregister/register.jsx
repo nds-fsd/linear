@@ -5,17 +5,10 @@ import { Context } from "../../Context";
 import registerFormStyles from "./register.module.css";
 
 const Register = () => {
-  const { register, handleSubmit, isLoading } = useForm();
-
-  const context = useContext(Context)
-
+  const { register, handleSubmit } = useForm();
+  const context = useContext(Context);
   const [validatonMessage, setValidationMessage] = useState();
-
-  const {isLoginIn, registerUser, error} = context
-
-
-
-
+  const { isLoginIn, registerUser, error } = context;
 
   return (
     <div className={registerFormStyles.formContainer}>
@@ -108,9 +101,7 @@ const Register = () => {
         {validatonMessage && (
           <p className={registerFormStyles.registerError}>{validatonMessage}</p>
         )}
-        {error && (
-          <p className={registerFormStyles.registerError}>{error}</p>
-        )}
+        {error && <p className={registerFormStyles.registerError}>{error}</p>}
       </form>
     </div>
   );

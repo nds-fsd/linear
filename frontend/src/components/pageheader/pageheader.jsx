@@ -4,7 +4,16 @@ import FormatListBulletedOutlinedIcon from "@mui/icons-material/FormatListBullet
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import headerStyle from "./pageheader.module.css";
 
-const PageHeader = ({ setActiveview, activeView, title, btntitle }) => {
+const PageHeader = ({
+  setActiveview,
+  activeView,
+  title,
+  btntitle,
+  btnFunction,
+}) => {
+
+
+  
   return (
     <div className={headerStyle.header}>
       <h1>{title}</h1>
@@ -38,7 +47,7 @@ const PageHeader = ({ setActiveview, activeView, title, btntitle }) => {
           </button>
         </div>
 
-        <button className={headerStyle.btn}>
+        <button onClick={() => btnFunction(true)} className={headerStyle.btn}>
           <AddCircleOutlineOutlinedIcon />
           Add {btntitle}
         </button>
