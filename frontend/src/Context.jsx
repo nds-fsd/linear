@@ -50,7 +50,7 @@ export const ContextProvider = ({ children }) => {
     setIsLoginIn(true);
     api.post("/register", data)
     .then((res) => {
-      console.log(res);
+      setInvalidLogIn(false);
       if (res.status === 201) {
         return res.data;
       }

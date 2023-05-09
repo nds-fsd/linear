@@ -23,10 +23,14 @@ const KanbanDnd = () => {
     queryKey:["tasks"],
     queryFn:()=>getTasks(),
     onSuccess:(data) => {setColumns(data.data)},
-    onError:(err) => console.log(err)
+    onError:(err) => {
+      if(err.response.data.message === "No hay tareas"){
+        setColumns(MOCK_DATA)
+      }
+      console.log(err)}
   })
-  const [columns, setColumns] = useState(MOCK_DATA);
-
+  const [columns, setColumns] = useState(tasks?.data ?? MOCK_DATA);
+  console.log(tasks?.data)
 
   const dragEndHandle = (result) => {
     console.log(result);

@@ -9,6 +9,7 @@ taskRouter.get("/", async (req, res) => {
     const allTasks = await Task.find();
     if (allTasks.length === 0) {
       res.status(404).json({ message: "No hay tareas" });
+      return;
     }
     const groupedTasks = allTasks.reduce((acc, task) => {
       if (!acc[task.status]) {

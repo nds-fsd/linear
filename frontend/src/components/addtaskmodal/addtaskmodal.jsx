@@ -73,7 +73,7 @@ const AddTaskModal = ({ closeModal }) => {
                 id="tasktitle"
                 className={addTaskStyles.input}
                 type="text"
-                placeholder="Task"
+                placeholder="Issue"
                 {...register("title")}
               />
               <label className={addTaskStyles.label} htmlFor="taskdescription">

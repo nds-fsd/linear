@@ -4,7 +4,7 @@ import { Draggable } from 'react-beautiful-dnd'
 
 const Widget = ({widget,index}) => {
   return (
-    <Draggable draggableId={widget.id} index={index}>
+    <Draggable draggableId={widget._id} index={index}>
       {(provided) => (
         <div
           className={styles.widget}
