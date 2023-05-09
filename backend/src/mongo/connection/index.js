@@ -1,12 +1,10 @@
-
-
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 dotenv.config();
 
 let dbUrl = process.env.URL_DATABASE;
 let mongodb;
-console.log(dbUrl)
+console.log(dbUrl);
 
 exports.connectDB = async () => {
   mongoose.set("strictQuery", false);

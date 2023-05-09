@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { api } from "../../utils/api";
-import { useQuery, useQueryClient } from "react-query"
+import { useQuery, useQueryClient } from "react-query";
 import MOCK_DATA from "./mock-data";
 import Column from "./column/column";
 import { DragDropContext } from "react-beautiful-dnd";
@@ -14,23 +14,26 @@ const reorder = (list, startIndex, endIndex) => {
 
 const KanbanDnd = () => {
   // const [columns, setColumns] = useState(null);
-  
+
   const getTasks = () => {
-    return api.get("/tasks")
-  }
-  
-  const {data:tasks} = useQuery({
-    queryKey:["tasks"],
-    queryFn:()=>getTasks(),
-    onSuccess:(data) => {setColumns(data.data)},
-    onError:(err) => {
-      if(err.response.data.message === "No hay tareas"){
-        setColumns(MOCK_DATA)
+    return api.get("/tasks");
+  };
+
+  const { data: tasks } = useQuery({
+    queryKey: ["tasks"],
+    queryFn: () => getTasks(),
+    onSuccess: (data) => {
+      setColumns(data.data);
+    },
+    onError: (err) => {
+      if (err.response.data.message === "No hay tareas") {
+        setColumns(MOCK_DATA);
       }
-      console.log(err)}
-  })
+      console.log(err);
+    },
+  });
   const [columns, setColumns] = useState(tasks?.data ?? MOCK_DATA);
-  console.log(tasks?.data)
+  console.log(tasks?.data);
 
   const dragEndHandle = (result) => {
     console.log(result);
@@ -88,11 +91,7 @@ const KanbanDnd = () => {
     <DragDropContext onDragEnd={dragEndHandle}>
       <div style={{ display: "flex", gap: "1rem" }}>
         {Object.keys(columns).map((column) => (
-          <Column
-            key={column}
-            droppableId={column}
-            widgets={columns[column]}
-          />
+          <Column key={column} droppableId={column} widgets={columns[column]} />
         ))}
       </div>
     </DragDropContext>

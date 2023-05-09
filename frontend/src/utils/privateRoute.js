@@ -3,11 +3,10 @@ import { getUserToken } from "./localStorage.utils";
 import Home from "../pages/home/home";
 
 const PrivateRoutes = () => {
-
   if (getUserToken()) {
-    return (<Outlet />);
+    return <Outlet />;
   } else {
-    return (<Navigate to="/login" />);
+    return <Navigate to="/login" />;
   }
 };
 

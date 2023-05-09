@@ -1,9 +1,9 @@
-.widget{
-  width:100%;
-  height:40px;
-  text-align:center;
-  border:2px solid blue;
-  cursor:grab;
+.widget {
+  width: 100%;
+  height: 40px;
+  text-align: center;
+  border: 2px solid blue;
+  cursor: grab;
 }
 
 .widget:active,
@@ -13,9 +13,8 @@
   cursor: grabbing;
 }
 
-.beingDragged{
+.beingDragged {
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   background-color: aqua;
-  cursor: grabbing;    
+  cursor: grabbing;
 }
-

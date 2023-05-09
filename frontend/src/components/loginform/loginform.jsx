@@ -27,7 +27,7 @@ const LoginForm = () => {
           setMissingInfoMessage("please enter you password");
           return;
         }
-        setMissingInfoMessage("")
+        setMissingInfoMessage("");
         logIn(data);
       })}
     >
@@ -66,10 +66,8 @@ const LoginForm = () => {
             type="submit"
             value="Iniciar sesión"
           />
-          {missingInfoMessage  && (
-            <p className={loginFormStyles.logInError}>
-              {missingInfoMessage}
-            </p>
+          {missingInfoMessage && (
+            <p className={loginFormStyles.logInError}>{missingInfoMessage}</p>
           )}
           {invalidLogIn && (
             <p className={loginFormStyles.logInError}>

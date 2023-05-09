@@ -42,7 +42,7 @@ const DraggableWidget = ({ title, updateWidgetList, widgetList }) => {
       onDrag={(e) => handleOnDrag()}
       onDragEnd={handleOnDragEnd}
     >
-       {`task ${title}`}
+      {`task ${title}`}
     </div>
   );
 };

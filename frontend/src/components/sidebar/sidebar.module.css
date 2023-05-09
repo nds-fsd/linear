@@ -1,69 +1,67 @@
-.sidebarContainer{
-    height:100%;
-    min-width:300px;
-    display:flex;
-    flex-direction:column;
-    justify-content: space-between;
-    padding:1.5em;
-    gap:1%;
-    border:var(--gray-color) solid 2px;
-    background-color: var(--main-bg-color);
+.sidebarContainer {
+  height: 100%;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1.5em;
+  gap: 1%;
+  border: var(--gray-color) solid 2px;
+  background-color: var(--main-bg-color);
 }
 
-.navBar{
-    padding:0;
-    min-height:74%;
+.navBar {
+  padding: 0;
+  min-height: 74%;
 }
 
-.list{
-    list-style:none;
-    display:flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    padding:0;
-    margin:0;
-    width:100%;
-    height:100%;
-    padding:1em;
-    padding-top:3em;
-    gap:2.5em;
+.list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  padding: 1em;
+  padding-top: 3em;
+  gap: 2.5em;
 }
 
-
-.listItem{
-    width:100%;
-    cursor:pointer;
-    padding:0.5em 0;
+.listItem {
+  width: 100%;
+  cursor: pointer;
+  padding: 0.5em 0;
 }
 
-.link{
-    all:unset;
-    width:100%;
-    display:flex;
-    gap:1em;
-    font-weight: 600;
-    padding-bottom:.3em;
+.link {
+  all: unset;
+  width: 100%;
+  display: flex;
+  gap: 1em;
+  font-weight: 600;
+  padding-bottom: 0.3em;
 }
 
-.icon{
-    color:var(--accent-color);
+.icon {
+  color: var(--accent-color);
 }
 
-
-.logOut{
-    border: .5px solid var(--gray-color);
-    justify-self: flex-end;
-    display:flex;
-    align-items: center;
-    border-radius: 10px;
-    height:80px;
-    padding:1em 1em;
-    cursor:pointer;
+.logOut {
+  border: 0.5px solid var(--gray-color);
+  justify-self: flex-end;
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  height: 80px;
+  padding: 1em 1em;
+  cursor: pointer;
 }
 
 .logOut:active,
 .logOut:hover,
-.logOut:focus{
-    background-color:var(--gray-color);
+.logOut:focus {
+  background-color: var(--gray-color);
 }

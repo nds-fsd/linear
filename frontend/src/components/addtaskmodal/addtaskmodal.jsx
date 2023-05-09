@@ -11,9 +11,9 @@ import Spinner from "../spinner/spinner";
 
 const AddTaskModal = ({ closeModal }) => {
   const [userList, setUserList] = useState([]);
-  const [errorMessage, setErrorMessage] = useState("")
+  const [errorMessage, setErrorMessage] = useState("");
   const { register, handleSubmit } = useForm();
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
 
   const addTask = (data) => {
     return api.post("/tasks", data);
@@ -26,10 +26,11 @@ const AddTaskModal = ({ closeModal }) => {
     isError,
   } = useMutation({
     mutationFn: (data) => addTask(data),
-    onSuccess:  (payload) => {
-        queryClient.refetchQueries("tasks")
-        console.log(payload.data)},
-    onError:    (err) => setErrorMessage(err.response.data.error),
+    onSuccess: (payload) => {
+      queryClient.refetchQueries("tasks");
+      console.log(payload.data);
+    },
+    onError: (err) => setErrorMessage(err.response.data.error),
   });
 
   const optionElements = STATUS_ARRAY.map((statusObj) => {
@@ -41,11 +42,13 @@ const AddTaskModal = ({ closeModal }) => {
   });
 
   if (isSuccess) {
-   {setTimeout(()=>closeModal(false), 1000)} 
+    {
+      setTimeout(() => closeModal(false), 1000);
+    }
     return (
       <ModalBackground>
         <div className={addTaskStyles.form}>
-          <h2 style={{alignSelf:"center"}}>Task created succesfully!</h2>
+          <h2 style={{ alignSelf: "center" }}>Task created succesfully!</h2>
         </div>
       </ModalBackground>
     );
@@ -65,7 +68,9 @@ const AddTaskModal = ({ closeModal }) => {
           ) : (
             <>
               <h2 className={addTaskStyles.formTitle}>Add a new Issue</h2>
-              {errorMessage && <p className={addTaskStyles.addTaskError}>{errorMessage}</p>}
+              {errorMessage && (
+                <p className={addTaskStyles.addTaskError}>{errorMessage}</p>
+              )}
               <label className={addTaskStyles.label} htmlFor="tasktitle">
                 Issue Title
               </label>

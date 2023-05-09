@@ -1,101 +1,89 @@
-
-
 .generalcontainer {
-    display: flex;
-    justify-content: center;
-    flex-direction:column;
-    width: 450px;
-    height: 550px;
-    border-radius: 10px;
-    /* box-shadow: 5px 5px 0.5px 0.5px #00000033; */
-    /* background:var(--main-bg-color); */
-    border: 2px solid yellow
-
-
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 450px;
+  height: 550px;
+  border-radius: 10px;
+  /* box-shadow: 5px 5px 0.5px 0.5px #00000033; */
+  /* background:var(--main-bg-color); */
+  border: 2px solid yellow;
 }
 
 .title {
-    border: 2px solid black;
-    padding: 0.5em;
-
+  border: 2px solid black;
+  padding: 0.5em;
 }
 
 .form {
-    border: 1px solid black;
-    
-    /* display: grid;
+  border: 1px solid black;
+
+  /* display: grid;
     grid-template-columns: repeat (auto-fill, minmax(15rem, 1fr));
-    grid-gap: 1rem; */ 
+    grid-gap: 1rem; */
 }
 
 .label {
-    
 }
 
 .input {
-    border-radius:  10px;
+  border-radius: 10px;
 }
 
-
-
 .id {
-    /* all:unset;
+  /* all:unset;
     border-radius: 25px;
     padding: 1em;
     margin: 10px;
     color: rgb(97, 93, 93);
     border: 1px solid #dadde1; */
-    /* border: 2px solid black;
+  /* border: 2px solid black;
     display: flex;
     flex-direction: column; */
-
 }
 
-
 .userData {
-    margin: 5px;
-    display: grid;
-    grid-template-columns: 200px 200px;
-    padding: 0.5em;
-    gap:1em;
-
+  margin: 5px;
+  display: grid;
+  grid-template-columns: 200px 200px;
+  padding: 0.5em;
+  gap: 1em;
 }
 
 .userDataLogin {
-    margin: 5px;
-    display: flex;
-    flex-direction:column;
-    padding: 0.5em;
-    gap: 1em;
+  margin: 5px;
+  display: flex;
+  flex-direction: column;
+  padding: 0.5em;
+  gap: 1em;
 }
 
 .userDate {
-    margin: 5px;
-    padding: 0.5em;
+  margin: 5px;
+  padding: 0.5em;
 }
 
 .userGender {
-    margin: 5px;
-    gap:1em;
-    display: grid;
-    grid-template-columns: 100px 100px 180px;
-    padding: 0.5em;
+  margin: 5px;
+  gap: 1em;
+  display: grid;
+  grid-template-columns: 100px 100px 180px;
+  padding: 0.5em;
 }
 .policy {
-    display: flex;
-    flex-direction: column;
-    border: 1px solid black;
-    font-size: 0.7em;
-    padding: 1em;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  font-size: 0.7em;
+  padding: 1em;
 }
 
 .register {
-    border: 1px solid black;
-    display: flex;
-    justify-content: center;
-    padding: 1em;
-    
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  padding: 1em;
 }
 .apa {
-    background-color: green;
+  background-color: green;
 }

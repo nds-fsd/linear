@@ -1,8 +1,8 @@
-import React from 'react'
-import styles from './widget.module.css'
-import { Draggable } from 'react-beautiful-dnd'
+import React from "react";
+import styles from "./widget.module.css";
+import { Draggable } from "react-beautiful-dnd";
 
-const Widget = ({widget,index}) => {
+const Widget = ({ widget, index }) => {
   return (
     <Draggable draggableId={widget._id} index={index}>
       {(provided) => (
@@ -16,7 +16,7 @@ const Widget = ({widget,index}) => {
         </div>
       )}
     </Draggable>
-  )
-}
+  );
+};
 
-export default Widget
+export default Widget;

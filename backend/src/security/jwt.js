@@ -5,9 +5,8 @@ const jwt = require("jsonwebtoken");
 const User = require("../mongo/schemas/user.schema");
 const jwtSecret = process.env.JWT_SECRET;
 
-
-
-const emailRegex =  /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+const emailRegex =
+  /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 const authRouter = express.Router();
 
@@ -24,19 +23,17 @@ authRouter.post("/register", async (req, res) => {
       .status(400)
       .json({ error: { email: "Email already registered" } });
   } else {
-    if (!data.email.match(emailRegex)){
-      return res
-      .status(400)
-      .json({ error: { email: "Insert a valid email" } });
+    if (!data.email.match(emailRegex)) {
+      return res.status(400).json({ error: { email: "Insert a valid email" } });
     }
     const newUser = new User({
       email: data.email,
       password: data.password,
       firstname: data.firstname,
       lastname: data.lastname,
-      pronouns:  data.pronouns,
+      pronouns: data.pronouns,
       teamrole: data.teamrole,
-      birthday:data.birthday,
+      birthday: data.birthday,
     });
     const savedUser = await newUser.save();
     if (savedUser) {
@@ -46,9 +43,9 @@ authRouter.post("/register", async (req, res) => {
           email: savedUser.email,
           firstname: savedUser.firstname,
           lastname: savedUser.lastname,
-          pronouns:savedUser.pronouns,
+          pronouns: savedUser.pronouns,
           teamrole: savedUser.teamrole,
-          birthday:savedUser.birthday,
+          birthday: savedUser.birthday,
           id: savedUser._id,
         },
       });
@@ -89,9 +86,9 @@ authRouter.post("/login", async (req, res) => {
         name: foundUser.name,
         lastname: foundUser.lastname,
         firstname: foundUser.firstname,
-        pronouns:foundUser.pronouns,
-        birthday:foundUser.birthday,
-        teamrole:foundUser.teamrole,
+        pronouns: foundUser.pronouns,
+        birthday: foundUser.birthday,
+        teamrole: foundUser.teamrole,
         id: foundUser._id,
       },
     });

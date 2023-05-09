@@ -2,10 +2,6 @@ const express = require("express");
 const User = require("../mongo/schemas/user.schema.js");
 const userRouter = express.Router();
 
-
-
-
-
 userRouter.get("/", async (req, res) => {
   try {
     const allUsers = await User.find();

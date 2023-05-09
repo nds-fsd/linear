@@ -1,93 +1,85 @@
 .formContainer {
-    padding:1em;
-    display: flex;
-    flex-direction:column;
-    align-items: center;
-    justify-content: center;
-    width: 500px;
-    min-height: 350px;
-    border-radius: 10px;
-    box-shadow: 5px 5px 0.5px 0.5px #00000033;
-    background:var(--main-bg-color);
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 500px;
+  min-height: 350px;
+  border-radius: 10px;
+  box-shadow: 5px 5px 0.5px 0.5px #00000033;
+  background: var(--main-bg-color);
 }
 
 .userData {
-    all:unset;
-    border-radius: 5px;
-    padding: 1em;
-    margin: 10px;
-    color: rgb(97, 93, 93);
-    border: 1px solid #dadde1;
-    display: flex;
-    justify-content: space-between;
-    width:93%;
-
+  all: unset;
+  border-radius: 5px;
+  padding: 1em;
+  margin: 10px;
+  color: rgb(97, 93, 93);
+  border: 1px solid #dadde1;
+  display: flex;
+  justify-content: space-between;
+  width: 93%;
 }
 
-.userData input{
-    all:unset;
+.userData input {
+  all: unset;
 }
 
 .icon {
-    cursor:pointer
+  cursor: pointer;
 }
 .login {
-    margin: 10px;
-    padding: 1em;
-    border-radius: 5px;
-    background-color: #1877f2;
-    color: whitesmoke;
-    cursor: pointer;
-    border: #363636;
-    border-bottom: 1px solid #dadde1;
-    width:100%;
-} 
-.login:hover {
-    background: blue; 
+  margin: 10px;
+  padding: 1em;
+  border-radius: 5px;
+  background-color: #1877f2;
+  color: whitesmoke;
+  cursor: pointer;
+  border: #363636;
+  border-bottom: 1px solid #dadde1;
+  width: 100%;
 }
-    
-
+.login:hover {
+  background: blue;
+}
 
 .forgetPass {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration:none;
-    color: blue; 
-
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: blue;
 }
 
 .forgetPass:hover {
-
-    text-decoration:underline
+  text-decoration: underline;
 }
-
 
 .newUser {
-    all:unset;
-    font-size: .8rem;
-    display:flex;
-    justify-content: center;
-    cursor: pointer;
-    width: 200px;
-    padding: 1em;
-    font-size: 1rem;
-    border-radius: 5px;
-    background-color: var(--green-color);
-    color: var(--main-bg-color);
-
+  all: unset;
+  font-size: 0.8rem;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  width: 200px;
+  padding: 1em;
+  font-size: 1rem;
+  border-radius: 5px;
+  background-color: var(--green-color);
+  color: var(--main-bg-color);
 }
 .newUser:hover {
-    background: rgb(54, 196, 101); 
+  background: rgb(54, 196, 101);
 }
 .positionNewUser {
-    display:flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
-.logInError{
-    color:red;
-    padding:0;
-    margin:0;
-
+.logInError {
+  color: red;
+  padding: 0;
+  margin: 0;
 }

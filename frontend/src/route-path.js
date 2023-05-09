@@ -1,5 +1,5 @@
 export const HOME = "/home";
-export const REGISTER = "/register"
+export const REGISTER = "/register";
 export const PROJECTS = "projects";
 export const USERS = "users";
 export const USER_ID = ":userid";

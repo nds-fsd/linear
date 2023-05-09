@@ -22,13 +22,11 @@ import {
 import sideBarStyles from "./sidebar.module.css";
 
 const Sidebar = () => {
-
-  const navigate = useNavigate()
-
+  const navigate = useNavigate();
 
   return (
     <div className={sideBarStyles.sidebarContainer}>
-      <UserDatacard/>
+      <UserDatacard />
 
       <nav className={sideBarStyles.navBar}>
         <ul className={sideBarStyles.list}>
@@ -40,13 +38,11 @@ const Sidebar = () => {
                 return {
                   fontWeight: isActive ? "bold" : "",
                   borderBottom: isActive ? "2px solid var(--accent-color)" : "",
-                  color: isActive ? "var(--accent-color)" : ""
-
+                  color: isActive ? "var(--accent-color)" : "",
                 };
               }}
             >
-              <ListAltOutlinedIcon 
-              className={sideBarStyles.icon}/>
+              <ListAltOutlinedIcon className={sideBarStyles.icon} />
               My issues
             </NavLink>
           </li>
@@ -58,12 +54,11 @@ const Sidebar = () => {
                 return {
                   fontWeight: isActive ? "bold" : "",
                   borderBottom: isActive ? "2px solid var(--accent-color)" : "",
-                  color: isActive ? "var(--accent-color)" : ""
+                  color: isActive ? "var(--accent-color)" : "",
                 };
               }}
             >
-              <AssignmentOutlinedIcon 
-              className={sideBarStyles.icon}/>
+              <AssignmentOutlinedIcon className={sideBarStyles.icon} />
               Projects
             </NavLink>
           </li>
@@ -75,12 +70,11 @@ const Sidebar = () => {
                 return {
                   fontWeight: isActive ? "bold" : "",
                   borderBottom: isActive ? "2px solid var(--accent-color)" : "",
-                  color: isActive ? "var(--accent-color)" : ""
+                  color: isActive ? "var(--accent-color)" : "",
                 };
               }}
             >
-              <QueryBuilderOutlinedIcon 
-              className={sideBarStyles.icon}/>
+              <QueryBuilderOutlinedIcon className={sideBarStyles.icon} />
               Cycles
             </NavLink>
           </li>
@@ -92,12 +86,11 @@ const Sidebar = () => {
                 return {
                   fontWeight: isActive ? "bold" : "",
                   borderBottom: isActive ? "2px solid var(--accent-color)" : "",
-                  color: isActive ? "var(--accent-color)" : ""
+                  color: isActive ? "var(--accent-color)" : "",
                 };
               }}
             >
-              <InboxOutlinedIcon
-              className={sideBarStyles.icon} />
+              <InboxOutlinedIcon className={sideBarStyles.icon} />
               Inbox
             </NavLink>
           </li>
@@ -109,27 +102,26 @@ const Sidebar = () => {
                 return {
                   fontWeight: isActive ? "bold" : "",
                   borderBottom: isActive ? "2px solid var(--accent-color)" : "",
-                  color: isActive ? "var(--accent-color)" : ""
+                  color: isActive ? "var(--accent-color)" : "",
                 };
               }}
             >
-              <SettingsOutlinedIcon
-              className={sideBarStyles.icon} />
+              <SettingsOutlinedIcon className={sideBarStyles.icon} />
               Settings
             </NavLink>
           </li>
         </ul>
       </nav>
-      <div 
-      onClick={()=> {
-        console.log("clicked")
-        removeSession()
-        navigate(LOGIN)
-      }}
-      className={sideBarStyles.logOut}>
+      <div
+        onClick={() => {
+          console.log("clicked");
+          removeSession();
+          navigate(LOGIN);
+        }}
+        className={sideBarStyles.logOut}
+      >
         <div className={sideBarStyles.link}>
-          <LogoutOutlinedIcon
-          className={sideBarStyles.icon} />
+          <LogoutOutlinedIcon className={sideBarStyles.icon} />
           Log out
         </div>
       </div>

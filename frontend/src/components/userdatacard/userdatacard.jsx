@@ -1,36 +1,33 @@
-import {useContext} from 'react'
-import userDatacardStyles from './userdatacard.module.css'
-import userImage from '../../assets/imageUser.jpg'
-import { Context } from '../../Context'
+import { useContext } from "react";
+import userDatacardStyles from "./userdatacard.module.css";
+import userImage from "../../assets/imageUser.jpg";
+import { Context } from "../../Context";
 
-const UserDatacard = () =>{
+const UserDatacard = () => {
+  const context = useContext(Context);
 
-const context = useContext(Context)
+  const { userSessionContext } = context;
+  const { firstname, lastname, pronouns, teamrole } = userSessionContext;
+  console.log(userSessionContext);
 
-const {userSessionContext} = context
-const {firstname, lastname, pronouns, teamrole} = userSessionContext
-console.log(userSessionContext)
+  let role = "";
 
-let role = ""
+  if (teamrole === "cyclemanager") {
+    role = "Time Manager";
+  } else if (teamrole === "projectmanager") {
+    role = "Project Manager";
+  } else if (teamrole === "tecnicstaff") {
+    role = "Staff";
+  }
 
-if(teamrole === "cyclemanager"){
-  role = "Time Manager"
-}else if(teamrole === "projectmanager"){
-  role = "Project Manager"
-} else if(teamrole === "tecnicstaff"){
-  role = "Staff"
-}
-
-
-
-return (
+  return (
     <div className={userDatacardStyles.userData}>
-        <img src={userImage}  className={userDatacardStyles.img} alt="" />
-        <div className={userDatacardStyles.userDataContainer}>
-          <h3>{`${firstname} ${lastname}`}</h3>
-          <p>{role}</p>
-        </div>
-    </div>    
-   )
-}
-export default UserDatacard ;
+      <img src={userImage} className={userDatacardStyles.img} alt="" />
+      <div className={userDatacardStyles.userDataContainer}>
+        <h3>{`${firstname} ${lastname}`}</h3>
+        <p>{role}</p>
+      </div>
+    </div>
+  );
+};
+export default UserDatacard;

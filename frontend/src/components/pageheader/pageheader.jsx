@@ -11,9 +11,6 @@ const PageHeader = ({
   btntitle,
   btnFunction,
 }) => {
-
-
-
   return (
     <div className={headerStyle.header}>
       <h1>{title}</h1>

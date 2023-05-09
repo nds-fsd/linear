@@ -13,7 +13,7 @@ export const ContextProvider = ({ children }) => {
   );
   const [invalidLogIn, setInvalidLogIn] = useState(false);
   const [isLoginIn, setIsLoginIn] = useState(false);
-  const [error, setError] = useState("")
+  const [error, setError] = useState("");
 
   const navigate = useNavigate();
 
@@ -46,33 +46,34 @@ export const ContextProvider = ({ children }) => {
       });
   };
 
-  const registerUser = (data) =>{
+  const registerUser = (data) => {
     setIsLoginIn(true);
-    api.post("/register", data)
-    .then((res) => {
-      setInvalidLogIn(false);
-      if (res.status === 201) {
-        return res.data;
-      }
-    })
-    .then((data) => {
-      if (data.token) {
-        setUserSession(data);
-        setUserSessionContext(data);
-        navigate(`${HOME}/${MY_ISSUES}`);
-        location.reload();
-      } else {
-        console.log("Something went wrong, call support");
-        navigate(LOGIN);
-      }
-      setIsLoginIn(false);
-    })
-    .catch((err) => {
-      setIsLoginIn(false);
-      setInvalidLogIn(true);
-      setError(err.response.data.error.email)
-    });
-  }
+    api
+      .post("/register", data)
+      .then((res) => {
+        setInvalidLogIn(false);
+        if (res.status === 201) {
+          return res.data;
+        }
+      })
+      .then((data) => {
+        if (data.token) {
+          setUserSession(data);
+          setUserSessionContext(data);
+          navigate(`${HOME}/${MY_ISSUES}`);
+          location.reload();
+        } else {
+          console.log("Something went wrong, call support");
+          navigate(LOGIN);
+        }
+        setIsLoginIn(false);
+      })
+      .catch((err) => {
+        setIsLoginIn(false);
+        setInvalidLogIn(true);
+        setError(err.response.data.error.email);
+      });
+  };
 
   return (
     <Context.Provider

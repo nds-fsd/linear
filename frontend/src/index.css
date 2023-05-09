@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 #root {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   line-height: 1.5;
   font-weight: 400;
   font-synthesis: none;
@@ -12,22 +12,22 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
   min-height: 100vh;
-  --main-bg-color: #E9EBF0;
-  --accent-color:  #3361FF;
-  --gray-color:   #C7CED9;
+  --main-bg-color: #e9ebf0;
+  --accent-color: #3361ff;
+  --gray-color: #c7ced9;
   --darkgray-color: rgba(0, 0, 0, 0.5);
-  --yellow-color: #EAB308;
-  --pink-color: #DB2777;
-  --purple-color: #9333EA;
-  --green-color: #16A34A;
+  --yellow-color: #eab308;
+  --pink-color: #db2777;
+  --purple-color: #9333ea;
+  --green-color: #16a34a;
 }
 
-*{
-  box-sizing:border-box;
+* {
+  box-sizing: border-box;
 }
 
 body {
   height: 100vh;
-  margin:0;
-  padding:0;
+  margin: 0;
+  padding: 0;
 }
