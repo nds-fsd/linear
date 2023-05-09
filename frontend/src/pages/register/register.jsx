@@ -1,6 +1,7 @@
 import registerStyles from './register.module.css';
-import NewRegister from '../../components/newregister/newregister';
+import RegisterForm from '../../components/newregister/register';
 import ResetPassHeader from '../../components/resetpassheader/resetpassheader';
+import LoginHeader from '../../components/loginheader/loginheader'
 import Footer from '../../components/footer/footer';
 
 const Register = () => {
@@ -8,9 +9,10 @@ const Register = () => {
             
         return (
           <div className={registerStyles.container}>
-            <ResetPassHeader/>
+            {/* <ResetPassHeader/> */}
+            <LoginHeader/>
             <div className={registerStyles.newRegister}>
-              <NewRegister/>
+              <RegisterForm/>
             </div>
             <Footer />
           </div>

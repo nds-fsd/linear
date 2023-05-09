@@ -1,0 +1,58 @@
+.formContainer {
+    padding:1em;
+    display: flex;
+    flex-direction:column;
+    width: 500px;
+    min-height: 350px;
+    border-radius: 10px;
+    box-shadow: 5px 5px 0.5px 0.5px #00000033;
+    background:var(--main-bg-color);
+
+
+}
+
+.form{
+    min-height:340px;
+    display:flex;
+    flex-direction:column;
+    gap:1em;
+}
+
+.input {
+    all:unset;
+    border-radius: 5px;
+    padding: 1em;
+    color: rgb(97, 93, 93);
+    border: 1px solid #dadde1;
+    display: flex;
+    justify-content: space-between;
+    width:93%;
+
+}
+
+.registerBtn{
+    all:unset;
+    height:60px;
+    text-align:center;
+    border:1px solid var(--green-color);
+    background-color:var(--green-color);
+    color: var(--main-bg-color);
+    border-radius:10px;
+    cursor: pointer;
+}
+
+.registerBtn .registerBtn:active {
+    transform: scale(0.98);
+    /* Scaling button to 0.98 to its original size */
+    box-shadow: .5px .5px .5px .5px rgba(0, 0, 0, 0.24);
+    /* Lowering the shadow */
+    
+  }
+
+  .registerError{
+    color:red;
+    padding:0;
+    margin:0;
+    text-align:center;
+
+}

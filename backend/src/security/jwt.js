@@ -13,7 +13,6 @@ const authRouter = express.Router();
 
 authRouter.post("/register", async (req, res) => {
   const data = req.body;
-  console.log(req.body);
   // * Make sure request has the email
   if (!data.email) {
     return res.status(400).json({ error: { register: "Email not recieved" } });
@@ -35,7 +34,8 @@ authRouter.post("/register", async (req, res) => {
       password: data.password,
       firstname: data.firstname,
       lastname: data.lastname,
-      genre:  data.genre,
+      pronouns:  data.pronouns,
+      teamrole: data.teamrole,
       birthday:data.birthday,
     });
     const savedUser = await newUser.save();
@@ -46,7 +46,8 @@ authRouter.post("/register", async (req, res) => {
           email: savedUser.email,
           firstname: savedUser.firstname,
           lastname: savedUser.lastname,
-          genre:savedUser.genre,
+          pronouns:savedUser.pronouns,
+          teamrole: savedUser.teamrole,
           birthday:savedUser.birthday,
           id: savedUser._id,
         },
@@ -87,8 +88,10 @@ authRouter.post("/login", async (req, res) => {
         email: foundUser.email,
         name: foundUser.name,
         lastname: foundUser.lastname,
-        genre:foundUser.genre,
+        firstname: foundUser.firstname,
+        pronouns:foundUser.pronouns,
         birthday:foundUser.birthday,
+        teamrole:foundUser.teamrole,
         id: foundUser._id,
       },
     });

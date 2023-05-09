@@ -1,13 +1,13 @@
 import React from "react";
+import { getUserSession, removeSession } from "../../utils/localStorage.utils";
 import UserDatacard from "../userdatacard/userdatacard";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import ListAltOutlinedIcon from "@mui/icons-material/ListAltOutlined";
 import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
 import QueryBuilderOutlinedIcon from "@mui/icons-material/QueryBuilderOutlined";
 import InboxOutlinedIcon from "@mui/icons-material/InboxOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
-import userImage from "../../assets/imageUser.jpeg"
 import {
   HOME,
   USERS,
@@ -17,10 +17,15 @@ import {
   CYCLES,
   SETTINGS,
   INBOX,
+  LOGIN,
 } from "../../route-path";
 import sideBarStyles from "./sidebar.module.css";
 
 const Sidebar = () => {
+
+  const navigate = useNavigate()
+
+
   return (
     <div className={sideBarStyles.sidebarContainer}>
       <UserDatacard/>
@@ -115,7 +120,13 @@ const Sidebar = () => {
           </li>
         </ul>
       </nav>
-      <div className={sideBarStyles.logOut}>
+      <div 
+      onClick={()=> {
+        console.log("clicked")
+        removeSession()
+        navigate(LOGIN)
+      }}
+      className={sideBarStyles.logOut}>
         <div className={sideBarStyles.link}>
           <LogoutOutlinedIcon
           className={sideBarStyles.icon} />

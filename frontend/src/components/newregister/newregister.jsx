@@ -43,11 +43,13 @@ const NewRegister = () => {
                 <div className={newRegisterStyles.userDate}>
                   <input id="date" name="date" type="date"/>
                 </div>
-                  <label htmlFor="genre">Gènero</label>
+                  <label htmlFor="genre">Pronombre</label>
                 <div className={newRegisterStyles.userGender}>
-                  <input id="male" name="male" data-type="radio" placeholder='Hombre'/>
-                  <input id="female" name="female" type="text" placeholder='Mujer'/>
-                  <input id="other" name="other" type="text" placeholder='Personalizado'/>
+                      <select>
+                        <option>Sr</option>
+                        <option>Sra</option>
+                        <option>Neutro</option>
+                      </select>
                 </div>
               </div>
                 <div className={newRegisterStyles.policy}>

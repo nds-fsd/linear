@@ -1,16 +1,14 @@
-
-
 .formContainer {
+    padding:1em;
     display: flex;
     flex-direction:column;
+    align-items: center;
+    justify-content: center;
     width: 500px;
-    height: 350px;
-    /* border: 2px solid #363636; */
+    min-height: 350px;
     border-radius: 10px;
     box-shadow: 5px 5px 0.5px 0.5px #00000033;
     background:var(--main-bg-color);
-
-    /* color:#1c1e21 */
 }
 
 .userData {
@@ -20,7 +18,14 @@
     margin: 10px;
     color: rgb(97, 93, 93);
     border: 1px solid #dadde1;
+    display: flex;
+    justify-content: space-between;
+    width:93%;
 
+}
+
+.userData input{
+    all:unset;
 }
 
 .icon {
@@ -30,16 +35,15 @@
     margin: 10px;
     padding: 1em;
     border-radius: 5px;
-    /* background-color: #3361FF; */
     background-color: #1877f2;
     color: whitesmoke;
     cursor: pointer;
     border: #363636;
     border-bottom: 1px solid #dadde1;
+    width:100%;
 } 
 .login:hover {
     background: blue; 
-    /* color: white;  */
 }
     
 
@@ -60,16 +64,17 @@
 
 
 .newUser {
+    all:unset;
+    font-size: .8rem;
     display:flex;
     justify-content: center;
     cursor: pointer;
     width: 200px;
     padding: 1em;
+    font-size: 1rem;
     border-radius: 5px;
-    background-color: #42b72a;
-    color: whitesmoke;
-    border: #363636;
-    border-bottom: 1px solid #dadde1;
+    background-color: var(--green-color);
+    color: var(--main-bg-color);
 
 }
 .newUser:hover {
@@ -78,4 +83,11 @@
 .positionNewUser {
     display:flex;
     justify-content: center;
+}
+
+.logInError{
+    color:red;
+    padding:0;
+    margin:0;
+
 }
