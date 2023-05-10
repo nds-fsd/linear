@@ -1,7 +1,7 @@
 const { Schema, model } = require("mongoose");
 const STATUS_ARRAY = require("../../statusarray")
 
-const taskSchema = new Schema({
+const cycleSchema = new Schema({
   title: { type: String, required: true },
   description: { type: String, required: true },
   status: {
@@ -10,11 +10,10 @@ const taskSchema = new Schema({
     required: true,
   },
   duedate: { type: Date },
-  user: { type: Schema.Types.ObjectId, ref: "User" },
-  cycle: { type: Schema.Types.ObjectId, ref: "Cycle" },
+  cyclemanager: { type: Schema.Types.ObjectId, ref: "User" },
   project: { type: Schema.Types.ObjectId, ref: "Project" },
 });
 
-const Task = model("Task", taskSchema);
+const Cycle = model("Cycle", cycleSchema);
 
-module.exports = Task;
+module.exports = Cycle;

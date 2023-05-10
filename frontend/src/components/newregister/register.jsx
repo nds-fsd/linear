@@ -25,10 +25,10 @@ const Register = () => {
             setValidationMessage("Please enter your last name");
             return;
           } else if (!data.password) {
-            setValidationMessage("Please enter your first name");
+            setValidationMessage("Please enter your a password");
             return;
           } else if (!data.teamrole) {
-            setValidationMessage("Please enter your Role in the team");
+            setValidationMessage("Please enter your role in the team");
             return;
           } else if (data.password !== data.repeatpassword) {
             setValidationMessage("Passwords dont match");
