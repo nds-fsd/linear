@@ -17,7 +17,7 @@ const widgetList = {
       content: "YOU",
     },
   ],
-  inProgress: [
+  inprogress: [
     {
       _id: "widget-5",
       content: "DONT",
@@ -32,6 +32,24 @@ const widgetList = {
     },
     {
       _id: "widget-8",
+      content: "TASKS ;)",
+    },
+  ],
+  todo: [
+    {
+      _id: "widget-11",
+      content: "DONT",
+    },
+    {
+      _id: "widget-14",
+      content: "HAVE",
+    },
+    {
+      _id: "widget-19",
+      content: "ANY",
+    },
+    {
+      _id: "widget-22",
       content: "TASKS ;)",
     },
   ],
