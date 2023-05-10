@@ -6,6 +6,6 @@ cycleRouter.get("/", cycleController.getAllCycles);
 cycleRouter.get("/:id", cycleController.getCycleById);
 cycleRouter.post("/", cycleController.createCycle);
 cycleRouter.delete("/:id", cycleController.deleteCycleById);
-cycleRouter.patch("/projects/:id", cycleController.updateCycleById);
+cycleRouter.patch("/:id", cycleController.updateCycleById);
 
-module.exports = projectRouter;
+module.exports = cycleRouter;
