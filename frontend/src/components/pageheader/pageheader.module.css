@@ -1,92 +1,90 @@
-.header{
-    display:flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    min-height:150px;
-    width:100%;
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 150px;
+  width: 100%;
 }
 
-.toolBar{
-    display:flex;
-    flex-wrap: wrap;
-    width:100%;
-    justify-content: space-between;
-    padding:1em;
+.toolBar {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: space-between;
+  padding: 1em;
 }
 
-.searchDialog{
-    display:flex;
-    align-items:center;
-    gap:.5em;
-    padding:.7em;
-    background:#fff;
-    height:50px;
-    border-radius: 10px;
+.searchDialog {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.7em;
+  background: #fff;
+  height: 50px;
+  border-radius: 10px;
 }
 
-.icon{
-    margin-bottom:-.3em;
-    color:var(--darkgray-color)
+.icon {
+  margin-bottom: -0.3em;
+  color: var(--darkgray-color);
 }
 
-.searchDialog > input{
-    all:unset;
-    height:100%;
+.searchDialog > input {
+  all: unset;
+  height: 100%;
 }
 
-.switchViewBtnContainer{
-    display:flex;
-    position:relative;
-    /* margin-left:-100px; */
-    gap:.3em;
+.switchViewBtnContainer {
+  display: flex;
+  position: relative;
+  /* margin-left:-100px; */
+  gap: 0.3em;
 }
 
-
-.btn{
-    all:unset;
-    /* border:1px solid var(--darkgray-color); */
-    border-radius: 10px;
-    background-color:#fff;
-    display:flex;
-    align-items: center;
-    gap:.5em;
-    font-size: 1em;
-    font-weight: bold;
-    color: var(--darkgray-color);
-    padding:0 1em;
-    cursor:pointer;
+.btn {
+  all: unset;
+  /* border:1px solid var(--darkgray-color); */
+  border-radius: 10px;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  font-size: 1em;
+  font-weight: bold;
+  color: var(--darkgray-color);
+  padding: 0 1em;
+  cursor: pointer;
 }
 
-.activebtn{
-    all:unset;
-    /* border:1px solid var(--darkgray-color); */
-    border-radius: 10px;
-    background-color:#fff;
-    display:flex;
-    align-items: center;
-    gap:.5em;
-    font-size: 1em;
-    font-weight: bold;
-    color: var(--darkgray-color);
-    padding:0 1em;
-    cursor:pointer;
-    border:1px solid var(--darkgray-color);
-    margin:-1px;
-    background-color: var(--main-bg-color);
+.activebtn {
+  all: unset;
+  /* border:1px solid var(--darkgray-color); */
+  border-radius: 10px;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  font-size: 1em;
+  font-weight: bold;
+  color: var(--darkgray-color);
+  padding: 0 1em;
+  cursor: pointer;
+  border: 1px solid var(--darkgray-color);
+  margin: -1px;
+  background-color: var(--main-bg-color);
 }
 
 .btn:hover {
-    border:1px solid var(--darkgray-color);
-    margin:-1px;
-    background-color: var(--main-bg-color);
+  border: 1px solid var(--darkgray-color);
+  margin: -1px;
+  background-color: var(--main-bg-color);
 }
 
 .btn:active {
-    transform: scale(.98);
-  }
+  transform: scale(0.98);
+}
 
-
-.switchViewBtnContainer > button > .icon{
-    margin-bottom:0;
+.switchViewBtnContainer > button > .icon {
+  margin-bottom: 0;
 }

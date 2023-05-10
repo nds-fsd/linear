@@ -1,169 +1,153 @@
 .container {
-    display: flex;
-    flex-direction: column;
-    background-color: #FFFFFF;
-    width: 420px;
-    height: 25%;
-    align-items: flex-start;
-    border-radius: 10px;
-    box-shadow: rgba(59, 130, 246, 0.1);
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  width: 420px;
+  height: 25%;
+  align-items: flex-start;
+  border-radius: 10px;
+  box-shadow: rgba(59, 130, 246, 0.1);
 }
 .container1 {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    width: 350px;
-    height: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 350px;
+  height: 40px;
 }
 
-.card_title{
-  display:flex;
+.card_title {
+  display: flex;
   padding-left: 40px;
-
 }
 
 .tags {
-    width: 80%;
-    display: flex;
-    margin:auto;
-    justify-content: flex-start;
-    align-items: center;
-    height: 40%;
-    gap: 5px;
-    padding:10px;
+  width: 80%;
+  display: flex;
+  margin: auto;
+  justify-content: flex-start;
+  align-items: center;
+  height: 40%;
+  gap: 5px;
+  padding: 10px;
 }
 
 /* https://stackoverflow.com/questions/32670216/index-for-css-selector-for-multiple-elements */
 /* esto es un estilo que solo afecta la primera div dentro del container con la clase .tags */
-.tags>div:nth-child(1) {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 5px 8px;
-    gap: 10px;
-    width: 100px;
-    height: 30px;
-    background: #FFFFFF;
-    border: 1px solid #EBEEF2;
-    border-radius: 16px;
-    flex: none;
-    flex-grow: 0;
-    font-weight: 600;
-    line-height: 12px;
-    text-align: center;
-    color: #d5d8df;
+.tags > div:nth-child(1) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 8px;
+  gap: 10px;
+  width: 100px;
+  height: 30px;
+  background: #ffffff;
+  border: 1px solid #ebeef2;
+  border-radius: 16px;
+  flex: none;
+  flex-grow: 0;
+  font-weight: 600;
+  line-height: 12px;
+  text-align: center;
+  color: #d5d8df;
 }
 
 /* esto es un estilo que solo afecta la segunda div dentro del container con la clase .tags */
-.tags>div:nth-child(2) {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 5px 8px;
-    gap: 10px;
-    width: 100px;
-    height: 30px;
-    background: rgba(59, 130, 246, 0.1);
-    border-radius: 16px;
-    flex: none;
-    flex-grow: 0;
-    font-weight: 600;
-    line-height: 12px;
-    text-align: center;
-    color: #2563EB;
+.tags > div:nth-child(2) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 8px;
+  gap: 10px;
+  width: 100px;
+  height: 30px;
+  background: rgba(59, 130, 246, 0.1);
+  border-radius: 16px;
+  flex: none;
+  flex-grow: 0;
+  font-weight: 600;
+  line-height: 12px;
+  text-align: center;
+  color: #2563eb;
 }
 
 /* esto es un estilo que solo afecta la tercera div dentro del container con la clase .tags */
-.tags>div:nth-child(3) {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 5px 8px;
-    gap: 10px;
-    width: 100px;
-    height: 30px;
-    background: rgba(234, 179, 8, 0.1);
-    border-radius: 16px;
-    flex: none;
-    flex-grow: 0;
+.tags > div:nth-child(3) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 8px;
+  gap: 10px;
+  width: 100px;
+  height: 30px;
+  background: rgba(234, 179, 8, 0.1);
+  border-radius: 16px;
+  flex: none;
+  flex-grow: 0;
 
-    font-weight: 600;
-    line-height: 12px;
-    text-align: center;
-    color: #CA8A04;
+  font-weight: 600;
+  line-height: 12px;
+  text-align: center;
+  color: #ca8a04;
 }
 
 .container3 {
-    width: 100%;
-    display: flex;
-    justify-content: space-evenly;
-    padding: 8px;
-
-
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  padding: 8px;
 }
-       
-      
-.button{
-    width: 32px;
-    height: 32px;
-    background: #FFFFFF;
-    border: 2px dashed #d8e0e9;
-    border-radius: 48px;
-    margin-left: 5px;
-    
+
+.button {
+  width: 32px;
+  height: 32px;
+  background: #ffffff;
+  border: 2px dashed #d8e0e9;
+  border-radius: 48px;
+  margin-left: 5px;
 }
 .card_title {
-    display: flex;
-    padding-top: 10px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    size: 14px;
-
+  display: flex;
+  padding-top: 10px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  size: 14px;
 }
 .card_image {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-top:10px;
-    justify-content: center;
-    align-items:flex-start;
-    gap:10px;
-    color: rgb(0, 68, 255)
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 10px;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 10px;
+  color: rgb(0, 68, 255);
 }
- .avatar{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 4px;
-    width: 50%;
- }
-.files{
-    width: 50%;
-    height: 100%;
-    display: flex;
-    gap: 4px;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    
-    
+.avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4px;
+  width: 50%;
+}
+.files {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  gap: 4px;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 
-.clipAdd{
-    width: 20px;
-    margin: 2px;
+.clipAdd {
+  width: 20px;
+  margin: 2px;
 }
 
-.iconomensaje{
-    width: 20px;
-    margin: 2px;
+.iconomensaje {
+  width: 20px;
+  margin: 2px;
 }
-
-
-
-
-
-
-
-

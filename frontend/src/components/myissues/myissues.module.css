@@ -1,9 +1,10 @@
-.myIssues{
-    width:100%;
-    background-color: var(--main-bg-color);
-    border:2px solid var(--gray-color)
+.myIssues {
+  width: 100%;
+  background-color: var(--main-bg-color);
+  border: 2px solid var(--gray-color);
+  position: relative;
 }
 
-.kanbanContainer{
-    padding:20px
+.kanbanContainer {
+  padding: 20px;
 }

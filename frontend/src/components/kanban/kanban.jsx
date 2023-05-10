@@ -9,18 +9,15 @@ function Kanban() {
 
   const [groupOneWidgets, setGroupOneWidgets] = useState(["1", "2"]);
   const [groupTwoWidgets, setGroupTwoWidgets] = useState(["3", "4"]);
-  const [groupThreeWidgets, setGroupThreeWidgets] = useState([
-    "5",
-    "6",
-  ]);
+  const [groupThreeWidgets, setGroupThreeWidgets] = useState(["5", "6"]);
   const [groupFourWidgets, setGroupFourWidgets] = useState(["7", "8"]);
 
   return (
     <div className={kanbanStyle.kanbanArea}>
-      <DroppingArea 
-      setWidgets={setGroupOneWidgets} 
-      widgets={groupOneWidgets}
-      columnType={"Backlog"}
+      <DroppingArea
+        setWidgets={setGroupOneWidgets}
+        widgets={groupOneWidgets}
+        columnType={"Backlog"}
       >
         {groupOneWidgets?.map((widget, index) => (
           <DraggableWidget
@@ -33,9 +30,11 @@ function Kanban() {
         ))}
       </DroppingArea>
 
-      <DroppingArea 
-      columnType={"To do"}
-      setWidgets={setGroupTwoWidgets} widgets={groupTwoWidgets}>
+      <DroppingArea
+        columnType={"To do"}
+        setWidgets={setGroupTwoWidgets}
+        widgets={groupTwoWidgets}
+      >
         {groupTwoWidgets?.map((widget, index) => (
           <DraggableWidget
             widgetList={groupTwoWidgets}
@@ -61,9 +60,11 @@ function Kanban() {
           />
         ))}
       </DroppingArea>
-      <DroppingArea 
+      <DroppingArea
         columnType={"Done"}
-      setWidgets={setGroupFourWidgets} widgets={groupFourWidgets}>
+        setWidgets={setGroupFourWidgets}
+        widgets={groupFourWidgets}
+      >
         {groupFourWidgets?.map((widget, index) => (
           <DraggableWidget
             widgetList={groupFourWidgets}

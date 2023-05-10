@@ -1,6 +1,5 @@
 import { useState } from "react";
-import droppingAreaStyle from './droppingarea.module.css'
-
+import droppingAreaStyle from "./droppingarea.module.css";
 
 const DroppingArea = ({ children, setWidgets, widgets, columnType }) => {
   function handleOnDrop(e) {
@@ -13,7 +12,11 @@ const DroppingArea = ({ children, setWidgets, widgets, columnType }) => {
   }
 
   return (
-    <div className={droppingAreaStyle.column} onDrop={handleOnDrop} onDragOver={handleDragOver}>
+    <div
+      className={droppingAreaStyle.column}
+      onDrop={handleOnDrop}
+      onDragOver={handleDragOver}
+    >
       <h2 className={droppingAreaStyle.header}>{columnType}</h2>
       {children}
     </div>

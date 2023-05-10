@@ -1,10 +1,8 @@
-import React from 'react'
-import settingsStyle from './settings.module.css'
+import React from "react";
+import settingsStyle from "./settings.module.css";
 
 const Settings = () => {
-  return (
-    <div className={settingsStyle.settings}>settings</div>
-  )
-}
+  return <div className={settingsStyle.settings}>settings</div>;
+};
 
-export default Settings
+export default Settings;

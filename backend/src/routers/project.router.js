@@ -2,7 +2,6 @@ const express = require("express");
 const Project = require("../mongo/schemas/project.schema.js");
 const projectRouter = express.Router();
 
-
 //Gets all of the projects
 projectRouter.get("/projects", async (req, res) => {
   try {
@@ -24,10 +23,9 @@ projectRouter.get("/projects/:id", async (req, res) => {
 
 //Gets a single project by title
 projectRouter.get("/projects/query/:title", async (req, res) => {
-  const filter={title:req.params.title}
+  const filter = { title: req.params.title };
   const selectedProject = await Project.find(filter);
   res.json(selectedProject);
-  
 });
 
 //Posts a single project
@@ -39,7 +37,6 @@ projectRouter.post("/projects", async (req, res) => {
   res.json(newProject);
 });
 
-
 //Deletes a single project by ID
 projectRouter.delete("/projects/:id", async (req, res) => {
   const selectedProject = await Project.findByIdAndDelete(req.params.id);
@@ -48,23 +45,22 @@ projectRouter.delete("/projects/:id", async (req, res) => {
 
 //Deletes a single project by title
 projectRouter.delete("/projects/query/:title", async (req, res) => {
-  const filter={title:req.params.title}
+  const filter = { title: req.params.title };
   const selectedProject = await Project.findOneAndDelete(req.params.title);
   res.json(selectedProject);
 });
 
-
 //Updates the title of a single project by id
 projectRouter.patch("/projects/:id", async (req, res) => {
-  const filter={title:req.params.id}
-  const selectedProject = await Project.findByIdAndUpdate(filter,req.body);
+  const filter = { title: req.params.id };
+  const selectedProject = await Project.findByIdAndUpdate(filter, req.body);
   res.json(selectedProject);
 });
 
 // Updates the title of a single project by title
 projectRouter.patch("/projects/query/:title", async (req, res) => {
-  const filter={title:req.params.title}
-  const selectedProject = await Project.findOneAndUpdate(filter,req.body);
+  const filter = { title: req.params.title };
+  const selectedProject = await Project.findOneAndUpdate(filter, req.body);
   res.json(selectedProject);
 });
 
