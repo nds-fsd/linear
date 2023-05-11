@@ -1,6 +1,8 @@
 import { memo } from "react";
 import { Droppable } from "react-beautiful-dnd";
 import Widget from "../widget/widget";
+import styles from './column.module.css'
+
 
 const WidgetList = memo(function WidgetList({ widgets }) {
   console.log(widgets);
@@ -14,12 +16,7 @@ const Column = ({ droppableId, widgets }) => {
     <Droppable droppableId={droppableId}>
       {(provided) => (
         <div
-          style={{
-            minWidth: "320px",
-            border: "2px solid blue",
-            padding: "0.5rem",
-            borderRadius: "0.5rem",
-          }}
+          className={styles.column}
           ref={provided.innerRef}
           {...provided.droppableProps}
         >

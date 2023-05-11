@@ -49,10 +49,22 @@ const widgetList = {
       content: "ANY",
     },
     {
-      _id: "widget-22",
+      _id: "widget-6354",
       content: "TASKS ;)",
     },
   ],
+  inprogress:[
+    {
+      _id: "widget-3456345",
+      content: "TASKS ;)",
+    },
+  ],
+  done:[
+    {
+      _id: "widget-32423",
+      content: "TASKS ;)",
+    },   
+  ]
 };
 
 export default widgetList;

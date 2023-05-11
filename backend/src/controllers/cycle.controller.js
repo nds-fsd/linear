@@ -1,11 +1,12 @@
 const Cycle = require("../mongo/schemas/cycle.schema.js");
 const express = require("express");
 const asyncHandler = require("express-async-handler");
+const STATUS_ARRAY = require("../statusarray.js");
 
 exports.getAllCycles = asyncHandler(async (req, res) => {
   try {
     const allCycles = await Cycle.find();
-    if (allProjects.length === 0) {
+    if (allCycles.length === 0) {
       res.status(404).json({ message: "No hay proyectos" });
     }
     res.status(200).json(allCycles);
@@ -22,6 +23,21 @@ exports.getCycleById = asyncHandler(async (req, res) => {
 exports.createCycle = asyncHandler(async (req, res) => {
   const { title, description, status, duedate, cyclemanager, project } =
     req.body;
+    if (!title) {
+      return res.status(400).json({ error: "Title is needed" });
+    } else if (!STATUS_ARRAY.includes(status)) {
+      return res.status(400).json({ error: "Valid Status is needed" });
+    } else if (!description) {
+      return res.status(400).json({ error: "Description is needed" });
+    } else if (!status) {
+      return res.status(400).json({ error: "Status is needed" });
+    } else if (!duedate) {
+      return res.status(400).json({ error: "Due date is needed" });
+    } else if (!cyclemanager) {
+      return res.status(400).json({ error: "Cycle manager is needed" });
+    } else if (!project) {
+      return res.status(400).json({ error: "Project is needed" });
+    }
   const data = { title, description, status, duedate, cyclemanager, project };
   const newCycle = new Cycle(data);
   await newCycle.save();
