@@ -6,7 +6,8 @@ exports.getAllProyects = asyncHandler(async (req, res) => {
   try {
     const allProjects = await Project.find();
     if (allProjects.length === 0) {
-      res.status(404).json({ message: "No hay proyectos" });
+      res.status(404).json({ message: "No hay proyectos" })
+      return;
     }
     res.status(200).json(allProjects);
   } catch (e) {

@@ -12,11 +12,11 @@ exports.getAllTasks = asyncHandler(async (req, res) => {
       return;
     }
     const tasksWithoutUserPasswords = allTasks.map((task) => {
-      const { _id, title, description, status, duedate, user, project } = task;
+      const { _id, title, description, status, duedate, user, project, cycle } = task;
       const {firstname, lastname, teamrole, email } = user
       const asigneduser = {firstname, lastname, teamrole, email}
       const taskWithoutUserPassword = {
-        _id, title, description, status, duedate, asigneduser, project
+        _id, title, description, status, duedate, asigneduser, project, cycle
       }
       return taskWithoutUserPassword
     });
@@ -35,7 +35,7 @@ exports.getAllTasks = asyncHandler(async (req, res) => {
 });
 
 exports.createTask = asyncHandler(async (req, res) => {
-  const { title, status, description, project, user, duedate } = req.body;
+  const { title, status, description, project, user, duedate, cycle } = req.body;
   if (!title) {
     return res.status(400).json({ error: "Title is needed" });
   } else if (!STATUS_ARRAY.includes(status)) {
@@ -47,7 +47,7 @@ exports.createTask = asyncHandler(async (req, res) => {
   } else if (!duedate) {
     return res.status(400).json({ error: "Due date is needed" });
   }
-  const data = { title, status, description, project, user, duedate };
+  const data = { title, status, description, project, user, duedate, cycle };
   const newTask = new Task(data);
   await newTask.save();
   res.status(201).json(newTask);

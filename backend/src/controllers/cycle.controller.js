@@ -7,7 +7,8 @@ exports.getAllCycles = asyncHandler(async (req, res) => {
   try {
     const allCycles = await Cycle.find();
     if (allCycles.length === 0) {
-      res.status(404).json({ message: "No hay proyectos" });
+      res.status(404).json({ message: "No hay Ciclos" });
+      return
     }
     res.status(200).json(allCycles);
   } catch (e) {

@@ -10,6 +10,7 @@ const UserSchema = new Schema(
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     pronouns: { trype: String },
+    team:{ type: Schema.Types.ObjectId, ref: "Team" },
     teamrole: {
       type: String,
       enum: ["projectmanager", "cyclemanager", "tecnicstaff"],
