@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { api } from "../../utils/api";
+import { getAllTasks } from "../../utils/apitask";
 import { useQuery, useQueryClient } from "react-query";
 import MOCK_DATA from "./mock-data";
 import Column from "./column/column";
 import { DragDropContext } from "react-beautiful-dnd";
+import styles from './kanban-dnd.module.css'
 
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
@@ -13,15 +15,10 @@ const reorder = (list, startIndex, endIndex) => {
 };
 
 const KanbanDnd = () => {
-  // const [columns, setColumns] = useState(null);
-
-  const getTasks = () => {
-    return api.get("/tasks");
-  };
 
   const { data: tasks } = useQuery({
     queryKey: ["tasks"],
-    queryFn: () => getTasks(),
+    queryFn: () => getAllTasks(),
     onSuccess: (data) => {
       setColumns(data.data);
     },
@@ -33,7 +30,9 @@ const KanbanDnd = () => {
     },
   });
   const [columns, setColumns] = useState(tasks?.data ?? MOCK_DATA);
-  console.log(tasks?.data);
+
+
+  /* for now Im fetching all tasks from the backend, in the future they must be filtered by role */
 
   const dragEndHandle = (result) => {
     console.log(result);
@@ -89,7 +88,9 @@ const KanbanDnd = () => {
 
   return (
     <DragDropContext onDragEnd={dragEndHandle}>
-      <div style={{ display: "flex", gap: "1rem" }}>
+      <div 
+        className={styles.kanbanBoard}
+      >
         {Object.keys(columns).map((column) => (
           <Column key={column} droppableId={column} widgets={columns[column]} />
         ))}

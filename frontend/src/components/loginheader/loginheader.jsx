@@ -6,7 +6,8 @@ import { Link } from "react-router-dom";
 const LoginHeader = () => {
   return (
     <div className={loginHeaderStyles.header}>
-      <Link to={LOGIN}>
+      <Link 
+      to={LOGIN}>
         <img className={loginHeaderStyles.logo} src={logo} />
       </Link>
     </div>

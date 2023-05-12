@@ -4,13 +4,24 @@ const asyncHandler = require("express-async-handler");
 const STATUS_ARRAY = require("../statusarray.js");
 
 exports.getAllTasks = asyncHandler(async (req, res) => {
+  const filter = req.body;
   try {
-    const allTasks = await Task.find();
+    const allTasks = await Task.find(filter).populate("user");
     if (allTasks.length === 0) {
       res.status(404).json({ message: "No hay tareas" });
       return;
     }
-    const groupedTasks = allTasks.reduce((acc, task) => {
+    const tasksWithoutUserPasswords = allTasks.map((task) => {
+      const { _id, title, description, status, duedate, user, project } = task;
+      const {firstname, lastname, teamrole, email } = user
+      const asigneduser = {firstname, lastname, teamrole, email}
+      const taskWithoutUserPassword = {
+        _id, title, description, status, duedate, asigneduser, project
+      }
+      return taskWithoutUserPassword
+    });
+
+    const groupedTasks = tasksWithoutUserPasswords.reduce((acc, task) => {
       if (!acc[task.status]) {
         acc[task.status] = [];
       }
@@ -53,7 +64,7 @@ exports.deleteTask = asyncHandler(async (req, res) => {
 });
 
 exports.updateTaskById = asyncHandler(async (req, res) => {
-    const filter = req.params.id;
-    const selectedTask = await Task.findByIdAndUpdate(filter, req.body);
-    res.json(selectedTask);
-  });
+  const filter = req.params.id;
+  const selectedTask = await Task.findByIdAndUpdate(filter, req.body);
+  res.json(selectedTask);
+});

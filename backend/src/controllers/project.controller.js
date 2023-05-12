@@ -20,8 +20,8 @@ exports.getProyectById = asyncHandler(async (req, res) => {
 });
 
 exports.createProject = asyncHandler(async (req, res) => {
-  const { title, startdate, finishdate, users } = req.body;
-  const data = { title, startdate, finishdate, users };
+  const { title, startdate, finishdate, projectmanager } = req.body;
+  const data = { title, startdate, finishdate, projectmanager };
   const newProject = new Project(data);
   await newProject.save();
   res.json(newProject);

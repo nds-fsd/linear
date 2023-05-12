@@ -8,7 +8,7 @@ const Register = () => {
   const { register, handleSubmit } = useForm();
   const context = useContext(Context);
   const [validatonMessage, setValidationMessage] = useState();
-  const { isLoginIn, registerUser, error } = context;
+  const { isLoginIn, registerUser, error, setError } = context;
 
   return (
     <div className={registerFormStyles.formContainer}>
