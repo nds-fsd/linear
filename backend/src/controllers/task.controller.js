@@ -5,20 +5,43 @@ const STATUS_ARRAY = require("../statusarray.js");
 
 exports.getAllTasks = asyncHandler(async (req, res) => {
   const filter = req.body;
+  const { user } = filter;
+  let allTasks = [];
+  if (!user) {
+    allTasks = await Task.find()
+      .populate("user")
+      .populate("project")
+      .populate("cycle");
+  } else {
+    allTasks = await Task.find({ user })
+      .populate("user")
+      .populate("project")
+      .populate("cycle");
+  }
+
   try {
-    const allTasks = await Task.find(filter).populate("user");
     if (allTasks.length === 0) {
-      res.status(404).json({ message: "No hay tareas" });
+      res
+        .status(404)
+        .json({ message: "No hay tareas que coincidan con tu busqueda" });
       return;
     }
     const tasksWithoutUserPasswords = allTasks.map((task) => {
-      const { _id, title, description, status, duedate, user, project, cycle } = task;
-      const {firstname, lastname, teamrole, email } = user
-      const asigneduser = {firstname, lastname, teamrole, email}
+      const { _id, title, description, status, duedate, user, project, cycle } =
+        task;
+      const { firstname, lastname, teamrole, email } = user;
+      const asigneduser = { firstname, lastname, teamrole, email, _id };
       const taskWithoutUserPassword = {
-        _id, title, description, status, duedate, asigneduser, project, cycle
-      }
-      return taskWithoutUserPassword
+        _id,
+        title,
+        description,
+        status,
+        duedate,
+        asigneduser,
+        project,
+        cycle,
+      };
+      return taskWithoutUserPassword;
     });
 
     const groupedTasks = tasksWithoutUserPasswords.reduce((acc, task) => {
@@ -35,7 +58,8 @@ exports.getAllTasks = asyncHandler(async (req, res) => {
 });
 
 exports.createTask = asyncHandler(async (req, res) => {
-  const { title, status, description, project, user, duedate, cycle } = req.body;
+  const { title, status, description, project, user, duedate, cycle } =
+    req.body;
   if (!title) {
     return res.status(400).json({ error: "Title is needed" });
   } else if (!STATUS_ARRAY.includes(status)) {

@@ -14,22 +14,8 @@ const reorder = (list, startIndex, endIndex) => {
   return result;
 };
 
-const KanbanDnd = () => {
-
-  const { data: tasks } = useQuery({
-    queryKey: ["tasks"],
-    queryFn: () => getAllTasks(),
-    onSuccess: (data) => {
-      setColumns(data.data);
-    },
-    onError: (err) => {
-      if (err.response.data.message === "No hay tareas") {
-        setColumns(MOCK_DATA);
-      }
-      console.log(err);
-    },
-  });
-  const [columns, setColumns] = useState(tasks?.data ?? MOCK_DATA);
+const KanbanDnd = ({data}) => {
+  const [columns, setColumns] = useState(data ?? MOCK_DATA); 
 
 
   /* for now Im fetching all tasks from the backend, in the future they must be filtered by role */

@@ -4,8 +4,17 @@ const asyncHandler = require("express-async-handler");
 const STATUS_ARRAY = require("../statusarray.js");
 
 exports.getAllCycles = asyncHandler(async (req, res) => {
+  const filter = req.body
+  const { project } = filter
+  let allCycles = []
+  if(!project){
+    allCycles = await Cycle.find().populate('project');
+  }else {
+    allCycles = await Cycle.find({project}).populate('project');
+  }
+
+
   try {
-    const allCycles = await Cycle.find();
     if (allCycles.length === 0) {
       res.status(404).json({ message: "No hay Ciclos" });
       return
@@ -22,7 +31,7 @@ exports.getCycleById = asyncHandler(async (req, res) => {
 });
 
 exports.createCycle = asyncHandler(async (req, res) => {
-  const { title, description, status, duedate, cyclemanager, project } =
+  const { title, description, status, duedate, project } =
     req.body;
     if (!title) {
       return res.status(400).json({ error: "Title is needed" });
@@ -34,12 +43,10 @@ exports.createCycle = asyncHandler(async (req, res) => {
       return res.status(400).json({ error: "Status is needed" });
     } else if (!duedate) {
       return res.status(400).json({ error: "Due date is needed" });
-    } else if (!cyclemanager) {
-      return res.status(400).json({ error: "Cycle manager is needed" });
     } else if (!project) {
       return res.status(400).json({ error: "Project is needed" });
     }
-  const data = { title, description, status, duedate, cyclemanager, project };
+  const data = { title, description, status, duedate, project };
   const newCycle = new Cycle(data);
   await newCycle.save();
   res.json(newCycle);

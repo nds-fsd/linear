@@ -11,7 +11,6 @@ const cycleSchema = new Schema({
   },
   startdate: { type: Date },
   finishdate: { type: Date },
-  cyclemanager: { type: Schema.Types.ObjectId, ref: "User" },
   project: { type: Schema.Types.ObjectId, ref: "Project" },
 });
 
