@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { api } from "../../utils/api";
-import { getAllTasks } from "../../utils/apitask";
-import { useQuery, useQueryClient } from "react-query";
-import MOCK_DATA from "./mock-data";
+import { useState, useEffect } from "react";
+// import { api } from "../../utils/api";
+// import { getAllTasks } from "../../utils/apitask";
+// import { useQuery, useQueryClient } from "react-query";
+// import MOCK_DATA from "./mock-data";
 import Column from "./column/column";
 import { DragDropContext } from "react-beautiful-dnd";
 import styles from './kanban-dnd.module.css'
@@ -15,13 +15,18 @@ const reorder = (list, startIndex, endIndex) => {
 };
 
 const KanbanDnd = ({data}) => {
-  const [columns, setColumns] = useState(data ?? MOCK_DATA); 
+  
+  const [columns, setColumns] = useState(data);
+
+  useEffect(()=>{
+    setColumns(data)
+  },[data])
+  
 
 
   /* for now Im fetching all tasks from the backend, in the future they must be filtered by role */
 
   const dragEndHandle = (result) => {
-    console.log(result);
     const { source, destination } = result;
     // si no tiene destino el evento, salte y no hagas nada
     if (!destination) {
