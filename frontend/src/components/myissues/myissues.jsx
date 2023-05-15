@@ -1,6 +1,6 @@
 import { useState, useContext } from "react";
 import { useQuery, useQueryClient } from "react-query";
-import { getAllTasks } from "../../utils/apitask";
+import { getAllTasks, getTasksByUser } from "../../utils/apitask";
 import myIssuesStyle from "./myissues.module.css";
 import PageHeader from "../pageheader/pageheader.jsx";
 import KanbanDnd from "../kanban-dnd/kanban-dnd";
@@ -11,15 +11,13 @@ import MOCK_DATA from "../kanban-dnd/mock-data"
 const MyIssues = () => {
   const [activeView, setActiveview] = useState("kanban");
   const [showModal, setShowModal] = useState(false);
-  const context = useContext(Context)
+  const {userSessionContext:{id, firstname, lastname}} = useContext(Context)
   const [data, setData] = useState(MOCK_DATA);   
-  const {userSessionContext} = context
-  const {id, firstname, lastname} = userSessionContext
   const userFullName =`${firstname} ${lastname}`
   
   const { data: myTasks } = useQuery({
     queryKey: ["tasks", {userid:id, username: userFullName}],
-    queryFn: () => getAllTasks({user:id}),
+    queryFn: () => getTasksByUser(id),
     onSuccess: (tasks) => {
       setData(tasks.data);
     },

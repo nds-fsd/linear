@@ -4,7 +4,7 @@ const asyncHandler = require("express-async-handler");
 
 exports.getAllUsers = asyncHandler(async (req, res) => {
   try {
-    const allUsers = await User.find().populate('team').select('-password');
+    const allUsers = await User.find().populate().select('-password');
     if (allUsers.length === 0) {
       res.status(404).json({ message: "No hay usuarios" });
     }

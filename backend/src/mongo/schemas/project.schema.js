@@ -14,7 +14,6 @@ const projectSchema = new Schema(
       enum: STATUS_ARRAY,
       required: true,
     },
-    team:{ type: Schema.Types.ObjectId, ref: "Team" },
   },
   { timestamps: true }
 );
