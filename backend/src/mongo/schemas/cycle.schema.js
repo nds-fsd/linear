@@ -9,8 +9,8 @@ const cycleSchema = new Schema({
     enum: STATUS_ARRAY,
     required: true,
   },
-  duedate: { type: Date },
-  cyclemanager: { type: Schema.Types.ObjectId, ref: "User" },
+  startdate: { type: Date },
+  finishdate: { type: Date },
   project: { type: Schema.Types.ObjectId, ref: "Project" },
 });
 

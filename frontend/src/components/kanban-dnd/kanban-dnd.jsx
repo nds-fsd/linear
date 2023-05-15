@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { api } from "../../utils/api";
-import { getAllTasks } from "../../utils/apitask";
-import { useQuery, useQueryClient } from "react-query";
-import MOCK_DATA from "./mock-data";
+import { useState, useEffect } from "react";
+// import { api } from "../../utils/api";
+// import { getAllTasks } from "../../utils/apitask";
+// import { useQuery, useQueryClient } from "react-query";
+// import MOCK_DATA from "./mock-data";
 import Column from "./column/column";
 import { DragDropContext } from "react-beautiful-dnd";
 import styles from './kanban-dnd.module.css'
@@ -14,28 +14,19 @@ const reorder = (list, startIndex, endIndex) => {
   return result;
 };
 
-const KanbanDnd = () => {
+const KanbanDnd = ({data}) => {
+  
+  const [columns, setColumns] = useState(data);
 
-  const { data: tasks } = useQuery({
-    queryKey: ["tasks"],
-    queryFn: () => getAllTasks(),
-    onSuccess: (data) => {
-      setColumns(data.data);
-    },
-    onError: (err) => {
-      if (err.response.data.message === "No hay tareas") {
-        setColumns(MOCK_DATA);
-      }
-      console.log(err);
-    },
-  });
-  const [columns, setColumns] = useState(tasks?.data ?? MOCK_DATA);
+  useEffect(()=>{
+    setColumns(data)
+  },[data])
+  
 
 
   /* for now Im fetching all tasks from the backend, in the future they must be filtered by role */
 
   const dragEndHandle = (result) => {
-    console.log(result);
     const { source, destination } = result;
     // si no tiene destino el evento, salte y no hagas nada
     if (!destination) {

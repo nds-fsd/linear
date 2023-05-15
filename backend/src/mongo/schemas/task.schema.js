@@ -13,7 +13,6 @@ const taskSchema = new Schema({
   duedate: { type: Date },
   user: { type: Schema.Types.ObjectId, ref: "User" },
   cycle: { type: Schema.Types.ObjectId, ref: "Cycle" },
-  project: { type: Schema.Types.ObjectId, ref: "Project" },
 });
 
 const Task = model("Task", taskSchema);

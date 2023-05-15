@@ -4,21 +4,47 @@ const asyncHandler = require("express-async-handler");
 const STATUS_ARRAY = require("../statusarray.js");
 
 exports.getAllTasks = asyncHandler(async (req, res) => {
-  const filter = req.body;
+  const user = req.params.userid;
+  let allTasks = [];
+  if (!user) {
+    allTasks = await Task.find()
+      .populate("user")
+      .populate({
+        path: "cycle",
+        model: "Cycle",
+        populate: { path: "project", model: "Project" },
+      });
+  } else {
+    allTasks = await Task.find({ user })
+      .populate("user")
+      .populate({
+        path: "cycle",
+        model: "Cycle",
+        populate: { path: "project", model: "Project" },
+      });
+  }
+
   try {
-    const allTasks = await Task.find(filter).populate("user");
     if (allTasks.length === 0) {
-      res.status(404).json({ message: "No hay tareas" });
+      res
+        .status(404)
+        .json({ message: "No hay tareas que coincidan con tu busqueda" });
       return;
     }
     const tasksWithoutUserPasswords = allTasks.map((task) => {
-      const { _id, title, description, status, duedate, user, project } = task;
-      const {firstname, lastname, teamrole, email } = user
-      const asigneduser = {firstname, lastname, teamrole, email}
+      const { _id, title, description, status, duedate, user, cycle } = task;
+      const { firstname, lastname, teamrole, email } = user;
+      const asigneduser = { firstname, lastname, teamrole, email, _id };
       const taskWithoutUserPassword = {
-        _id, title, description, status, duedate, asigneduser, project
-      }
-      return taskWithoutUserPassword
+        _id,
+        title,
+        description,
+        status,
+        duedate,
+        asigneduser,
+        cycle,
+      };
+      return taskWithoutUserPassword;
     });
 
     const groupedTasks = tasksWithoutUserPasswords.reduce((acc, task) => {
@@ -35,7 +61,7 @@ exports.getAllTasks = asyncHandler(async (req, res) => {
 });
 
 exports.createTask = asyncHandler(async (req, res) => {
-  const { title, status, description, project, user, duedate } = req.body;
+  const { title, status, description, user, duedate, cycle } = req.body;
   if (!title) {
     return res.status(400).json({ error: "Title is needed" });
   } else if (!STATUS_ARRAY.includes(status)) {
@@ -47,7 +73,7 @@ exports.createTask = asyncHandler(async (req, res) => {
   } else if (!duedate) {
     return res.status(400).json({ error: "Due date is needed" });
   }
-  const data = { title, status, description, project, user, duedate };
+  const data = { title, status, description, user, duedate, cycle };
   const newTask = new Task(data);
   await newTask.save();
   res.status(201).json(newTask);

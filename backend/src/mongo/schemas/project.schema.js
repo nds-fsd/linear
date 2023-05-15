@@ -8,16 +8,17 @@ const projectSchema = new Schema(
     title: { type: String, required: true },
     startdate: { type: Date },
     finishdate: { type: Date },
+    description:{ type: String, required: true },
     status: {
       type: String,
       enum: STATUS_ARRAY,
       required: true,
     },
-    projectmanager:{ type: Schema.Types.ObjectId, ref: "User" },
   },
   { timestamps: true }
 );
 
 const Project = model("Project", projectSchema);
-//coment
+
+
 module.exports = Project;

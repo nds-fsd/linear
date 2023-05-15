@@ -6,7 +6,8 @@ exports.getAllProyects = asyncHandler(async (req, res) => {
   try {
     const allProjects = await Project.find();
     if (allProjects.length === 0) {
-      res.status(404).json({ message: "No hay proyectos" });
+      res.status(404).json({ message: "No hay proyectos" })
+      return;
     }
     res.status(200).json(allProjects);
   } catch (e) {
@@ -20,8 +21,8 @@ exports.getProyectById = asyncHandler(async (req, res) => {
 });
 
 exports.createProject = asyncHandler(async (req, res) => {
-  const { title, startdate, finishdate, projectmanager ,status} = req.body;
-  const data = { title, status, startdate, finishdate, projectmanager };
+  const { title, startdate, finishdate, status, description} = req.body;
+  const data = { title, status, startdate, finishdate, description };
   const newProject = new Project(data);
   await newProject.save();
   res.json(newProject);
