@@ -28,7 +28,7 @@ const PageHeader = ({
       <div className={headerStyle.wrapper}>
         <h2>{formattedDate}</h2>
         <h1>{title}</h1>
-        <h2>{userSessionContext?.team.title}</h2>
+        <h2></h2>
       </div>
       <div className={headerStyle.toolBar}>
         <div className={headerStyle.searchDialog}>

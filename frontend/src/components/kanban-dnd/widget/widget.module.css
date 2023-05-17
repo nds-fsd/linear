@@ -12,10 +12,17 @@
 .row{
   display:flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .wrapper{
   display:flex;
   align-items: center;
   gap:10px;
+  max-width: 100px;
+  overflow:hidden;
+}
+
+.wrapper p {
+  white-space:nowrap;
 }

@@ -33,7 +33,6 @@ authRouter.post("/register", async (req, res) => {
       lastname: data.lastname,
       pronouns: data.pronouns,
       teamrole: data.teamrole,
-      team: data.team,
       birthday: data.birthday,
     });
     const savedUser = await newUser.save();
@@ -46,7 +45,6 @@ authRouter.post("/register", async (req, res) => {
           lastname: savedUser.lastname,
           pronouns: savedUser.pronouns,
           teamrole: savedUser.teamrole,
-          team: data.team,
           birthday: savedUser.birthday,
           id: savedUser._id,
         },
@@ -70,7 +68,7 @@ authRouter.post("/login", async (req, res) => {
       .json({ error: { login: "Missing email or password" } });
   }
   try {
-    const foundUser = await User.findOne({ email }).populate('team');
+    const foundUser = await User.findOne({ email });
     if (!foundUser) {
       return res
         .status(400)
@@ -81,8 +79,6 @@ authRouter.post("/login", async (req, res) => {
       return res.status(400).json({ error: { password: "Invalid Password" } });
     }
     // * if everything is ok, return the new token and user data
-    const {_id, title} = foundUser.team
-    const teamData = {_id, title}
 
     return res.status(200).json({
       token: foundUser.generateJWT(),
@@ -93,7 +89,6 @@ authRouter.post("/login", async (req, res) => {
         firstname: foundUser.firstname,
         pronouns: foundUser.pronouns,
         birthday: foundUser.birthday,
-        team: teamData,
         teamrole: foundUser.teamrole,
         id: foundUser._id,
       },

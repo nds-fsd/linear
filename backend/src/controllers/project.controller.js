@@ -2,7 +2,7 @@ const Project = require("../mongo/schemas/project.schema.js");
 const express = require("express");
 const asyncHandler = require("express-async-handler");
 
-exports.getAllProyects = asyncHandler(async (req, res) => {
+exports.getAllProjects = asyncHandler(async (req, res) => {
   try {
     const allProjects = await Project.find();
     if (allProjects.length === 0) {
@@ -15,7 +15,7 @@ exports.getAllProyects = asyncHandler(async (req, res) => {
   }
 });
 
-exports.getProyectById = asyncHandler(async (req, res) => {
+exports.getProjectById = asyncHandler(async (req, res) => {
   const selectedProjects = await Project.findById(req.params.id);
   res.json(selectedProjects);
 });

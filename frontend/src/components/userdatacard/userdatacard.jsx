@@ -7,8 +7,7 @@ const UserDatacard = () => {
   const context = useContext(Context);
 
   const { userSessionContext } = context;
-  const { firstname, lastname, pronouns, teamrole, team } = userSessionContext;
-  console.log(team);
+  const { firstname, lastname, teamrole } = userSessionContext;
 
   let role = "";
 

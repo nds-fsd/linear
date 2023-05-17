@@ -1,5 +1,5 @@
 .kanbanBoard{
-    height: 81%;
+    height: 73%;
     display:flex;
     overflow: auto;
     justify-content: space-evenly;

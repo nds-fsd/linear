@@ -47,13 +47,21 @@ exports.getAllTasks = asyncHandler(async (req, res) => {
       return taskWithoutUserPassword;
     });
 
-    const groupedTasks = tasksWithoutUserPasswords.reduce((acc, task) => {
-      if (!acc[task.status]) {
-        acc[task.status] = [];
+    const groupedTasks = tasksWithoutUserPasswords.reduce(
+      (acc, task) => {
+        if (!acc[task.status]) {
+          acc[task.status] = [];
+        }
+        acc[task.status].push(task);
+        return acc;
+      },
+      {
+        backlog: [],
+        todo: [],
+        inprogress: [],
+        done: [],
       }
-      acc[task.status].push(task);
-      return acc;
-    }, {});
+    );
     res.status(200).json(groupedTasks);
   } catch (e) {
     res.status(500).json({ message: e });
@@ -64,14 +72,14 @@ exports.createTask = asyncHandler(async (req, res) => {
   const { title, status, description, user, duedate, cycle } = req.body;
   if (!title) {
     return res.status(400).json({ error: "Title is needed" });
-  } else if (!STATUS_ARRAY.includes(status)) {
+  } else if (!status || !STATUS_ARRAY.includes(status)) {
     return res.status(400).json({ error: "Valid Status is needed" });
   } else if (!description) {
     return res.status(400).json({ error: "Description is needed" });
-  } else if (!status) {
-    return res.status(400).json({ error: "Status is needed" });
   } else if (!duedate) {
     return res.status(400).json({ error: "Due date is needed" });
+  } else if (!cycle) {
+    return res.status(400).json({ error: "Cycle is needed" });
   }
   const data = { title, status, description, user, duedate, cycle };
   const newTask = new Task(data);
@@ -80,8 +88,27 @@ exports.createTask = asyncHandler(async (req, res) => {
 });
 
 exports.getTaskById = asyncHandler(async (req, res) => {
-  const selectedTasks = await Task.findById(req.params.id);
-  res.json(selectedTasks);
+  const selectedTask = await Task.findById(req.params.id)
+    .populate("user")
+    .populate({
+      path: "cycle",
+      model: "Cycle",
+      populate: { path: "project", model: "Project" },
+    });
+  const { _id, title, description, status, duedate, user, cycle } =
+    selectedTask;
+  const { firstname, lastname, teamrole, email } = user;
+  const asigneduser = { firstname, lastname, teamrole, email, _id };
+  const taskWithoutUserPassword = {
+    _id,
+    title,
+    description,
+    status,
+    duedate,
+    asigneduser,
+    cycle,
+  };
+  res.json(taskWithoutUserPassword);
 });
 
 exports.deleteTask = asyncHandler(async (req, res) => {
