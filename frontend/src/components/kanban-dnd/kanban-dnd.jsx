@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 // import MOCK_DATA from "./mock-data";
 import Column from "./column/column";
 import { DragDropContext } from "react-beautiful-dnd";
-import styles from './kanban-dnd.module.css'
+import styles from "./kanban-dnd.module.css";
 
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
@@ -14,15 +14,12 @@ const reorder = (list, startIndex, endIndex) => {
   return result;
 };
 
-const KanbanDnd = ({data}) => {
-  
+const KanbanDnd = ({ data, handleEditModal }) => {
   const [columns, setColumns] = useState(data);
 
-  useEffect(()=>{
-    setColumns(data)
-  },[data])
-  
-
+  useEffect(() => {
+    setColumns(data);
+  }, [data]);
 
   /* for now Im fetching all tasks from the backend, in the future they must be filtered by role */
 
@@ -79,11 +76,14 @@ const KanbanDnd = ({data}) => {
 
   return (
     <DragDropContext onDragEnd={dragEndHandle}>
-      <div 
-        className={styles.kanbanBoard}
-      >
+      <div className={styles.kanbanBoard}>
         {Object.keys(columns).map((column) => (
-          <Column key={column} droppableId={column} widgets={columns[column]} />
+          <Column
+            key={column}
+            droppableId={column}
+            widgets={columns[column]}
+            handleEditModal={handleEditModal}
+          />
         ))}
       </div>
     </DragDropContext>

@@ -13,13 +13,13 @@ import EditTaskModal from "../edittaskmodal/edittaskmodal";
 const MyIssues = () => {
   const [activeView, setActiveview] = useState("kanban");
   const [showAddModal, setShowAddModal] = useState(false);
-  const [showEditModal, setShowEditModal] = useState(false)
+  const [showEditModal, setShowEditModal] = useState(false);
   const {
     userSessionContext: { id: userid, firstname, lastname },
   } = useContext(Context);
   const [data, setData] = useState(MOCK_DATA);
-  const [taskId, setTaskId] = useState('')
-  const [taskDataState, setTaskDataState] = useState('')
+  const [taskId, setTaskId] = useState("");
+  const [taskDataState, setTaskDataState] = useState("");
 
   const userFullName = `${firstname} ${lastname}`;
 
@@ -35,10 +35,10 @@ const MyIssues = () => {
   });
 
   const { data: taskData } = useQuery({
-    queryKey: ["task", { taskId: taskId}],
+    queryKey: ["task", { taskId: taskId }],
     queryFn: () => getTaskById(taskId),
     onSuccess: (task) => {
-      setTaskDataState(task)
+      setTaskDataState(task);
     },
     onError: (err) => {
       console.log(err);
@@ -46,8 +46,8 @@ const MyIssues = () => {
   });
 
   const handleEditModal = (taskid) => {
-    setTaskId(taskid)
-    setShowEditModal(true)
+    setTaskId(taskid);
+    setShowEditModal(true);
   };
 
   const headerElements = Object.keys(MOCK_DATA).map((columnHeader) => {
@@ -77,23 +77,20 @@ const MyIssues = () => {
         btntitle="Issue"
         btnFunction={setShowAddModal}
       />
-      {showAddModal && 
-      
-      <AddTaskModal
-      setShowModal={setShowAddModal}      
-      />}
-      {showEditModal && 
-      
-      <EditTaskModal
-      taskId={taskId}
-      taskDataState={taskData?.data} 
-      closeModal={setShowEditModal}  
-      />
-      }
+      {showAddModal && <AddTaskModal setShowModal={setShowAddModal} />}
+      {showEditModal && (
+        <EditTaskModal
+          taskId={taskId}
+          taskDataState={taskData?.data}
+          closeModal={setShowEditModal}
+        />
+      )}
       {activeView === "kanban" ? (
         <>
           <div className={myIssuesStyle.header}>{headerElements}</div>
-          <KanbanDnd data={data} />
+          <KanbanDnd 
+          handleEditModal={handleEditModal}
+          data={data} />
         </>
       ) : (
         <ListView handleEditModal={handleEditModal} data={data} />

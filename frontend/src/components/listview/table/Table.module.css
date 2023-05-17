@@ -46,7 +46,6 @@
 
 .table tbody tr:hover {
   background-color: #eee;
-  cursor: pointer;
 }
 
 .expand {
@@ -54,10 +53,11 @@
 }
 
 .label-backlog {
-  background-color: var(--gray-color);
+  background-color: var(--purple-color);
   border-radius: 3px;
   padding: 0.3rem;
-  color: var(--dark-gray-color);
+  color: var(--main-bg-color);
+
   font-weight: 500;
 }
 
@@ -65,7 +65,8 @@
   background-color: var(--accent-color);
   border-radius: 3px;
   padding: 0.3rem;
-  color: var(--dark-gray-color);
+  color: var(--main-bg-color);
+
   font-weight: 500;
 }
 
@@ -73,7 +74,8 @@
   background-color: var(--green-color);
   border-radius: 3px;
   padding: 0.3rem;
-  color: var(--dark-gray-color);
+  color: var(--main-bg-color);
+
   font-weight: 500;
 }
 
@@ -81,7 +83,8 @@
   background-color: var(--yellow-color);
   border-radius: 3px;
   padding: 0.3rem;
-  color: var(--dark-gray-color);
+  color: var(--main-bg-color);
+
   font-weight: 500;
 }
 
