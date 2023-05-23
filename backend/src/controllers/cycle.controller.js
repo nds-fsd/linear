@@ -4,19 +4,11 @@ const asyncHandler = require("express-async-handler");
 const STATUS_ARRAY = require("../statusarray.js");
 
 exports.getAllCycles = asyncHandler(async (req, res) => {
-  const filter = req.body
-  const { project } = filter
-  let allCycles = []
-  if(!project){
-    allCycles = await Cycle.find().populate('project');
-  }else {
-    allCycles = await Cycle.find({project}).populate('project');
-  }
-
 
   try {
+    const allCycles = await Cycle.find().populate('project');
     if (allCycles.length === 0) {
-      res.status(404).json({ message: "No hay Ciclos" });
+      res.status(404).json({ message: "No hay Ciclos que coincidan con tu busqueda" });
       return
     }
     res.status(200).json(allCycles);
@@ -24,6 +16,28 @@ exports.getAllCycles = asyncHandler(async (req, res) => {
     res.status(500).json({ message: e });
   }
 });
+
+exports.getCyclesByProject = asyncHandler(async (req, res) => {
+  const { projectid }  = req.params
+  let allCycles = []
+  if(!projectid){
+    res.status(400).json({ message: "ProjectId missing" });
+    return
+  }
+  try {
+    allCycles = await Cycle.find({ project:projectid }).populate('project');
+    if (allCycles.length === 0) {
+      res.status(404).json({ message: "No hay Ciclos que coincidan con tu busqueda" });
+      return
+    }
+    res.status(200).json(allCycles);
+  } catch (e) {
+    res.status(500).json({ message: e });
+  }
+});
+
+
+
 
 exports.getCycleById = asyncHandler(async (req, res) => {
   const selectedCycle = await Cycle.findById(req.params.id);

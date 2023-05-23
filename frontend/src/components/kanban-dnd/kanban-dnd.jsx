@@ -1,11 +1,9 @@
-import { useState, useEffect } from "react";
-// import { api } from "../../utils/api";
-// import { getAllTasks } from "../../utils/apitask";
-// import { useQuery, useQueryClient } from "react-query";
-// import MOCK_DATA from "./mock-data";
+import { useState, useEffect, useContext } from "react";
 import Column from "./column/column";
 import { DragDropContext } from "react-beautiful-dnd";
-import styles from './kanban-dnd.module.css'
+import styles from "./kanban-dnd.module.css";
+import { patchTaskById, useEditTaskMutation } from "../../utils/apitask";
+import {Context} from '../../Context'
 
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
@@ -14,20 +12,57 @@ const reorder = (list, startIndex, endIndex) => {
   return result;
 };
 
-const KanbanDnd = ({data}) => {
-  
+function modifyObjectProperty(arr, index, property, value) {
+  const newArr = [...arr];
+  if (index >= 0 && index < newArr.length) {
+    newArr[index][property] = value;
+  }
+  return newArr;
+}
+
+
+
+const KanbanDnd = ({ data, handleEditModal }) => {
+
+  const {userSessionContext} = useContext(Context)
+  const {id:userid, firstname, lastname} = userSessionContext
+
+
   const [columns, setColumns] = useState(data);
+  const [taskForUpdate, setTaskForUpdate] = useState({
+    draggableId: "",
+    status: "",
+  });
 
-  useEffect(()=>{
-    setColumns(data)
-  },[data])
-  
+  const { mutate: updateTaskStatus, data:mutationData} = useEditTaskMutation(
+    taskForUpdate.draggableId,
+    { status: taskForUpdate.status },
+    {userid, username:`${firstname} ${lastname}`}
+  );
+
+  useEffect(() => {
+    setColumns(data);
+  }, [data]);
 
 
-  /* for now Im fetching all tasks from the backend, in the future they must be filtered by role */
+  useEffect(() => {
+    if (taskForUpdate) {
+      updateTaskStatus();
+      
+      const {status, draggableId} = taskForUpdate
+      const indexOfCardInColumn = columns[status]?.findIndex(task => task._id === draggableId)
+      const columnToModify = columns[status]
+      if(columnToModify){
+        const newColumn = modifyObjectProperty(columnToModify, indexOfCardInColumn,'status', status)
+        setColumns({...columns, [status]:newColumn})
+      }
+      
+    }
+  }, [taskForUpdate]);
 
   const dragEndHandle = (result) => {
-    const { source, destination } = result;
+    const { source, destination, draggableId } = result;
+    const newStatus = destination.droppableId;
     // si no tiene destino el evento, salte y no hagas nada
     if (!destination) {
       return;
@@ -40,7 +75,6 @@ const KanbanDnd = ({data}) => {
       if (destination.index === source.index) {
         return;
       }
-
       const widgets = reorder(
         columns[source.droppableId],
         source.index,
@@ -50,9 +84,7 @@ const KanbanDnd = ({data}) => {
         ...columns,
         [source.droppableId]: widgets,
       };
-
       setColumns(updateState);
-
       // ! AQUI EN EL ELSE GESTIONAMOS EL CAMBIO DE COLUMNA
     } else {
       // hacemos una copia de la columna origen (utilizando el source del evento de dnd)
@@ -63,15 +95,15 @@ const KanbanDnd = ({data}) => {
       const [removed] = startColumn.splice(source.index, 1);
       // metemos el widget a la columna donde se soltó el widget (por eso el splice es en finishColumn)
       finishColumn.splice(destination.index, 0, removed);
-
       // reconstruimos un objeto y sobreescribimos el valor de las columnas que cambiamos
       const updateState = {
         ...columns,
         [source.droppableId]: startColumn,
         [destination.droppableId]: finishColumn,
       };
-      // se lo enchufamos al setState
       setColumns(updateState);
+      setTaskForUpdate({ draggableId, status: newStatus});
+      // se lo enchufamos al setState
     }
   };
 
@@ -79,11 +111,14 @@ const KanbanDnd = ({data}) => {
 
   return (
     <DragDropContext onDragEnd={dragEndHandle}>
-      <div 
-        className={styles.kanbanBoard}
-      >
+      <div className={styles.kanbanBoard}>
         {Object.keys(columns).map((column) => (
-          <Column key={column} droppableId={column} widgets={columns[column]} />
+          <Column
+            key={column}
+            droppableId={column}
+            widgets={columns[column]}
+            handleEditModal={handleEditModal}
+          />
         ))}
       </div>
     </DragDropContext>

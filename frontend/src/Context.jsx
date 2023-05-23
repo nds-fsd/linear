@@ -1,9 +1,10 @@
-import { useState, createContext } from "react";
+import { useState, createContext, useEffect } from "react";
 import { getUserSession, setUserSession } from "./utils/localStorage.utils";
 import { useNavigate } from "react-router-dom";
 import { LOGIN, HOME, MY_ISSUES } from "./route-path";
 import { api } from "./utils/api";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { getTeamsByUserId } from "./utils/apiTeam";
+import { useQueryClient } from "react-query";
 
 export const Context = createContext();
 
@@ -11,11 +12,12 @@ export const ContextProvider = ({ children }) => {
   const [userSessionContext, setUserSessionContext] = useState(
     getUserSession()
   );
+  const [teams, setTeams] = useState([{}]);
   const [invalidLogIn, setInvalidLogIn] = useState(false);
   const [isLoginIn, setIsLoginIn] = useState(false);
   const [error, setError] = useState("");
-
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const logIn = (data) => {
     setIsLoginIn(true);
@@ -75,6 +77,12 @@ export const ContextProvider = ({ children }) => {
       });
   };
 
+  useEffect(() => {
+    getTeamsByUserId(userSessionContext?.id).then((res) => {
+      setTeams(res.data);
+    });
+  }, [userSessionContext]);
+
   return (
     <Context.Provider
       value={{
@@ -82,6 +90,7 @@ export const ContextProvider = ({ children }) => {
         logIn,
         setIsLoginIn,
         registerUser,
+        teams,
         error,
         userSessionContext,
         invalidLogIn,

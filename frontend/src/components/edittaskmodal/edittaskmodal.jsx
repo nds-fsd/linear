@@ -1,25 +1,42 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import ModalBackground from "../modalbackground/modalbackground";
 import { useMutation, useQueryClient, useQuery } from "react-query";
 import { useState, useContext } from "react";
 import { useForm } from "react-hook-form";
-import { addTask } from "../../utils/apitask";
+import { patchTaskById, getTaskById } from "../../utils/apitask";
 import { getCyclesByProject } from "../../utils/apiCycle";
 import { Context } from "../../Context";
-import addTaskStyles from "./addtaskmodal.module.css";
+import styles from "./edittaskmodal.module.css";
 import { STATUS_ARRAY } from "../../statusarray";
 import Spinner from "../spinner/spinner";
 
-const AddTaskModal = ({ setShowModal }) => {
-
-  const { register, handleSubmit, reset } = useForm();
-  const { teams , userSessionContext } = useContext(Context);
+const EditTaskModal = ({ closeModal, taskDataState, taskId }) => {
+  const { teams, userSessionContext } = useContext(Context);
+  const [useFormHookParams, setUseFormHookParams] = useState({});
   const [errorMessage, setErrorMessage] = useState("");
   const [selectedTeam, setSelectedTeam] = useState("");
   const [selectedProject, setSelectedProject] = useState("");
   const queryClient = useQueryClient();
   const [users, setUsers] = useState();
-
+  const { register, handleSubmit, reset } = useForm({
+    defaultValues: () =>
+      getTaskById(taskId).then((res) => {
+        const { title, description, duedate, cycle, status } = res.data;
+        const formatedDueDate = new Date(duedate).toISOString().split("T")[0];
+        const projectid = cycle.project._id;
+        const cycleid = cycle._id;
+        const team = teams.find((team) => team.project._id === projectid);
+        setSelectedTeam(team._id);
+        setSelectedProject(projectid);
+        return {
+          title,
+          description,
+          duedate: formatedDueDate,
+          status,
+          cycle: cycleid,
+        };
+      }),
+  });
 
   useEffect(() => {
     const fullSelectedTeam = teams.find((team) => team._id === selectedTeam);
@@ -37,13 +54,13 @@ const AddTaskModal = ({ setShowModal }) => {
   });
 
   const {
-    mutate: addTaskMutation,
+    mutate: patchTask,
     isLoading: isPosting,
-    isSuccess: isPosted,
+    isSuccess: isEdited,
     isError,
     error,
   } = useMutation({
-    mutationFn: (data) => addTask(data),
+    mutationFn: (data) => patchTaskById(taskId, data),
     onSuccess: (payload) => {
       queryClient.refetchQueries("tasks");
     },
@@ -86,65 +103,54 @@ const AddTaskModal = ({ setShowModal }) => {
     );
   });
 
-  if (isPosted) {
-    {
-      setTimeout(() => setShowModal(false), 1000);
-    }
-    return (
-      <ModalBackground>
-        <div className={addTaskStyles.form}>
-          <h2 style={{ alignSelf: "center" }}>Task created succesfully!</h2>
-        </div>
-      </ModalBackground>
-    );
+  if (isEdited) {
+    closeModal(false);
   }
 
   return (
     <ModalBackground>
-      <div className={addTaskStyles.formContainer}>
+      <div className={styles.formContainer}>
         <form
-          className={addTaskStyles.form}
+          className={styles.form}
           onSubmit={handleSubmit((data) => {
-            console.log(data);
-            addTaskMutation(data);
+            patchTask(data);
           })}
         >
           {isPosting ? (
             <Spinner />
           ) : (
             <>
-              <h2 className={addTaskStyles.formTitle}>Add a new Issue</h2>
               {errorMessage && (
-                <p className={addTaskStyles.addTaskError}>{errorMessage}</p>
+                <p className={styles.addTaskError}>{errorMessage}</p>
               )}
-              <label className={addTaskStyles.label} htmlFor="tasktitle">
+              <label className={styles.label} htmlFor="tasktitle">
                 Issue Title
               </label>
               <input
                 id="tasktitle"
-                className={addTaskStyles.input}
+                className={styles.input}
                 type="text"
                 placeholder="Issue"
                 {...register("title")}
               />
-              <label className={addTaskStyles.label} htmlFor="taskdescription">
+              <label className={styles.label} htmlFor="taskdescription">
                 Issue Description
               </label>
               <textarea
                 rows="6"
                 cols="30"
                 id="taskdescription"
-                className={addTaskStyles.textAreaInput}
+                className={styles.textAreaInput}
                 placeholder="Description"
                 {...register("description")}
               />
-              <div className={addTaskStyles.wrapper}>
-                <label className={addTaskStyles.label} htmlFor="taskproject">
+              <div className={styles.wrapper}>
+                <label className={styles.label} htmlFor="taskproject">
                   Issue Project
                   <select
                     id="taskproject"
-                    defaultValue=""
-                    className={addTaskStyles.selectInput}
+                    value={selectedTeam ? selectedTeam : ""}
+                    className={styles.selectInput}
                     onChange={(e) => {
                       reset({ cycle: "" });
                       setSelectedTeam(e.target.value);
@@ -156,13 +162,13 @@ const AddTaskModal = ({ setShowModal }) => {
                     {projectElements}
                   </select>
                 </label>
-                <label className={addTaskStyles.label} htmlFor="taskcycle">
+                <label className={styles.label} htmlFor="taskcycle">
                   Project Cycle
                   <select
                     disabled={cyclesIsLoading || cyclesIsError}
                     id="taskcycle"
                     defaultValue=""
-                    className={addTaskStyles.selectInput}
+                    className={styles.selectInput}
                     {...register("cycle")}
                   >
                     {!selectedProject ? (
@@ -180,13 +186,13 @@ const AddTaskModal = ({ setShowModal }) => {
                   </select>
                 </label>
               </div>
-              <div className={addTaskStyles.wrapper}>
-                <label className={addTaskStyles.label} htmlFor="taskuser">
+              <div className={styles.wrapper}>
+                <label className={styles.label} htmlFor="taskuser">
                   Asigned to
                   <select
                     id="taskuser"
                     defaultValue=""
-                    className={addTaskStyles.selectInput}
+                    className={styles.selectInput}
                     {...register("user")}
                   >
                     {users ? (
@@ -202,12 +208,12 @@ const AddTaskModal = ({ setShowModal }) => {
                     )}
                   </select>
                 </label>
-                <label className={addTaskStyles.label} htmlFor="taskstatus">
+                <label className={styles.label} htmlFor="taskstatus">
                   Issue Status
                   <select
                     id="taskstatus"
                     defaultValue=""
-                    className={addTaskStyles.selectInput}
+                    className={styles.selectInput}
                     {...register("status")}
                   >
                     <option value="" disabled hidden>
@@ -218,28 +224,28 @@ const AddTaskModal = ({ setShowModal }) => {
                 </label>
               </div>
               <div>
-                <label className={addTaskStyles.label} htmlFor="taskduedate">
+                <label className={styles.label} htmlFor="taskduedate">
                   Issue due date
                 </label>
                 <input
                   id="taskduedate"
-                  className={addTaskStyles.input}
+                  className={styles.input}
                   type="date"
                   placeholder="Due date"
                   {...register("duedate")}
                 />
               </div>
-              <div className={addTaskStyles.btnContainer}>
+              <div className={styles.btnContainer}>
                 <button
-                  className={addTaskStyles.closeBtn}
-                  onClick={() => setShowModal(false)}
+                  className={styles.closeBtn}
+                  onClick={() => closeModal(false)}
                 >
                   Close
                 </button>
                 <input
-                  className={addTaskStyles.submitBtn}
+                  className={styles.submitBtn}
                   type="submit"
-                  value="Create new task"
+                  value="Confirm"
                 />
               </div>
             </>
@@ -250,4 +256,4 @@ const AddTaskModal = ({ setShowModal }) => {
   );
 };
 
-export default AddTaskModal;
+export default EditTaskModal;
