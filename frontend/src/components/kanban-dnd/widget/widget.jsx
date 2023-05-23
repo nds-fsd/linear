@@ -4,7 +4,6 @@ import { Draggable } from "react-beautiful-dnd";
 import QueryBuilderIcon from "@mui/icons-material/QueryBuilder";
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 
-
 const Widget = ({ widget, index, handleEditModal, handleDeleteModal }) => {
   const { description, duedate, status, title, asigneduser, cycle, _id } =
     widget;
@@ -44,18 +43,19 @@ const Widget = ({ widget, index, handleEditModal, handleDeleteModal }) => {
             </h3>
             <span className={styles.wrapper}>
               <DeleteOutlineRoundedIcon
-              className={styles.deleteBtn}
-              onClick={()=>handleDeleteModal(_id)}
+                className={styles.deleteBtn}
+                onClick={() => handleDeleteModal(_id)}
               />
-              
-              {/* <p>{cycle?.title}</p> */}
             </span>
           </div>
 
           <div className={styles.row}>
-            <p>
-              {asigneduser?.firstname} {asigneduser?.lastname}
-            </p>
+            <div className={styles.widgetInfo}>
+              <p>
+                {asigneduser?.firstname} {asigneduser?.lastname}
+              </p>
+              <p>{cycle?.title}</p>
+            </div>
             <p className={styles[`status${status}`]}>{finalStatus}</p>
           </div>
 

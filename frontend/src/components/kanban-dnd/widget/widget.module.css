@@ -77,3 +77,14 @@
 .deleteBtn{
   cursor:pointer;
 }
+
+
+.widgetInfo{
+  display:flex;
+  flex-direction: column;
+  gap:.5em;
+}
+
+.widgetInfo p{
+  text-align: left;
+}
