@@ -29,6 +29,16 @@
   min-width: 100px;
 }
 
+.description {
+  max-width: 500px;
+}
+
+.titleHeader {
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--accent-color);
+}
+
 .table td {
   border-top: 0.5px solid #ddd;
   overflow: hidden;

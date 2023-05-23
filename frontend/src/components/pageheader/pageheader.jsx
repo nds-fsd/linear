@@ -3,7 +3,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import ViewKanbanOutlinedIcon from "@mui/icons-material/ViewKanbanOutlined";
 import FormatListBulletedOutlinedIcon from "@mui/icons-material/FormatListBulletedOutlined";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
-import headerStyle from "./pageheader.module.css"
+import headerStyle from "./pageheader.module.css";
 import { Context } from "../../Context";
 
 const PageHeader = ({
@@ -12,16 +12,16 @@ const PageHeader = ({
   title,
   btntitle,
   btnFunction,
+  refetchFn,
 }) => {
-
-  const context = useContext(Context)
-  const { userSessionContext } = context
-  const today = new Date().toLocaleString('en-US', {
-    day: '2-digit',
-    month: '2-digit',
-    year: 'numeric'
+  const context = useContext(Context);
+  const { userSessionContext } = context;
+  const today = new Date().toLocaleString("en-US", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
   });
-  const parts = today.split('/');
+  const parts = today.split("/");
   const formattedDate = `${parts[1]}/${parts[0]}/${parts[2]}`;
   return (
     <div className={headerStyle.header}>
@@ -40,7 +40,10 @@ const PageHeader = ({
 
         <div className={headerStyle.switchViewBtnContainer}>
           <button
-            onClick={() => setActiveview("kanban")}
+            onClick={() => {
+              refetchFn();
+              setActiveview("kanban");
+            }}
             className={
               activeView === "kanban" ? headerStyle.activebtn : headerStyle.btn
             }

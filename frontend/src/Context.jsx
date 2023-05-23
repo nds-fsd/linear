@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { LOGIN, HOME, MY_ISSUES } from "./route-path";
 import { api } from "./utils/api";
 import { getTeamsByUserId } from "./utils/apiTeam";
-import { useQuery, useQueryClient } from "react-query";
+import { useQueryClient } from "react-query";
 
 export const Context = createContext();
 
@@ -78,14 +78,10 @@ export const ContextProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    getTeamsByUserId(userSessionContext.id)
-    .then((res) =>{
-    setTeams(res.data)
-    }
-    );
+    getTeamsByUserId(userSessionContext?.id).then((res) => {
+      setTeams(res.data);
+    });
   }, [userSessionContext]);
-
-
 
   return (
     <Context.Provider

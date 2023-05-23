@@ -70,10 +70,17 @@ export const Table = ({ rows, deleteRow, handleEditModal }) => {
 
             return (
               <tr key={row._id}>
-                <td>{row.title}</td>
-                <td className={styles.expand}>{row.description}</td>
-                <td className={styles.expand}>{row.cycle.project.title}</td>
-                <td className={styles.expand}>{row.cycle.title}</td>
+                <td
+                  className={styles.titleHeader}
+                  onClick={() => {
+                    handleEditModal(row._id);
+                  }}
+                >
+                  {row.title}
+                </td>
+                <td className={styles.description}>{row?.description}</td>
+                <td className={styles.expand}>{row?.cycle?.project.title}</td>
+                <td className={styles.expand}>{row?.cycle?.title}</td>
                 <td className={styles[`label-${row.status}`]}>
                   <span>{statusText}</span>
                 </td>
@@ -85,7 +92,9 @@ export const Table = ({ rows, deleteRow, handleEditModal }) => {
                     />
                     <BorderColorRoundedIcon
                       className="edit-btn"
-                      onClick={() => {handleEditModal(row._id)}}
+                      onClick={() => {
+                        handleEditModal(row._id);
+                      }}
                     />
                   </span>
                 </td>

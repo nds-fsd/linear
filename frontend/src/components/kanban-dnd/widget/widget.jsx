@@ -7,7 +7,13 @@ const Widget = ({ widget, index, handleEditModal }) => {
   const { description, duedate, status, title, asigneduser, cycle, _id } =
     widget;
 
-  const formatedDate = new Date(duedate).toLocaleString().split(",")[0];
+  const date = new Date(duedate).toLocaleString("en-US", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  });
+  const parts = date.split("/");
+  const formatedDate = `${parts[1]}/${parts[0]}/${parts[2]}`;
 
   let finalStatus = "";
 

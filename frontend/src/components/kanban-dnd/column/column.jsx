@@ -5,7 +5,12 @@ import styles from "./column.module.css";
 
 const WidgetList = memo(function WidgetList({ widgets, handleEditModal }) {
   return widgets?.map((widget, index) => (
-    <Widget widget={widget} index={index} key={widget._id} handleEditModal={handleEditModal} />
+    <Widget
+      widget={widget}
+      index={index}
+      key={widget._id}
+      handleEditModal={handleEditModal}
+    />
   ));
 });
 

@@ -23,7 +23,7 @@ const MyIssues = () => {
 
   const userFullName = `${firstname} ${lastname}`;
 
-  const { data: myTasks } = useQuery({
+  const { data: myTasks, refetch: refetchTasks } = useQuery({
     queryKey: ["tasks", { userid: userid, username: userFullName }],
     queryFn: () => getTasksByUser(userid),
     onSuccess: (tasks) => {
@@ -50,6 +50,9 @@ const MyIssues = () => {
     setShowEditModal(true);
   };
 
+
+
+
   const headerElements = Object.keys(MOCK_DATA).map((columnHeader) => {
     let headerName = "";
     if (columnHeader === "backlog") {
@@ -73,6 +76,7 @@ const MyIssues = () => {
       <PageHeader
         activeView={activeView}
         setActiveview={setActiveview}
+        refetchFn={refetchTasks}
         title="My Issues"
         btntitle="Issue"
         btnFunction={setShowAddModal}
@@ -88,9 +92,7 @@ const MyIssues = () => {
       {activeView === "kanban" ? (
         <>
           <div className={myIssuesStyle.header}>{headerElements}</div>
-          <KanbanDnd 
-          handleEditModal={handleEditModal}
-          data={data} />
+          <KanbanDnd handleEditModal={handleEditModal} data={data} />
         </>
       ) : (
         <ListView handleEditModal={handleEditModal} data={data} />

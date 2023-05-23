@@ -6,70 +6,70 @@
   background-color: white;
   padding: 10px;
   box-shadow: 0 0 5px #eee;
-  display:flex;
-  flex-direction:column;
-  gap:1.3em;
+  display: flex;
+  flex-direction: column;
+  gap: 1.3em;
 }
 
-.title{
-  cursor:pointer;
+.title {
+  cursor: pointer;
 }
 
-.statusbacklog{
-  padding:7px;
-  border-radius:30px;
-  min-width:40%;
+.statusbacklog {
+  padding: 7px;
+  border-radius: 30px;
+  min-width: 40%;
   background-color: var(--purple-color);
   color: var(--main-bg-color);
-
   font-weight: 500;
 }
-.statustodo{
-  padding:7px;
-  border-radius:30px;
-  min-width:40%;
+
+.statustodo {
+  padding: 7px;
+  border-radius: 30px;
+  min-width: 40%;
   background-color: var(--yellow-color);
   color: var(--main-bg-color);
 
   font-weight: 500;
 }
-.statusinprogress{
-  padding:7px;
-  border-radius:30px;
-  min-width:40%;
+
+.statusinprogress {
+  padding: 7px;
+  border-radius: 30px;
+  min-width: 40%;
   background-color: var(--accent-color);
   color: var(--main-bg-color);
 
   font-weight: 500;
-
 }
-.statusdone{
-  padding:7px;
-  border-radius:30px;
-  min-width:40%;
+
+.statusdone {
+  padding: 7px;
+  border-radius: 30px;
+  min-width: 40%;
   background-color: var(--green-color);
   color: var(--main-bg-color);
   font-weight: 500;
 }
 
-
-.row{
-  display:flex;
+.row {
+  display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.row *{
-  margin:0;
+.row * {
+  margin: 0;
 }
 
-.wrapper{
-  display:flex;
+.wrapper {
+  display: flex;
   align-items: center;
-  gap:10px;
+  gap: 10px;
   max-width: 100px;
-  overflow:hidden;
+  overflow: hidden;
 }
 
 .wrapper p {
-  white-space:nowrap;
+  white-space: nowrap;
 }

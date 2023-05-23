@@ -18,7 +18,7 @@ const EditTaskModal = ({ closeModal, taskDataState, taskId }) => {
   const [selectedProject, setSelectedProject] = useState("");
   const queryClient = useQueryClient();
   const [users, setUsers] = useState();
-  const { register, handleSubmit, reset, watch } = useForm({
+  const { register, handleSubmit, reset } = useForm({
     defaultValues: () =>
       getTaskById(taskId).then((res) => {
         const { title, description, duedate, cycle, status } = res.data;
@@ -103,19 +103,16 @@ const EditTaskModal = ({ closeModal, taskDataState, taskId }) => {
     );
   });
 
-
   if (isEdited) {
     closeModal(false);
   }
 
   return (
-    <ModalBackground >
-      <div  
-        className={styles.formContainer}>
+    <ModalBackground>
+      <div className={styles.formContainer}>
         <form
           className={styles.form}
           onSubmit={handleSubmit((data) => {
-            console.log(data);
             patchTask(data);
           })}
         >

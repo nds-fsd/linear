@@ -118,6 +118,46 @@ exports.deleteTask = asyncHandler(async (req, res) => {
 
 exports.updateTaskById = asyncHandler(async (req, res) => {
   const filter = req.params.id;
+  const { title, status, description, user, duedate, cycle } = req.body;
+  if (!title) {
+    return res.status(400).json({ error: "Title is needed" });
+  } else if (!status || !STATUS_ARRAY.includes(status)) {
+    return res.status(400).json({ error: "Valid Status is needed" });
+  } else if (!description) {
+    return res.status(400).json({ error: "Description is needed" });
+  } else if (!duedate) {
+    return res.status(400).json({ error: "Due date is needed" });
+  } else if (!cycle) {
+    return res.status(400).json({ error: "Cycle is needed" });
+  }
+  const selectedTask = await Task.findByIdAndUpdate(filter, req.body);
+  res.json(selectedTask);
+});
+
+exports.updateTaskStatus = asyncHandler(async (req, res) => {
+  const filter = req.params.id;
+  const { title, status, description, user, duedate, cycle } = req.body;
+  if (title) {
+    return res
+      .status(400)
+      .json({ error: "This endpoint is only for updating status" });
+  } else if (!status || !STATUS_ARRAY.includes(status)) {
+    return res
+      .status(400)
+      .json({ error: "Valid Status is needed" });
+  } else if (description) {
+    return res
+      .status(400)
+      .json({ error: "This endpoint is only for updating status" });
+  } else if (duedate) {
+    return res
+      .status(400)
+      .json({ error: "This endpoint is only for updating status" });
+  } else if (cycle) {
+    return res
+      .status(400)
+      .json({ error: "This endpoint is only for updating status" });
+  }
   const selectedTask = await Task.findByIdAndUpdate(filter, req.body);
   res.json(selectedTask);
 });
