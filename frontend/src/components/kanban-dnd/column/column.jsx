@@ -3,18 +3,19 @@ import { Droppable } from "react-beautiful-dnd";
 import Widget from "../widget/widget";
 import styles from "./column.module.css";
 
-const WidgetList = memo(function WidgetList({ widgets, handleEditModal }) {
+const WidgetList = memo(function WidgetList({ widgets, handleEditModal, handleDeleteModal }) {
   return widgets?.map((widget, index) => (
     <Widget
       widget={widget}
       index={index}
       key={widget._id}
       handleEditModal={handleEditModal}
+      handleDeleteModal={handleDeleteModal}
     />
   ));
 });
 
-const Column = ({ droppableId, widgets, handleEditModal }) => {
+const Column = ({ droppableId, widgets, handleEditModal, handleDeleteModal }) => {
   let title = "";
   switch (droppableId) {
     case "backlog":
@@ -40,7 +41,7 @@ const Column = ({ droppableId, widgets, handleEditModal }) => {
             ref={provided.innerRef}
             {...provided.droppableProps}
           >
-            <WidgetList widgets={widgets} handleEditModal={handleEditModal} />
+            <WidgetList widgets={widgets} handleEditModal={handleEditModal} handleDeleteModal={handleDeleteModal} />
             {provided.placeholder}
           </div>
         )}

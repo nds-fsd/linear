@@ -3,10 +3,8 @@ import { Table } from "./table/Table";
 import AddTaskModal from "../addtaskmodal/addtaskmodal";
 import styles from "./listview.module.css";
 
-function ListView({data, handleEditModal}) {
-  const handleDeleteRow = () =>{
-    console.log("deleted row")
-  }
+function ListView({data, handleEditModal, handleDeleteModal}) {
+
 
   const unorderedTasks = Object.keys(data).map(listName => {
     return data[listName]
@@ -20,8 +18,8 @@ function ListView({data, handleEditModal}) {
     <div className={styles.listView}>
       <Table
         handleEditModal={handleEditModal}
+        handleDeleteModal={handleDeleteModal}
         rows={rows} 
-        deleteRow={handleDeleteRow} 
          />
     </div>
   );

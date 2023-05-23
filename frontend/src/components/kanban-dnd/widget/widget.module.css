@@ -73,3 +73,7 @@
 .wrapper p {
   white-space: nowrap;
 }
+
+.deleteBtn{
+  cursor:pointer;
+}

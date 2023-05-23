@@ -5,7 +5,7 @@ import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import styles from "./Table.module.css";
 
-export const Table = ({ rows, deleteRow, handleEditModal }) => {
+export const Table = ({ rows, deleteRow, handleEditModal, handleDeleteModal }) => {
   const [sortedTasks, setSortedTasks] = useState([...rows]);
   const [sortOrder, setSortOrder] = useState("desc");
 
@@ -88,7 +88,7 @@ export const Table = ({ rows, deleteRow, handleEditModal }) => {
                   <span className={styles.actions}>
                     <DeleteOutlineRoundedIcon
                       className="delete-btn"
-                      onClick={() => deleteRow()}
+                      onClick={() => handleDeleteModal(row._id)}
                     />
                     <BorderColorRoundedIcon
                       className="edit-btn"

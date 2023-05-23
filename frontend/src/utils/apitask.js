@@ -21,11 +21,15 @@ export const patchTaskById = (taskid, data) => {
   return api.patch(`/tasks/${taskid}`, data);
 };
 
+export const deleteTaskById = (taskid) => {
+  return api.delete(`/tasks/${taskid}`);
+};
+
 export const patchStatusTaskById = (taskid, data) => {
   return api.patch(`/tasks/status/${taskid}`, data);
 };
 
-export const useEditTaskMutation = (taskid, obj) => {
+export const useEditStatusTaskMutation = (taskid, obj) => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -33,4 +37,16 @@ export const useEditTaskMutation = (taskid, obj) => {
     onSucess: () =>
       queryClient.invalidateQueries({ queryKey: ["tasks", querykey] }),
   });
+};
+
+export const useDeleteTaskMutation = (taskid) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: () => deleteTaskById(taskid),
+    onSuccess: (payload) => {
+      queryClient.refetchQueries("tasks");
+    },
+    onError: (err) => setErrorMessage(err.response.data.error),
+  })
 };

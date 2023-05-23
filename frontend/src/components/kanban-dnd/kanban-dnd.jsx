@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import Column from "./column/column";
 import { DragDropContext } from "react-beautiful-dnd";
 import styles from "./kanban-dnd.module.css";
-import { patchTaskById, useEditTaskMutation } from "../../utils/apitask";
+import { patchTaskById, useEditStatusTaskMutation } from "../../utils/apitask";
 import {Context} from '../../Context'
 
 const reorder = (list, startIndex, endIndex) => {
@@ -22,7 +22,7 @@ function modifyObjectProperty(arr, index, property, value) {
 
 
 
-const KanbanDnd = ({ data, handleEditModal }) => {
+const KanbanDnd = ({ data, handleEditModal, handleDeleteModal }) => {
 
   const {userSessionContext} = useContext(Context)
   const {id:userid, firstname, lastname} = userSessionContext
@@ -34,7 +34,7 @@ const KanbanDnd = ({ data, handleEditModal }) => {
     status: "",
   });
 
-  const { mutate: updateTaskStatus, data:mutationData} = useEditTaskMutation(
+  const { mutate: updateTaskStatus, data:mutationData} = useEditStatusTaskMutation(
     taskForUpdate.draggableId,
     { status: taskForUpdate.status },
     {userid, username:`${firstname} ${lastname}`}
@@ -118,6 +118,7 @@ const KanbanDnd = ({ data, handleEditModal }) => {
             droppableId={column}
             widgets={columns[column]}
             handleEditModal={handleEditModal}
+            handleDeleteModal={handleDeleteModal}
           />
         ))}
       </div>

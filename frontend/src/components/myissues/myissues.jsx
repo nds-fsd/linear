@@ -9,11 +9,13 @@ import { Context } from "../../Context";
 import MOCK_DATA from "../kanban-dnd/mock-data";
 import ListView from "../listview/listview";
 import EditTaskModal from "../edittaskmodal/edittaskmodal";
+import DeleteModal from "../confirmdeletemodal/confirmdeletemodal";
 
 const MyIssues = () => {
   const [activeView, setActiveview] = useState("kanban");
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const {
     userSessionContext: { id: userid, firstname, lastname },
   } = useContext(Context);
@@ -49,8 +51,13 @@ const MyIssues = () => {
     setTaskId(taskid);
     setShowEditModal(true);
   };
+  const handleDeleteModal = (taskid) => {
+    setTaskId(taskid);
+    setShowDeleteModal(true);
+  };
 
 
+  
 
 
   const headerElements = Object.keys(MOCK_DATA).map((columnHeader) => {
@@ -89,13 +96,24 @@ const MyIssues = () => {
           closeModal={setShowEditModal}
         />
       )}
+      {showDeleteModal && (
+        <DeleteModal
+          taskId={taskId}
+          deletedSchema={"task"}
+          cancelFn={setShowDeleteModal}
+        />
+      )}
       {activeView === "kanban" ? (
         <>
           <div className={myIssuesStyle.header}>{headerElements}</div>
-          <KanbanDnd handleEditModal={handleEditModal} data={data} />
+          <KanbanDnd handleEditModal={handleEditModal} 
+          handleDeleteModal={handleDeleteModal}
+          data={data} />
         </>
       ) : (
-        <ListView handleEditModal={handleEditModal} data={data} />
+        <ListView handleEditModal={handleEditModal}
+        handleDeleteModal={handleDeleteModal}
+        data={data} />
       )}
     </div>
   );

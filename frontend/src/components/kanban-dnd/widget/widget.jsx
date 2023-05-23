@@ -2,8 +2,10 @@ import React from "react";
 import styles from "./widget.module.css";
 import { Draggable } from "react-beautiful-dnd";
 import QueryBuilderIcon from "@mui/icons-material/QueryBuilder";
+import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 
-const Widget = ({ widget, index, handleEditModal }) => {
+
+const Widget = ({ widget, index, handleEditModal, handleDeleteModal }) => {
   const { description, duedate, status, title, asigneduser, cycle, _id } =
     widget;
 
@@ -41,8 +43,12 @@ const Widget = ({ widget, index, handleEditModal }) => {
               {title}
             </h3>
             <span className={styles.wrapper}>
-              <QueryBuilderIcon />
-              <p>{cycle?.title}</p>
+              <DeleteOutlineRoundedIcon
+              className={styles.deleteBtn}
+              onClick={()=>handleDeleteModal(_id)}
+              />
+              
+              {/* <p>{cycle?.title}</p> */}
             </span>
           </div>
 
