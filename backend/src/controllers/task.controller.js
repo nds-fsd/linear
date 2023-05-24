@@ -5,9 +5,10 @@ const STATUS_ARRAY = require("../statusarray.js");
 
 exports.getAllTasks = asyncHandler(async (req, res) => {
   const user = req.params.userid;
+  const query = req.query
   let allTasks = [];
   if (!user) {
-    allTasks = await Task.find()
+    allTasks = await Task.find(query)
       .populate("user")
       .populate({
         path: "cycle",

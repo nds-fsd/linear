@@ -1,12 +1,13 @@
 .dialogContainer{
-    width:600px;
-    height: 400px;
+    max-width:600px;
+    max-height: 400px;
     background-color:var(--gray-color);
     border-radius: 10px;
     display:flex;
     flex-direction:column;
     align-items: center;
     justify-content: center;
+    padding:3em 1em;
 }
 
 .cancelBtn{
@@ -33,4 +34,5 @@
     display:flex;
     gap:2em;
     cursor:pointer;
+    flex-wrap: wrap;
 }

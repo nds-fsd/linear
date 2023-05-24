@@ -4,9 +4,10 @@ const asyncHandler = require("express-async-handler");
 const STATUS_ARRAY = require("../statusarray.js");
 
 exports.getAllCycles = asyncHandler(async (req, res) => {
-
+  const query = req.query
+  console.log(query)
   try {
-    const allCycles = await Cycle.find().populate('project');
+    const allCycles = await Cycle.find(query).populate('project');
     if (allCycles.length === 0) {
       res.status(404).json({ message: "No hay Ciclos que coincidan con tu busqueda" });
       return
@@ -73,6 +74,7 @@ exports.deleteCycleById = asyncHandler(async (req, res) => {
 
 exports.updateCycleById = asyncHandler(async (req, res) => {
   const filter = req.params.id;
+  console.log(filter)
   const selectedCycle = await Cycle.findByIdAndUpdate(filter, req.body);
   res.json(selectedCycle);
 });

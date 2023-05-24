@@ -11,3 +11,7 @@ export const getAllTasks = () => {
 export const getTeamsByUserId = (userid) => {
   return api.get(`/teams/by-user?userid=${userid}`);
 };
+
+export const getTeamById = (teamid) => {
+  return api.get(`/teams/${teamid}`);
+};

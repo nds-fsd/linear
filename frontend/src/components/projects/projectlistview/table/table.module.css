@@ -1,0 +1,113 @@
+.tableWrapper {
+    width: 100%;
+  }
+  
+  .table {
+    display: block;
+    overflow: hidden;
+    table-layout: fixed;
+    border-collapse: collapse;
+    box-shadow: 0px 3px 3px #ccc;
+    white-space: nowrap;
+    max-width: 100%;
+    margin: auto;
+    table-layout: auto;
+    overflow-x: auto;
+  }
+  
+  .table thead {
+    background-color: #ccc;
+    color: #222;
+  }
+  
+  .table th {
+    min-width: 150px;
+  }
+  
+  .table td {
+    padding: 0.8rem;
+    min-width: 100px;
+  }
+  
+  .description {
+    max-width: 500px;
+  }
+  
+  .titleHeader {
+    cursor: pointer;
+    font-weight: 700;
+    color: var(--accent-color);
+    text-decoration:none;
+  }
+  
+  .table td {
+    border-top: 0.5px solid #ddd;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+    width: 100px;
+  }
+  
+  .sort {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .table tbody tr:hover {
+    background-color: #eee;
+  }
+  
+  .expand {
+    width: 100%;
+  }
+  
+  .label-backlog {
+    background-color: var(--purple-color);
+    border-radius: 3px;
+    padding: 0.3rem;
+    color: var(--main-bg-color);
+  
+    font-weight: 500;
+  }
+  
+  .label-inprogress {
+    background-color: var(--accent-color);
+    border-radius: 3px;
+    padding: 0.3rem;
+    color: var(--main-bg-color);
+  
+    font-weight: 500;
+  }
+  
+  .label-done {
+    background-color: var(--green-color);
+    border-radius: 3px;
+    padding: 0.3rem;
+    color: var(--main-bg-color);
+  
+    font-weight: 500;
+  }
+  
+  .label-todo {
+    background-color: var(--yellow-color);
+    border-radius: 3px;
+    padding: 0.3rem;
+    color: var(--main-bg-color);
+  
+    font-weight: 500;
+  }
+  
+  .actions {
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .actions svg {
+    cursor: pointer;
+  }
+  
+  .delete-btn {
+    color: #e10d05;
+  }

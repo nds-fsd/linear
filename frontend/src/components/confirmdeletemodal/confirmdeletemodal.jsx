@@ -6,7 +6,6 @@ import { useDeleteTaskMutation } from "../../utils/apitask";
 
 const DeleteModal = ({ taskId, deletedSchema, cancelFn }) => {
 
-
   const {
     mutate: deleteTask,
     isLoading: isDeleting,

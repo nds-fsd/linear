@@ -1,9 +1,8 @@
-import { useState } from "react";
+
 import { Table } from "./table/Table";
-import AddTaskModal from "../addtaskmodal/addtaskmodal";
 import styles from "./listview.module.css";
 
-function ListView({ data, handleEditModal, handleDeleteModal }) {
+function TaskListView({ data, handleEditModal, handleDeleteModal }) {
   const unorderedTasks = Object.keys(data).map((listName) => {
     return data[listName];
   });
@@ -23,4 +22,4 @@ function ListView({ data, handleEditModal, handleDeleteModal }) {
   );
 }
 
-export default ListView;
+export default TaskListView;

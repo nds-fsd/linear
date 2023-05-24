@@ -7,7 +7,7 @@ import KanbanDnd from "../kanban-dnd/kanban-dnd";
 import AddTaskModal from "../addtaskmodal/addtaskmodal";
 import { Context } from "../../Context";
 import MOCK_DATA from "../kanban-dnd/mock-data";
-import ListView from "../listview/listview";
+import TaskListView from "../tasklistview/tasklistview";
 import EditTaskModal from "../edittaskmodal/edittaskmodal";
 import DeleteModal from "../confirmdeletemodal/confirmdeletemodal";
 
@@ -111,7 +111,7 @@ const MyIssues = () => {
           data={data} />
         </>
       ) : (
-        <ListView handleEditModal={handleEditModal}
+        <TaskListView handleEditModal={handleEditModal}
         handleDeleteModal={handleDeleteModal}
         data={data} />
       )}

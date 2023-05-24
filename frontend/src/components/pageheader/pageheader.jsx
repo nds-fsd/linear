@@ -38,29 +38,33 @@ const PageHeader = ({
           <input id="searchinput" type="text" placeholder="Search issues" />
         </div>
 
-        <div className={headerStyle.switchViewBtnContainer}>
-          <button
-            onClick={() => {
-              refetchFn();
-              setActiveview("kanban");
-            }}
-            className={
-              activeView === "kanban" ? headerStyle.activebtn : headerStyle.btn
-            }
-          >
-            <ViewKanbanOutlinedIcon className={headerStyle.icon} />
-            Board view
-          </button>
-          <button
-            onClick={() => setActiveview("list")}
-            className={
-              activeView === "list" ? headerStyle.activebtn : headerStyle.btn
-            }
-          >
-            <FormatListBulletedOutlinedIcon className={headerStyle.icon} />
-            List view
-          </button>
-        </div>
+        {title === "My Issues" && (
+          <div className={headerStyle.switchViewBtnContainer}>
+            <button
+              onClick={() => {
+                refetchFn();
+                setActiveview("kanban");
+              }}
+              className={
+                activeView === "kanban"
+                  ? headerStyle.activebtn
+                  : headerStyle.btn
+              }
+            >
+              <ViewKanbanOutlinedIcon className={headerStyle.icon} />
+              Board view
+            </button>
+            <button
+              onClick={() => setActiveview("list")}
+              className={
+                activeView === "list" ? headerStyle.activebtn : headerStyle.btn
+              }
+            >
+              <FormatListBulletedOutlinedIcon className={headerStyle.icon} />
+              List view
+            </button>
+          </div>
+        )}
 
         <button onClick={() => btnFunction(true)} className={headerStyle.btn}>
           <AddCircleOutlineOutlinedIcon />

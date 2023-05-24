@@ -31,7 +31,7 @@ exports.getTeamsByUserId = asyncHandler(async (req, res) => {
 });
 
 exports.getTeamById = asyncHandler(async (req, res) => {
-  const selectedTeam = await Team.findById(req.params.id);
+  const selectedTeam = await Team.findById(req.params.id).populate("project").populate("users");
   res.json(selectedTeam);
 });
 
