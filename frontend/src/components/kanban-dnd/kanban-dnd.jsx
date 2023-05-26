@@ -1,9 +1,9 @@
-import { useState } from "react";
-import { api } from "../../utils/api";
-import { useQuery, useQueryClient } from "react-query";
-import MOCK_DATA from "./mock-data";
+import { useState, useEffect, useContext } from "react";
 import Column from "./column/column";
 import { DragDropContext } from "react-beautiful-dnd";
+import styles from "./kanban-dnd.module.css";
+import { patchTaskById, useEditStatusTaskMutation } from "../../utils/apitask";
+import {Context} from '../../Context'
 
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
@@ -12,32 +12,57 @@ const reorder = (list, startIndex, endIndex) => {
   return result;
 };
 
-const KanbanDnd = () => {
-  // const [columns, setColumns] = useState(null);
+function modifyObjectProperty(arr, index, property, value) {
+  const newArr = [...arr];
+  if (index >= 0 && index < newArr.length) {
+    newArr[index][property] = value;
+  }
+  return newArr;
+}
 
-  const getTasks = () => {
-    return api.get("/tasks");
-  };
 
-  const { data: tasks } = useQuery({
-    queryKey: ["tasks"],
-    queryFn: () => getTasks(),
-    onSuccess: (data) => {
-      setColumns(data.data);
-    },
-    onError: (err) => {
-      if (err.response.data.message === "No hay tareas") {
-        setColumns(MOCK_DATA);
-      }
-      console.log(err);
-    },
+
+const KanbanDnd = ({ data, handleEditModal, handleDeleteModal }) => {
+
+  const {userSessionContext} = useContext(Context)
+  const {id:userid, firstname, lastname} = userSessionContext
+
+
+  const [columns, setColumns] = useState(data);
+  const [taskForUpdate, setTaskForUpdate] = useState({
+    draggableId: "",
+    status: "",
   });
-  const [columns, setColumns] = useState(tasks?.data ?? MOCK_DATA);
-  console.log(tasks?.data);
+
+  const { mutate: updateTaskStatus, data:mutationData} = useEditStatusTaskMutation(
+    taskForUpdate.draggableId,
+    { status: taskForUpdate.status },
+    {userid, username:`${firstname} ${lastname}`}
+  );
+
+  useEffect(() => {
+    setColumns(data);
+  }, [data]);
+
+
+  useEffect(() => {
+    if (taskForUpdate) {
+      updateTaskStatus();
+      
+      const {status, draggableId} = taskForUpdate
+      const indexOfCardInColumn = columns[status]?.findIndex(task => task._id === draggableId)
+      const columnToModify = columns[status]
+      if(columnToModify){
+        const newColumn = modifyObjectProperty(columnToModify, indexOfCardInColumn,'status', status)
+        setColumns({...columns, [status]:newColumn})
+      }
+      
+    }
+  }, [taskForUpdate]);
 
   const dragEndHandle = (result) => {
-    console.log(result);
-    const { source, destination } = result;
+    const { source, destination, draggableId } = result;
+    const newStatus = destination.droppableId;
     // si no tiene destino el evento, salte y no hagas nada
     if (!destination) {
       return;
@@ -50,7 +75,6 @@ const KanbanDnd = () => {
       if (destination.index === source.index) {
         return;
       }
-
       const widgets = reorder(
         columns[source.droppableId],
         source.index,
@@ -60,9 +84,7 @@ const KanbanDnd = () => {
         ...columns,
         [source.droppableId]: widgets,
       };
-
       setColumns(updateState);
-
       // ! AQUI EN EL ELSE GESTIONAMOS EL CAMBIO DE COLUMNA
     } else {
       // hacemos una copia de la columna origen (utilizando el source del evento de dnd)
@@ -73,15 +95,15 @@ const KanbanDnd = () => {
       const [removed] = startColumn.splice(source.index, 1);
       // metemos el widget a la columna donde se soltó el widget (por eso el splice es en finishColumn)
       finishColumn.splice(destination.index, 0, removed);
-
       // reconstruimos un objeto y sobreescribimos el valor de las columnas que cambiamos
       const updateState = {
         ...columns,
         [source.droppableId]: startColumn,
         [destination.droppableId]: finishColumn,
       };
-      // se lo enchufamos al setState
       setColumns(updateState);
+      setTaskForUpdate({ draggableId, status: newStatus});
+      // se lo enchufamos al setState
     }
   };
 
@@ -89,9 +111,15 @@ const KanbanDnd = () => {
 
   return (
     <DragDropContext onDragEnd={dragEndHandle}>
-      <div style={{ display: "flex", gap: "1rem" }}>
+      <div className={styles.kanbanBoard}>
         {Object.keys(columns).map((column) => (
-          <Column key={column} droppableId={column} widgets={columns[column]} />
+          <Column
+            key={column}
+            droppableId={column}
+            widgets={columns[column]}
+            handleEditModal={handleEditModal}
+            handleDeleteModal={handleDeleteModal}
+          />
         ))}
       </div>
     </DragDropContext>

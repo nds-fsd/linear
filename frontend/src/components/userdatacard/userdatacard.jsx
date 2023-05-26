@@ -7,8 +7,7 @@ const UserDatacard = () => {
   const context = useContext(Context);
 
   const { userSessionContext } = context;
-  const { firstname, lastname, pronouns, teamrole } = userSessionContext;
-  console.log(userSessionContext);
+  const { firstname, lastname, teamrole } = userSessionContext;
 
   let role = "";
 
@@ -22,6 +21,7 @@ const UserDatacard = () => {
 
   return (
     <div className={userDatacardStyles.userData}>
+
       <img src={userImage} className={userDatacardStyles.img} alt="" />
       <div className={userDatacardStyles.userDataContainer}>
         <h3>{`${firstname} ${lastname}`}</h3>

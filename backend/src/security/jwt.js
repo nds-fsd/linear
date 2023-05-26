@@ -79,6 +79,7 @@ authRouter.post("/login", async (req, res) => {
       return res.status(400).json({ error: { password: "Invalid Password" } });
     }
     // * if everything is ok, return the new token and user data
+
     return res.status(200).json({
       token: foundUser.generateJWT(),
       user: {

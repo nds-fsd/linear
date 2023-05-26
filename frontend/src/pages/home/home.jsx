@@ -1,10 +1,11 @@
 import { useContext } from "react";
 import { Context } from "../../Context";
-import { Routes, Route, redirect, Navigate, Outlet } from "react-router-dom";
+import { Routes, Route,Navigate, } from "react-router-dom";
 import Sidebar from "../../components/sidebar/sidebar";
 import MyIssues from "../../components/myissues/myissues";
 import Projects from "../../components/projects/projects";
-import Cycles from "../../components/cycles/cycles";
+import ProjectDetail from "../../components/projects/projectDetail/projectdetail";
+import Overview from "../../components/cycles/overview";
 import Inbox from "../../components/inbox/inbox";
 import Settings from "../../components/settings/settings";
 import homeStyles from "./home.module.css";
@@ -31,12 +32,13 @@ const Home = () => {
     <div className={homeStyles.home}>
       <Sidebar />
       <Routes>
-        <Route path="" element={<Navigate to={MY_ISSUES} />} />
         <Route path={MY_ISSUES} element={<MyIssues />} />
         <Route path={PROJECTS} element={<Projects />} />
-        <Route path={CYCLES} element={<Cycles />} />
+        <Route path={`${PROJECTS}/:id`} element={<ProjectDetail />} />
+        <Route path={CYCLES} element={<Overview />} />
         <Route path={`${USER_ID}/${INBOX}`} element={<Inbox />} />
         <Route path={`${USER_ID}/${SETTINGS}`} element={<Settings />} />
+        <Route path="" element={<Navigate to={MY_ISSUES} />} />
       </Routes>
     </div>
   );

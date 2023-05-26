@@ -1,16 +1,18 @@
 const { Schema, model } = require("mongoose");
+const STATUS_ARRAY = require("../../statusarray")
+
 
 const taskSchema = new Schema({
   title: { type: String, required: true },
   description: { type: String, required: true },
   status: {
     type: String,
-    enum: ["backlog", "inprogress", "todo", "done"],
+    enum: STATUS_ARRAY,
     required: true,
   },
   duedate: { type: Date },
   user: { type: Schema.Types.ObjectId, ref: "User" },
-  project: { type: Schema.Types.ObjectId, ref: "Project" },
+  cycle: { type: Schema.Types.ObjectId, ref: "Cycle" },
 });
 
 const Task = model("Task", taskSchema);

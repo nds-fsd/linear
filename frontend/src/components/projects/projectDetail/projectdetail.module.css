@@ -1,0 +1,158 @@
+.projectDetails {
+    width: 100%;
+    background-color: var(--main-bg-color);
+    border: 2px solid var(--gray-color);
+    padding:3em;
+  }
+
+.projectDetails *{
+  margin:0;
+}  
+
+.container{
+  width:100%;
+  height:100%;
+  border-radius: 10px;
+  background-color: white;
+  overflow: auto;
+  padding:1em;
+  display:flex;
+}
+
+
+.projectTitle{
+  font-size: 2rem;
+}
+
+.colOne{
+  padding:1em;
+  width:50%;
+  border-right:2px solid var(--gray-color);
+  display:flex;
+  flex-direction:column;
+  gap:2em;
+}
+
+
+.btnWrapper{
+  display:flex;
+  gap:1.5em;
+}
+
+.goBackBtn{
+  font-size: 1em;
+  border-radius: 10px;
+  padding:1em 2em;
+  border:none;
+  cursor:pointer;
+  color:var(--darkgray-color);
+  font-weight:700;
+}
+
+.addCycleBtn{
+  font-size: 1em;
+  border-radius: 10px;
+  padding:1em 2em;
+  border:none;
+  cursor:pointer;
+  color:var(--accent-color);
+  font-weight:700;
+  display:flex;
+  align-items: center;
+  gap:10px;
+}
+
+.goBackBtn:active, .addCycleBtn:active {
+  transform: scale(0.98);
+}
+
+
+.datesContainer{
+  display:flex;
+  /* flex-direction:column; */
+  flex-wrap:wrap;
+  gap:1em;
+}
+
+.titleContainer{
+  display:flex;
+  /* flex-direction:column; */
+  flex-wrap:wrap;
+  gap:1em;
+  justify-content: space-between;
+}
+
+.descriptionContainer{
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  gap:1em;
+}
+
+.descriptionContainer h3{
+  font-size: 1.5em;
+}
+
+
+.projectTextArea{
+  border:2px solid var(--gray-color);
+  height:200px;
+  border-radius: 10px;
+  padding:1em;
+  overflow-y:auto;
+}
+
+.projectTextArea p{
+  line-break: anywhere;
+  
+}
+
+
+.cyclesContainer{
+  width:100%;
+  height: 40%;
+  border:2px solid var(--gray-color);
+  display:flex;
+  gap:2em;
+  padding:1em;
+  border-radius: 10px;
+  overflow: auto;
+}
+
+
+
+.buttonsContainer{
+  width:100%;
+  /* border:2px solid var(--gray-color); */
+  display:flex;
+  gap:2em;
+  padding:1em;
+  border-radius: 10px;
+}
+
+.selectButton{
+  width:100%;
+  min-height:70px;
+  height: 100%;
+  border-radius: 20px;
+  font-size:1em;
+  font-weight: 700;
+  border:none;
+  color: var(--accent-color);
+  cursor:pointer;
+}
+
+.selectButton:active {
+  transform: scale(0.98);
+}
+
+
+
+
+.colTwo{
+  padding:1em;
+  width:50%;
+  /* border:2px solid red; */
+}
+
+
