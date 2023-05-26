@@ -5,7 +5,7 @@ import Sidebar from "../../components/sidebar/sidebar";
 import MyIssues from "../../components/myissues/myissues";
 import Projects from "../../components/projects/projects";
 import ProjectDetail from "../../components/projects/projectDetail/projectdetail";
-import Cycles from "../../components/cycles/cycles";
+import Overview from "../../components/cycles/overview";
 import Inbox from "../../components/inbox/inbox";
 import Settings from "../../components/settings/settings";
 import homeStyles from "./home.module.css";
@@ -35,7 +35,7 @@ const Home = () => {
         <Route path={MY_ISSUES} element={<MyIssues />} />
         <Route path={PROJECTS} element={<Projects />} />
         <Route path={`${PROJECTS}/:id`} element={<ProjectDetail />} />
-        <Route path={CYCLES} element={<Cycles />} />
+        <Route path={CYCLES} element={<Overview />} />
         <Route path={`${USER_ID}/${INBOX}`} element={<Inbox />} />
         <Route path={`${USER_ID}/${SETTINGS}`} element={<Settings />} />
         <Route path="" element={<Navigate to={MY_ISSUES} />} />

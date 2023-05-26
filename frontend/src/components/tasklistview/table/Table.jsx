@@ -6,6 +6,7 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import styles from "./Table.module.css";
 
 export const Table = ({
+  isReduced,
   rows,
   deleteRow,
   handleEditModal,
@@ -45,15 +46,25 @@ export const Table = ({
             <th>
               <h2>Title</h2>
             </th>
-            <th className={styles.expand}>
-              <h2>Description</h2>
-            </th>
-            <th className={styles.expand}>
-              <h2>Project</h2>
-            </th>
-            <th className={styles.expand}>
-              <h2>Cycle</h2>
-            </th>
+            {!isReduced && (
+              <>
+                {" "}
+                <th className={styles.expand}>
+                  <h2>Description</h2>
+                </th>
+                <th className={styles.expand}>
+                  <h2>Project</h2>
+                </th>
+                <th className={styles.expand}>
+                  <h2>Cycle</h2>
+                </th>
+              </>
+            )}
+            {isReduced && (
+              <th className={styles.expand}>
+                <h2>Asigned User</h2>
+              </th>
+            )}
             <th className={styles.sort} onClick={sortElementsByStatus}>
               <h2>Status</h2>
               {sortOrder === "asc" ? (
@@ -84,9 +95,18 @@ export const Table = ({
                 >
                   {row.title}
                 </td>
-                <td className={styles.description}>{row?.description}</td>
-                <td className={styles.expand}>{row?.cycle?.project.title}</td>
-                <td className={styles.expand}>{row?.cycle?.title}</td>
+                {!isReduced && (
+                  <>
+                    <td className={styles.description}>{row?.description}</td>
+                    <td className={styles.expand}>
+                      {row?.cycle?.project.title}
+                    </td>
+                    <td className={styles.expand}>{row?.cycle?.title}</td>
+                  </>
+                )}
+                {isReduced && (
+                  <td className={styles.expand}>{row?.asigneduser.firstname} {row?.asigneduser.lastname}</td>
+                )}
                 <td className={styles[`label-${row.status}`]}>
                   <span>{statusText}</span>
                 </td>

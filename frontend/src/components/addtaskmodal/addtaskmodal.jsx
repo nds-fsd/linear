@@ -10,7 +10,7 @@ import addTaskStyles from "./addtaskmodal.module.css";
 import { STATUS_ARRAY } from "../../statusarray";
 import Spinner from "../spinner/spinner";
 
-const AddTaskModal = ({ setShowModal }) => {
+const AddTaskModal = ({ defaultValues, setShowModal }) => {
 
   const { register, handleSubmit, reset } = useForm();
   const { teams , userSessionContext } = useContext(Context);
@@ -19,7 +19,6 @@ const AddTaskModal = ({ setShowModal }) => {
   const [selectedProject, setSelectedProject] = useState("");
   const queryClient = useQueryClient();
   const [users, setUsers] = useState();
-
 
   useEffect(() => {
     const fullSelectedTeam = teams.find((team) => team._id === selectedTeam);

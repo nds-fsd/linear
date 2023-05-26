@@ -5,8 +5,8 @@ export const addTask = (data) => {
   return api.post("/tasks", data);
 };
 
-export const getAllTasks = () => {
-  return api.get("/tasks");
+export const getAllTasks = (queryParams) => {
+  return api.get("/tasks", {params: queryParams});
 };
 
 export const getTasksByUser = (userid) => {

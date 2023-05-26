@@ -51,9 +51,7 @@ const Widget = ({ widget, index, handleEditModal, handleDeleteModal }) => {
 
           <div className={styles.row}>
             <div className={styles.widgetInfo}>
-              <p>
-                {asigneduser?.firstname} {asigneduser?.lastname}
-              </p>
+              <p>{cycle?.project.title}</p>
               <p>{cycle?.title}</p>
             </div>
             <p className={styles[`status${status}`]}>{finalStatus}</p>
@@ -61,7 +59,9 @@ const Widget = ({ widget, index, handleEditModal, handleDeleteModal }) => {
 
           <div className={styles.row}>
             <div>{formatedDate}</div>
-            <p>{cycle?.project.title}</p>
+            <p>
+              {asigneduser?.firstname} {asigneduser?.lastname}
+            </p>
           </div>
         </div>
       )}

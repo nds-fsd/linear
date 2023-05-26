@@ -1,4 +1,4 @@
-import React from "react";
+import {useState} from "react";
 import QueryBuilderOutlinedIcon from "@mui/icons-material/QueryBuilderOutlined";
 import styles from "./projectdetailcycles.module.css";
 import KeyboardDoubleArrowRightRoundedIcon from "@mui/icons-material/KeyboardDoubleArrowRightRounded";
@@ -6,7 +6,11 @@ import { useQuery } from "react-query";
 import { getCyclesByProject } from "../../../../utils/apiCycle";
 import { formatDate } from "../../../../utils/formatDates";
 
-const ProjectDetailCyclesList = ({ projectId }) => {
+const ProjectDetailCyclesList = ({ projectId, handleSelectCycle, selectedCycle }) => {
+
+  const [cycles, setCycles] = useState([])
+
+
   const {
     data: rawCycles,
     isLoading: cyclesIsLoading,
@@ -14,13 +18,21 @@ const ProjectDetailCyclesList = ({ projectId }) => {
   } = useQuery({
     queryKey: ["cycles", { project: projectId }],
     queryFn: () => getCyclesByProject(projectId),
+    onSuccess: (data) => {
+      setCycles(data.data)}
   });
 
-  const cycleElements = rawCycles?.data.map((cycle) => {
-    console.log(cycle)
 
+
+  const cycleElements = cycles?.map((cycle) => {
+    const selected = (selectedCycle === cycle._id)
     return (
-      <li className={styles.cycleListItem}>
+      <li 
+      onClick={()=> {
+        handleSelectCycle(cycle._id)
+      }}
+      key={cycle._id} 
+      className={selected?styles.selected :styles.cycleListItem}>
         <div>
           <h2 className={styles.cycleTitle}>{cycle.title}</h2>
           <p>{cycle.status}</p>

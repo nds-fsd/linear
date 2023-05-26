@@ -5,6 +5,7 @@
   justify-content: space-between;
   min-height: 150px;
   width: 100%;
+  padding-top:1.5em;
 }
 
 .toolBar {
@@ -13,6 +14,13 @@
   width: 100%;
   justify-content: space-between;
   padding: 1em;
+}
+
+.date{
+  background-color:white;
+  padding:.5em 1em;
+  border-radius: 10px;
+  font-weight: 500;
 }
 
 .searchDialog {
@@ -95,4 +103,14 @@
   justify-content: space-between;
   align-items: center;
   padding:0 1.5em;
+}
+
+.titleContainer{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  gap:1em;
+}
+.titleContainer *{
+  margin:0;
 }

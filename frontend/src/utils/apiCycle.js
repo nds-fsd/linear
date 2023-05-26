@@ -7,6 +7,6 @@ export const getCyclesByProject = (projectid) => {
     return api.get(`/cycles/by-project/${projectid}`);
   };
 
-  export const getAllCycles = () => {
-    return api.get(`/cycles`);
+  export const getAllCycles = (queryParams) => {
+    return api.get(`/cycles`, {params: queryParams});
   };

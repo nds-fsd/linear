@@ -35,7 +35,7 @@ exports.getAllTasks = asyncHandler(async (req, res) => {
     const tasksWithoutUserPasswords = allTasks.map((task) => {
       const { _id, title, description, status, duedate, user, cycle } = task;
       const { firstname, lastname, teamrole, email } = user;
-      const asigneduser = { firstname, lastname, teamrole, email, _id };
+      const asigneduser = { firstname, lastname, teamrole, email, _id:user._id };
       const taskWithoutUserPassword = {
         _id,
         title,
@@ -99,7 +99,7 @@ exports.getTaskById = asyncHandler(async (req, res) => {
   const { _id, title, description, status, duedate, user, cycle } =
     selectedTask;
   const { firstname, lastname, teamrole, email } = user;
-  const asigneduser = { firstname, lastname, teamrole, email, _id };
+  const asigneduser = { firstname, lastname, teamrole, email, _id:user._id };
   const taskWithoutUserPassword = {
     _id,
     title,

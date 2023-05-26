@@ -11,8 +11,7 @@ const projectSchema = new Schema(
     status: {
       type: String,
       enum: STATUS_ARRAY,
-      required: true,
-    },
+    }
   },
   { timestamps: true }
 );

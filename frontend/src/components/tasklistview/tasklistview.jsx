@@ -3,6 +3,7 @@ import { Table } from "./table/Table";
 import styles from "./listview.module.css";
 
 function TaskListView({ data, handleEditModal, handleDeleteModal }) {
+  
   const unorderedTasks = Object.keys(data).map((listName) => {
     return data[listName];
   });
@@ -14,6 +15,7 @@ function TaskListView({ data, handleEditModal, handleDeleteModal }) {
   return (
     <div className={styles.listView}>
       <Table
+        isReduced={false}
         handleEditModal={handleEditModal}
         handleDeleteModal={handleDeleteModal}
         rows={rows}

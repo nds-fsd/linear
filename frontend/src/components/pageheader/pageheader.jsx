@@ -13,6 +13,7 @@ const PageHeader = ({
   btntitle,
   btnFunction,
   refetchFn,
+  filterData,
 }) => {
   const context = useContext(Context);
   const { userSessionContext } = context;
@@ -23,12 +24,24 @@ const PageHeader = ({
   });
   const parts = today.split("/");
   const formattedDate = `${parts[1]}/${parts[0]}/${parts[2]}`;
+
+  const projectOptionElements = filterData?.teams?.map((team) => {
+    return (
+      <option value={team.project} key={team.project}>
+        {team.project.name}
+      </option>
+    );
+  });
+
   return (
     <div className={headerStyle.header}>
       <div className={headerStyle.wrapper}>
-        <h2>{formattedDate}</h2>
-        <h1>{title}</h1>
-        <h2></h2>
+        <span></span>
+        <div className={headerStyle.titleContainer}>
+          <h1>{title}</h1>
+          <p className={headerStyle.date}>{formattedDate}</p>
+        </div>
+        <span></span>
       </div>
       <div className={headerStyle.toolBar}>
         <div className={headerStyle.searchDialog}>
@@ -38,7 +51,7 @@ const PageHeader = ({
           <input id="searchinput" type="text" placeholder="Search issues" />
         </div>
 
-        {title === "My Issues" && (
+        {title !== "Projects" && (
           <div className={headerStyle.switchViewBtnContainer}>
             <button
               onClick={() => {

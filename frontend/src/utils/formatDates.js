@@ -15,3 +15,15 @@ export const capitalizeStr = (str)=>{
   const capitalizedStr = str.charAt(0).toUpperCase() + str.slice(1)
   return capitalizedStr
 }
+
+
+export const reorderTasks = (tasks)=>{
+  const unorderedTasks = Object.keys(tasks)?.map((listName) => {
+    return tasks[listName];
+  });
+  const rows = unorderedTasks?.reduce((acc, current) => {
+    return [...acc, ...current];
+  });
+
+  return rows
+}
