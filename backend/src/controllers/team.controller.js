@@ -1,12 +1,12 @@
 const Team = require("../mongo/schemas/team.schema.js");
 const express = require("express");
 const asyncHandler = require("express-async-handler");
-const { getAll } = require("../db-service.js");
+const { getAll } = require("../services/db-service.js");
 
 exports.getAllTeams = asyncHandler(async (req, res) => {
   try {
     const allTeams = await getAll({
-        model:Teams,
+        model:Team,
         populationFields:['project','users'],
         entity:"Teams",
         query: req.query

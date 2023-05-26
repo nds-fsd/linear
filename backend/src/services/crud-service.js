@@ -1,7 +1,13 @@
-const { findOne, findAll, create,deleteOne:deleteItem,updateOne:updateItem } = require("./db-service");
+const {
+  findOne,
+  findAll,
+  create,
+  deleteOne: deleteItem,
+  updateOne: updateItem,
+} = require("./db-service.js");
+const asyncHandler = require("express-async-handler");
 
 const getAll = ({ model, populationFields, entity }) => {
-
   return asyncHandler(async (req, res) => {
     try {
       const allItems = await findAll({
@@ -59,21 +65,24 @@ const createOne = ({ model, requiredKeys = [] }) => {
   });
 };
 
+const updateOne = (model) => {
+  return asyncHandler(async (req, res) => {
+    const filter = req.params.id;
+    console.log(filter);
+    const selectedCycle = await updateItem({
+      model,
+      id: req.params.id,
+      data: req.body,
+    });
+    res.json(selectedCycle);
+  });
+};
 
-const updateOne = (model) =>{
-    return asyncHandler(async (req, res) => {
-        const filter = req.params.id;
-        console.log(filter);
-        const selectedCycle = await updateItem({model,id:req.params.id,data:req.body})
-        res.json(selectedCycle);
-      });
-}
+const deleteOne = (model) => {
+  return asyncHandler(async (req, res) => {
+    const deletedItem = await deleteItem(model, req.params.id);
+    res.json(deletedItem);
+  });
+};
 
-const deleteOne = (model) =>{
-    return asyncHandler(async (req, res) => {
-        const deletedItem = await deleteItem(model, req.params.id)
-        res.json(deletedItem);
-      });
-}
- 
-module.exports = { getAll, getOne, createOne,updateOne,deleteOne };
+module.exports = { getAll, getOne, createOne, updateOne, deleteOne };

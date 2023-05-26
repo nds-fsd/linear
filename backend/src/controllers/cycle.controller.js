@@ -2,15 +2,13 @@ const Cycle = require("../mongo/schemas/cycle.schema.js");
 const express = require("express");
 const asyncHandler = require("express-async-handler");
 const STATUS_ARRAY = require("../statusarray.js");
+const crudService = require('../services/crud-service.js')
 
-const crudService = require('../services/crud-service.js') 
-
-exports.getAllCycles = crudService.getAll({ 
-    populationFields:['project'],
-    entity:'Cycles',
-    model:Cycle
-})
-
+exports.getAllCycles = crudService.getAll({
+  populationFields: ["project"],
+  entity: "Cycles",
+  model: Cycle,
+});
 
 exports.getCyclesByProject = asyncHandler(async (req, res) => {
   const { projectid } = req.params;
@@ -33,16 +31,16 @@ exports.getCyclesByProject = asyncHandler(async (req, res) => {
   }
 });
 
-exports.getCycleById = crudService.getOne({ model:Cycle,
-    populationFields:['project']})
-
+exports.getCycleById = crudService.getOne({
+  model: Cycle,
+  populationFields: ["project"],
+});
 
 exports.createCycle = crudService.createOne({
-    model:Cycle,
-    requiredKeys:['title', 'description', 'startdate','finishdate', 'project']
-})
+  model: Cycle,
+  requiredKeys: ["title", "description", "startdate", "finishdate", "project"],
+});
 
+exports.deleteCycleById = crudService.deleteOne(Cycle);
 
-exports.deleteCycleById = crudService.deleteOne(Cycle) 
-
-exports.updateCycleById = crudService.updateOne(Cycle)
+exports.updateCycleById = crudService.updateOne(Cycle);
