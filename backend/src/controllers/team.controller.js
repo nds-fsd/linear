@@ -5,10 +5,11 @@ const { getAll } = require("../db-service.js");
 
 exports.getAllTeams = asyncHandler(async (req, res) => {
   try {
-    const allTeams = await getAll(req,{
+    const allTeams = await getAll({
         model:Teams,
         populationFields:['project','users'],
-        entity:"Teams"
+        entity:"Teams",
+        query: req.query
      });
     if (allTeams.length === 0) {
       res.status(404).json({ message: "No teams to display" });
