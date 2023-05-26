@@ -1,9 +1,11 @@
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import ViewKanbanOutlinedIcon from "@mui/icons-material/ViewKanbanOutlined";
 import FormatListBulletedOutlinedIcon from "@mui/icons-material/FormatListBulletedOutlined";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
+import ArrowDropDownCircleOutlinedIcon from "@mui/icons-material/ArrowDropDownCircleOutlined";
 import headerStyle from "./pageheader.module.css";
+import Select from "react-select";
 import { Context } from "../../Context";
 
 const PageHeader = ({
@@ -14,9 +16,27 @@ const PageHeader = ({
   btnFunction,
   refetchFn,
   filterData,
+  setFilterData,
+  refetchCycles
 }) => {
   const context = useContext(Context);
   const { userSessionContext } = context;
+  const [filterProjectOptions, setFilterProjectOptions] = useState([]);
+  const [filterCycleOptions, setFilterCycleOptions] = useState([]);
+
+  useEffect(() => {
+    const emptyOption = [{ label: "No options", id: "No options" }];
+
+    setFilterProjectOptions(filterData?.teams?.map((team) => {
+      return { label: team.project?.title, id: team.project?._id };
+    })); 
+
+    setFilterCycleOptions(filterData?.cycles?.map((cycle) => {
+      return { label: cycle.title, id: cycle._id };
+    }));
+
+  }, [filterData]);
+
   const today = new Date().toLocaleString("en-US", {
     day: "2-digit",
     month: "2-digit",
@@ -25,13 +45,14 @@ const PageHeader = ({
   const parts = today.split("/");
   const formattedDate = `${parts[1]}/${parts[0]}/${parts[2]}`;
 
-  const projectOptionElements = filterData?.teams?.map((team) => {
-    return (
-      <option value={team.project} key={team.project}>
-        {team.project.name}
-      </option>
-    );
+
+  const projectOptions = filterProjectOptions?.map((project) => {
+    return { label: project.label, value: project.id };
   });
+
+  const cycleOptions = filterCycleOptions?.map(cycle => {
+    return {label:cycle.label, value:cycle.id}
+  })
 
   return (
     <div className={headerStyle.header}>
@@ -44,13 +65,47 @@ const PageHeader = ({
         <span></span>
       </div>
       <div className={headerStyle.toolBar}>
-        <div className={headerStyle.searchDialog}>
-          <label htmlFor="searchinput">
-            <SearchIcon className={headerStyle.icon} />
-          </label>
-          <input id="searchinput" type="text" placeholder="Search issues" />
+        <div className={headerStyle.filterWrapper}>
+          {filterData.type === "complex" ? (
+            <>
+              {/* PROJECTS */}
+              <Select
+                value={filterData.selectedProject}
+                onChange={(e)=>{
+                  setFilterData(prevState => {
+                    return{...prevState, selectedProject:e}
+                  })
+                }}
+                classNames={{ control: () => headerStyle.select }}
+                options={projectOptions}
+              />
+              {/* CYCLES */}
+              <Select
+                isMulti
+                value={filterData.selectedCycles}
+                onChange={(e)=>{
+                  setFilterData(prevState => {
+                    return{...prevState, selectedCycles:e}
+                  })
+                  console.log(filterData)
+                }}
+                classNames={{ control: () => headerStyle.select }}
+                options={cycleOptions}
+              />
+            </>
+          ) : (
+            <div className={headerStyle.searchDialog}>
+              <label htmlFor="searchinput">
+                <SearchIcon className={headerStyle.icon} />
+              </label>
+              <input
+                id="searchinput"
+                type="text"
+                placeholder="Search an issue"
+              />
+            </div>
+          )}
         </div>
-
         {title !== "Projects" && (
           <div className={headerStyle.switchViewBtnContainer}>
             <button
@@ -78,6 +133,7 @@ const PageHeader = ({
             </button>
           </div>
         )}
+        {filterData.type === "complex" && <span></span>}
 
         <button onClick={() => btnFunction(true)} className={headerStyle.btn}>
           <AddCircleOutlineOutlinedIcon />

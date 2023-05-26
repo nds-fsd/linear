@@ -78,6 +78,8 @@ const MyIssues = () => {
     );
   });
 
+  const filterData = {type:"simple"}
+
   return (
     <div className={myIssuesStyle.myIssues}>
       <PageHeader
@@ -87,6 +89,7 @@ const MyIssues = () => {
         title="My Issues"
         btntitle="Issue"
         btnFunction={setShowAddModal}
+        filterData={filterData}
       />
       {showAddModal && <AddTaskModal setShowModal={setShowAddModal} />}
       {showEditModal && (
