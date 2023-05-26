@@ -18,7 +18,7 @@ const Projects = () => {
     console.log("chau")
   }
 
-
+  const filterData = {type:"simple"}
   return (
     <div className={projectsStyle.projects}>
       <PageHeader
@@ -26,6 +26,7 @@ const Projects = () => {
         setActiveview={setActiveview}
         title="Projects"
         btntitle="Project"
+        filterData={filterData}
       />
       <ProjectListView
         data={teams}

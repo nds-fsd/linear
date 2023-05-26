@@ -1,10 +1,16 @@
 const Team = require("../mongo/schemas/team.schema.js");
 const express = require("express");
 const asyncHandler = require("express-async-handler");
+const { getAll } = require("../services/db-service.js");
 
 exports.getAllTeams = asyncHandler(async (req, res) => {
   try {
-    const allTeams = await Team.find().populate("project").populate("users");
+    const allTeams = await getAll({
+        model:Team,
+        populationFields:['project','users'],
+        entity:"Teams",
+        query: req.query
+     });
     if (allTeams.length === 0) {
       res.status(404).json({ message: "No teams to display" });
       return;
