@@ -48,6 +48,7 @@ const Overview = () => {
     refetch: refetchTasks,
   } = useQuery({
     queryKey: ["tasks", {cycle:filterData.selectedCycles}],
+    retry:false,
     queryFn: () => {
       const cycleIds = filterData.selectedCycles.map(cycle => cycle.value)   
       console.log(cycleIds)
@@ -55,10 +56,10 @@ const Overview = () => {
     enabled: true,
     onSuccess: (tasks) => {
       setData(tasks.data);
-      queryClient.invalidateQueries({queryKey:["tasks", {cycle:filterData.selectedCycles}]})
+      // queryClient.invalidateQueries({queryKey:["tasks", {cycle:filterData.selectedCycles}]})
     },
     onError: (err) => {
-      console.log(err);
+      setData([]);
     },
   });
 
