@@ -1,0 +1,14 @@
+.listView{
+    height: 81%;
+    display:flex;
+    overflow: auto;
+    justify-content: space-evenly;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+    /* border:2px solid red; */
+  
+  }
+  
+  .listView::-webkit-scrollbar {
+  display: none;
+  }

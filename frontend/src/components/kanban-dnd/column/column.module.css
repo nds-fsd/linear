@@ -1,0 +1,29 @@
+.columnContainer{
+  text-align: center;
+}
+
+
+.column {
+  background-color: var(--main-bg-color);
+  height: 100%;
+  min-width: 320px;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items:center;
+  gap: 1em;
+  box-shadow: 0px 10px 10px #ccc;
+  overflow-y: scroll;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.column::-webkit-scrollbar {
+  display: none;
+}
+
+
+.header {
+  text-align: center;
+}

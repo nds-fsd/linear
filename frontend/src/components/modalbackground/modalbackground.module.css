@@ -1,0 +1,11 @@
+.modalContainer {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 100%;
+  min-height: 100%;
+  top: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}

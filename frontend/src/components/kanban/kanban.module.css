@@ -1,0 +1,10 @@
+.kanbanArea {
+  width: 100%;
+  height: calc(100% - 180px);
+  background-color: var(--main-bg-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 3em;
+}

@@ -1,0 +1,15 @@
+.kanbanBoard{
+    height: 73%;
+    display:flex;
+    overflow: auto;
+    justify-content: space-evenly;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+    padding:1em;
+}
+
+
+
+.kanbanBoard::-webkit-scrollbar {
+display: none;
+}
