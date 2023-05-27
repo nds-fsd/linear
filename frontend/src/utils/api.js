@@ -4,7 +4,7 @@ import { getUserSession, getUserToken } from "./localStorage.utils";
 
 const URL_API =
       window.location.hostname === "makisolutions.netlify.app"
-      ? "https://makisolutions.netlify.app/"
+      ? "https://maki.up.railway.app"
       : "http://localhost:3001"
 
 
