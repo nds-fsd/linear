@@ -3,7 +3,6 @@ import SearchIcon from "@mui/icons-material/Search";
 import ViewKanbanOutlinedIcon from "@mui/icons-material/ViewKanbanOutlined";
 import FormatListBulletedOutlinedIcon from "@mui/icons-material/FormatListBulletedOutlined";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
-import ArrowDropDownCircleOutlinedIcon from "@mui/icons-material/ArrowDropDownCircleOutlined";
 import headerStyle from "./pageheader.module.css";
 import Select from "react-select";
 import { Context } from "../../Context";
@@ -17,24 +16,28 @@ const PageHeader = ({
   refetchFn,
   filterData,
   setFilterData,
-  refetchCycles
 }) => {
+
+  const emptyOption = { label: "No option selected", id: "No options" };
   const context = useContext(Context);
   const { userSessionContext } = context;
-  const [filterProjectOptions, setFilterProjectOptions] = useState([]);
-  const [filterCycleOptions, setFilterCycleOptions] = useState([]);
+  const [filterProjectOptions, setFilterProjectOptions] = useState([
+    emptyOption,
+  ]);
+  const [filterCycleOptions, setFilterCycleOptions] = useState([emptyOption]);
 
   useEffect(() => {
-    const emptyOption = [{ label: "No options", id: "No options" }];
-
-    setFilterProjectOptions(filterData?.teams?.map((team) => {
-      return { label: team.project?.title, id: team.project?._id };
-    })); 
-
-    setFilterCycleOptions(filterData?.cycles?.map((cycle) => {
-      return { label: cycle.title, id: cycle._id };
-    }));
-
+    setFilterProjectOptions(() => {
+      const projects = filterData?.teams?.map((team) => {
+        return { label: team.project?.title, id: team.project?._id };
+      });
+      return [emptyOption, ...projects];
+    });
+    setFilterCycleOptions(
+      filterData?.cycles?.map((cycle) => {
+        return { label: cycle.title, id: cycle._id };
+      })
+    );
   }, [filterData]);
 
   const today = new Date().toLocaleString("en-US", {
@@ -45,15 +48,13 @@ const PageHeader = ({
   const parts = today.split("/");
   const formattedDate = `${parts[1]}/${parts[0]}/${parts[2]}`;
 
-
   const projectOptions = filterProjectOptions?.map((project) => {
     return { label: project.label, value: project.id };
   });
 
-  const cycleOptions = filterCycleOptions?.map(cycle => {
-    return {label:cycle.label, value:cycle.id}
-  })
-
+  const cycleOptions = filterCycleOptions?.map((cycle) => {
+    return { label: cycle.label, value: cycle.id };
+  });
   return (
     <div className={headerStyle.header}>
       <div className={headerStyle.wrapper}>
@@ -71,10 +72,10 @@ const PageHeader = ({
               {/* PROJECTS */}
               <Select
                 value={filterData.selectedProject}
-                onChange={(e)=>{
-                  setFilterData(prevState => {
-                    return{...prevState, selectedProject:e}
-                  })
+                onChange={(e) => {
+                  setFilterData((prevState) => {
+                    return { ...prevState, selectedProject: e };
+                  });
                 }}
                 classNames={{ control: () => headerStyle.select }}
                 options={projectOptions}
@@ -82,12 +83,12 @@ const PageHeader = ({
               {/* CYCLES */}
               <Select
                 isMulti
-                value={filterData.selectedCycles}
-                onChange={(e)=>{
-                  setFilterData(prevState => {
-                    return{...prevState, selectedCycles:e}
-                  })
-                  console.log(filterData)
+                value={filterData.selectedCycles || filterData.cycles}
+                onChange={(e) => {
+                  console.log(e)
+                  setFilterData((prevState) => {
+                    return { ...prevState, selectedCycles: e };
+                  });
                 }}
                 classNames={{ control: () => headerStyle.select }}
                 options={cycleOptions}

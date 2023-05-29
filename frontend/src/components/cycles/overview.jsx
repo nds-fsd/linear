@@ -25,14 +25,13 @@ const Overview = () => {
   const [filterData, setFilterData] = useState({
     type: "complex",
     teams: teams,
-    selectedProject: {value:"select one", label:"Select one..."},
-    selectedCycles:[],
-    cycles:[]
+    selectedProject: { value: "", label: "Select one..." },
+    selectedCycles: [],
+    cycles: [],
   });
   const [data, setData] = useState(MOCK_DATA);
   const [taskId, setTaskId] = useState("");
-  const queryClient = useQueryClient()
-
+  const queryClient = useQueryClient();
 
   // const userFullName = `${firstname} ${lastname}`;
 
@@ -47,16 +46,18 @@ const Overview = () => {
     isLoading: taskLoading,
     refetch: refetchTasks,
   } = useQuery({
-    queryKey: ["tasks", {cycle:filterData.selectedCycles}],
-    retry:false,
+    queryKey: ["tasks", { cycle: filterData.selectedCycles }],
+    retry: false,
     queryFn: () => {
-      const cycleIds = filterData.selectedCycles.map(cycle => cycle.value)   
-      console.log(cycleIds)
-      return getAllTasks({cycle:cycleIds})},
+      const allCyclesFromProject = filterData.cycles;
+      const selectedCycles = filterData.selectedCycles;
+      const cycleIds = selectedCycles.map((cycle) => cycle.value)
+  
+      return getAllTasks({ cycle: cycleIds });
+    },
     enabled: true,
     onSuccess: (tasks) => {
       setData(tasks.data);
-      // queryClient.invalidateQueries({queryKey:["tasks", {cycle:filterData.selectedCycles}]})
     },
     onError: (err) => {
       setData([]);
@@ -68,23 +69,26 @@ const Overview = () => {
     isLoading: cyclesIsLoading,
     refetch: refetchCycles,
   } = useQuery({
-    queryKey: ["cycles", {project:filterData.selectedProject?.value}],
+    queryKey: ["cycles", { project: filterData.selectedProject?.value }],
     queryFn: () => getCyclesByProject(filterData.selectedProject?.value),
     retry: false,
     onSuccess: (data) => {
-      setFilterData(prevState => {
-        const cyclesWithLabel = data.data.map(cycle => {return{label:cycle.title, value:cycle._id}}) 
-        return{...prevState, cycles:data.data, selectedCycles:cyclesWithLabel}
-      })
+      setFilterData((prevState) => {
+        const cyclesWithLabel = data.data.map((cycle) => {
+          return { label: cycle.title, value: cycle._id };
+        });
+        return {
+          ...prevState,
+          cycles: data.data,
+          selectedCycles: cyclesWithLabel,
+          cycles: cyclesWithLabel,
+        };
+      });
     },
     onError: (err) => {
       console.log(err);
     },
-  }); 
-
-
-
-
+  });
 
   const handleEditModal = (taskid) => {
     setTaskId(taskid);
@@ -124,7 +128,6 @@ const Overview = () => {
         btnFunction={setShowAddModal}
         filterData={filterData}
         setFilterData={setFilterData}
-        refetchCycles={refetchCycles}
       />
       {showAddModal && <AddTaskModal setShowModal={setShowAddModal} />}
       {showEditModal && (
