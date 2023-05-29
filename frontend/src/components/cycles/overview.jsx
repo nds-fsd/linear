@@ -50,8 +50,7 @@ const Overview = () => {
     retry: false,
     queryFn: () => {
       const selectedCycles = filterData.selectedCycles;
-      const cycleIds = selectedCycles.map((cycle) => cycle.value)
-  
+      const cycleIds = selectedCycles.map((cycle) => cycle.value)  
       return getAllTasks({ cycle: cycleIds });
     },
     enabled: true,
@@ -78,7 +77,6 @@ const Overview = () => {
         });
         return {
           ...prevState,
-          cycles: data.data,
           selectedCycles: cyclesWithLabel,
           cycles: cyclesWithLabel,
         };

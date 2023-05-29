@@ -17,29 +17,22 @@ const PageHeader = ({
   filterData,
   setFilterData,
 }) => {
-
   const emptyOption = { label: "No option selected", id: "No options" };
   const context = useContext(Context);
   const { userSessionContext } = context;
   const [filterProjectOptions, setFilterProjectOptions] = useState([
     emptyOption,
   ]);
-  const [filterCycleOptions, setFilterCycleOptions] = useState([emptyOption]);
 
   useEffect(() => {
-    setFilterProjectOptions(() => {
-      const projects = filterData?.teams?.map((team) => {
-        return { label: team.project?.title, id: team.project?._id };
+    if(filterData.type === "complex"){
+      setFilterProjectOptions(() => {
+        const projects = filterData?.teams?.map((team) => {
+          return { label: team.project?.title, id: team.project?._id };
+        });
+        return [emptyOption, ...projects];
       });
-      return [emptyOption, ...projects];
-    });
-    setFilterCycleOptions(
-      filterData?.cycles
-      // filterData?.cycles?.map((cycle) => {
-      //   return { label: cycle.title, id: cycle._id };
-      // })
-
-    );
+    }
   }, [filterData]);
 
   const today = new Date().toLocaleString("en-US", {
@@ -52,10 +45,6 @@ const PageHeader = ({
 
   const projectOptions = filterProjectOptions?.map((project) => {
     return { label: project.label, value: project.id };
-  });
-
-  const cycleOptions = filterCycleOptions?.map((cycle) => {
-    return { label: cycle.label, value: cycle.id };
   });
   return (
     <div className={headerStyle.header}>
@@ -85,15 +74,14 @@ const PageHeader = ({
               {/* CYCLES */}
               <Select
                 isMulti
-                value={filterData.selectedCycles || filterData.cycles}
+                value={filterData.selectedCycles}
                 onChange={(e) => {
-                  console.log(e)
                   setFilterData((prevState) => {
                     return { ...prevState, selectedCycles: e };
                   });
                 }}
                 classNames={{ control: () => headerStyle.select }}
-                options={cycleOptions}
+                options={filterData.cycles}
               />
             </>
           ) : (

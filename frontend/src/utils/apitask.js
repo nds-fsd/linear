@@ -13,6 +13,10 @@ export const getTasksByUser = (userid) => {
   return api.get(`/tasks/by-user/${userid}`);
 };
 
+export const getTasksByProject = (projectid) => {
+  return api.get(`/tasks/by-project/${projectid}`);
+};
+
 export const getTaskById = (taskid) => {
   return api.get(`/tasks/${taskid}`);
 };
