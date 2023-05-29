@@ -49,7 +49,6 @@ const Overview = () => {
     queryKey: ["tasks", { cycle: filterData.selectedCycles }],
     retry: false,
     queryFn: () => {
-      const allCyclesFromProject = filterData.cycles;
       const selectedCycles = filterData.selectedCycles;
       const cycleIds = selectedCycles.map((cycle) => cycle.value)
   

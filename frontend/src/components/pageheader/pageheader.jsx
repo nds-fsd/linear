@@ -34,9 +34,11 @@ const PageHeader = ({
       return [emptyOption, ...projects];
     });
     setFilterCycleOptions(
-      filterData?.cycles?.map((cycle) => {
-        return { label: cycle.title, id: cycle._id };
-      })
+      filterData?.cycles
+      // filterData?.cycles?.map((cycle) => {
+      //   return { label: cycle.title, id: cycle._id };
+      // })
+
     );
   }, [filterData]);
 
