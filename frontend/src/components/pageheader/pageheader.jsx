@@ -85,12 +85,19 @@ const PageHeader = ({
                 isMulti
                 value={filterData.selectedCycles}
                 onChange={(value) => {
-                    const unorderedTasks = unorderTasks(data)
-                    const filteredTasks = filterTasksByCycle(value, unorderedTasks)
-                    const sortedTasks = sortTasksByStatus(filteredTasks)
-                    setFilterData((prevState) => {
-                      return { ...prevState, selectedCycles: value, dataToDisplay:sortedTasks };
-                    });
+                  const unorderedTasks = unorderTasks(data);
+                  const filteredTasks = filterTasksByCycle(
+                    value,
+                    unorderedTasks
+                  );
+                  const sortedTasks = sortTasksByStatus(filteredTasks);
+                  setFilterData((prevState) => {
+                    return {
+                      ...prevState,
+                      selectedCycles: value,
+                      dataToDisplay: sortedTasks,
+                    };
+                  });
                 }}
                 classNames={{ control: () => headerStyle.select }}
                 options={filterData.cycles}
@@ -113,11 +120,15 @@ const PageHeader = ({
           <div className={headerStyle.switchViewBtnContainer}>
             <button
               onClick={() => {
-                const unorderedTasks = unorderTasks(filterData.dataToDisplay)
-                const sortedTasks = sortTasksByStatus(unorderedTasks)
-                setFilterData((prevState) => {
-                  return { ...prevState, dataToDisplay:sortedTasks };
-                });
+                if (filterData.type === "complex") {
+                  const unorderedTasks = unorderTasks(filterData.dataToDisplay);
+                  const sortedTasks = sortTasksByStatus(unorderedTasks);
+                  setFilterData((prevState) => {
+                    return { ...prevState, dataToDisplay: sortedTasks };
+                  });
+                } else if (filterData.type === "simple") {
+                  refetchFn();
+                }
                 setActiveview("kanban");
               }}
               className={
@@ -130,7 +141,11 @@ const PageHeader = ({
               Board view
             </button>
             <button
-              onClick={() => setActiveview("list")}
+              onClick={() => {
+                if(filterData.type === "simple"){
+                  refetchFn()
+                }
+                setActiveview("list")}}
               className={
                 activeView === "list" ? headerStyle.activebtn : headerStyle.btn
               }

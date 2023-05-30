@@ -12,7 +12,6 @@ const findAll = ({query={},model,populationFields = [], entity}) =>{
         throw new Error('Missing Model or Entity')
     }
 
-
     let operation = model.find(query)
     if(populationFields.length > 0){
         populationFields.forEach((popField)=>{
