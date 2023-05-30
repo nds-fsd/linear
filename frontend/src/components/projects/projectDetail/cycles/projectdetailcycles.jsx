@@ -4,7 +4,7 @@ import styles from "./projectdetailcycles.module.css";
 import KeyboardDoubleArrowRightRoundedIcon from "@mui/icons-material/KeyboardDoubleArrowRightRounded";
 import { useQuery } from "react-query";
 import { getCyclesByProject } from "../../../../utils/apiCycle";
-import { formatDate } from "../../../../utils/formatDates";
+import { formatDate } from "../../../../utils/formatUtils";
 
 const ProjectDetailCyclesList = ({ projectId, handleSelectCycle, selectedCycle }) => {
 

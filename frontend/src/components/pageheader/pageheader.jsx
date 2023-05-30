@@ -6,6 +6,11 @@ import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOu
 import headerStyle from "./pageheader.module.css";
 import Select from "react-select";
 import { Context } from "../../Context";
+import {
+  unorderTasks,
+  sortTasksByStatus,
+  filterTasksByCycle,
+} from "../../utils/formatUtils";
 
 const PageHeader = ({
   setActiveview,
@@ -16,30 +21,25 @@ const PageHeader = ({
   refetchFn,
   filterData,
   setFilterData,
+  setData,
+  data,
 }) => {
-
   const emptyOption = { label: "No option selected", id: "No options" };
   const context = useContext(Context);
   const { userSessionContext } = context;
   const [filterProjectOptions, setFilterProjectOptions] = useState([
     emptyOption,
   ]);
-  const [filterCycleOptions, setFilterCycleOptions] = useState([emptyOption]);
 
   useEffect(() => {
-    setFilterProjectOptions(() => {
-      const projects = filterData?.teams?.map((team) => {
-        return { label: team.project?.title, id: team.project?._id };
+    if (filterData.type === "complex") {
+      setFilterProjectOptions(() => {
+        const projects = filterData?.teams?.map((team) => {
+          return { label: team.project?.title, id: team.project?._id };
+        });
+        return [...projects];
       });
-      return [emptyOption, ...projects];
-    });
-    setFilterCycleOptions(
-      filterData?.cycles
-      // filterData?.cycles?.map((cycle) => {
-      //   return { label: cycle.title, id: cycle._id };
-      // })
-
-    );
+    }
   }, [filterData]);
 
   const today = new Date().toLocaleString("en-US", {
@@ -54,9 +54,6 @@ const PageHeader = ({
     return { label: project.label, value: project.id };
   });
 
-  const cycleOptions = filterCycleOptions?.map((cycle) => {
-    return { label: cycle.label, value: cycle.id };
-  });
   return (
     <div className={headerStyle.header}>
       <div className={headerStyle.wrapper}>
@@ -74,10 +71,11 @@ const PageHeader = ({
               {/* PROJECTS */}
               <Select
                 value={filterData.selectedProject}
-                onChange={(e) => {
+                onChange={(value) => {
                   setFilterData((prevState) => {
-                    return { ...prevState, selectedProject: e };
+                    return { ...prevState, selectedProject: value };
                   });
+                  refetchFn();
                 }}
                 classNames={{ control: () => headerStyle.select }}
                 options={projectOptions}
@@ -85,15 +83,17 @@ const PageHeader = ({
               {/* CYCLES */}
               <Select
                 isMulti
-                value={filterData.selectedCycles || filterData.cycles}
-                onChange={(e) => {
-                  console.log(e)
-                  setFilterData((prevState) => {
-                    return { ...prevState, selectedCycles: e };
-                  });
+                value={filterData.selectedCycles}
+                onChange={(value) => {
+                    const unorderedTasks = unorderTasks(data)
+                    const filteredTasks = filterTasksByCycle(value, unorderedTasks)
+                    const sortedTasks = sortTasksByStatus(filteredTasks)
+                    setFilterData((prevState) => {
+                      return { ...prevState, selectedCycles: value, dataToDisplay:sortedTasks };
+                    });
                 }}
                 classNames={{ control: () => headerStyle.select }}
-                options={cycleOptions}
+                options={filterData.cycles}
               />
             </>
           ) : (
@@ -113,7 +113,11 @@ const PageHeader = ({
           <div className={headerStyle.switchViewBtnContainer}>
             <button
               onClick={() => {
-                refetchFn();
+                const unorderedTasks = unorderTasks(filterData.dataToDisplay)
+                const sortedTasks = sortTasksByStatus(unorderedTasks)
+                setFilterData((prevState) => {
+                  return { ...prevState, dataToDisplay:sortedTasks };
+                });
                 setActiveview("kanban");
               }}
               className={

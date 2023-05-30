@@ -17,7 +17,7 @@ export const capitalizeStr = (str)=>{
 }
 
 
-export const reorderTasks = (tasks)=>{
+export const unorderTasks = (tasks)=>{
   const unorderedTasks = Object.keys(tasks)?.map((listName) => {
     return tasks[listName];
   });
@@ -26,4 +26,31 @@ export const reorderTasks = (tasks)=>{
   });
 
   return rows
+}
+
+
+export const sortTasksByStatus = (taskList) => {
+     const groupedTasks =  taskList.reduce(
+    (acc, task) => {
+      if (!acc[task.status]) {
+        acc[task.status] = [];
+      }
+      acc[task.status].push(task);
+      return acc;
+    },
+    {
+      backlog: [],
+      todo: [],
+      inprogress: [],
+      done: [],
+    }
+  );
+  return groupedTasks;
+};
+
+
+export const filterTasksByCycle = (cycles, tasks) =>  {
+  const cycleValues = cycles.map(cycle => cycle.value);
+  const filteredTasks = tasks.filter(task => cycleValues.includes(task.cycle?._id));
+  return filteredTasks;
 }

@@ -1,6 +1,6 @@
 import { useState, useContext, useEffect } from "react";
 import { useQuery, useQueryClient } from "react-query";
-import { getAllTasks } from "../../utils/apitask";
+import { getAllTasks, getTasksByProject } from "../../utils/apitask";
 import { getAllCycles, getCyclesByProject } from "../../utils/apiCycle";
 import KanbanDnd from "../kanban-dnd/kanban-dnd";
 import AddTaskModal from "../addtaskmodal/addtaskmodal";
@@ -17,7 +17,6 @@ const Overview = () => {
     userSessionContext: { id: userid, firstname, lastname },
     teams,
   } = useContext(Context);
-
   const [activeView, setActiveview] = useState("kanban");
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
@@ -28,6 +27,7 @@ const Overview = () => {
     selectedProject: { value: "", label: "Select one..." },
     selectedCycles: [],
     cycles: [],
+    dataToDisplay:{}
   });
   const [data, setData] = useState(MOCK_DATA);
   const [taskId, setTaskId] = useState("");
@@ -46,20 +46,20 @@ const Overview = () => {
     isLoading: taskLoading,
     refetch: refetchTasks,
   } = useQuery({
-    queryKey: ["tasks", { cycle: filterData.selectedCycles }],
-    retry: false,
+    queryKey: ["tasks", { project: filterData.selectedProject }],
     queryFn: () => {
-      const selectedCycles = filterData.selectedCycles;
-      const cycleIds = selectedCycles.map((cycle) => cycle.value)
-  
-      return getAllTasks({ cycle: cycleIds });
+      return getTasksByProject(filterData.selectedProject.value);
     },
-    enabled: true,
+    refetchOnWindowFocus: false,
+    retry: false,
     onSuccess: (tasks) => {
-      setData(tasks.data);
+        setData(tasks.data);
+        setFilterData(prevData => {
+          return{...prevData, dataToDisplay:tasks.data}
+        })
     },
     onError: (err) => {
-      setData([]);
+      setData(MOCK_DATA);
     },
   });
 
@@ -71,6 +71,7 @@ const Overview = () => {
     queryKey: ["cycles", { project: filterData.selectedProject?.value }],
     queryFn: () => getCyclesByProject(filterData.selectedProject?.value),
     retry: false,
+    refetchOnWindowFocus: false,
     onSuccess: (data) => {
       setFilterData((prevState) => {
         const cyclesWithLabel = data.data.map((cycle) => {
@@ -78,7 +79,6 @@ const Overview = () => {
         });
         return {
           ...prevState,
-          cycles: data.data,
           selectedCycles: cyclesWithLabel,
           cycles: cyclesWithLabel,
         };
@@ -127,6 +127,8 @@ const Overview = () => {
         btnFunction={setShowAddModal}
         filterData={filterData}
         setFilterData={setFilterData}
+        setData={setData}
+        data={data}
       />
       {showAddModal && <AddTaskModal setShowModal={setShowAddModal} />}
       {showEditModal && (
@@ -145,14 +147,14 @@ const Overview = () => {
           <KanbanDnd
             handleEditModal={handleEditModal}
             handleDeleteModal={handleDeleteModal}
-            data={data}
+            data={filterData.dataToDisplay}
           />
         </>
       ) : (
         <TaskListView
           handleEditModal={handleEditModal}
           handleDeleteModal={handleDeleteModal}
-          data={data}
+          data={filterData.dataToDisplay}
         />
       )}
     </div>

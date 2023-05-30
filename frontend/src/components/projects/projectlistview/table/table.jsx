@@ -5,7 +5,7 @@ import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { Link } from "react-router-dom";
 import styles from "./table.module.css";
-import { formatDate } from "../../../../utils/formatDates";
+import { formatDate } from "../../../../utils/formatUtils";
 
 
 

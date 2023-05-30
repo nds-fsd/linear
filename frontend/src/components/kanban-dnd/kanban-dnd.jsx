@@ -27,7 +27,6 @@ const KanbanDnd = ({ data, handleEditModal, handleDeleteModal }) => {
   const {userSessionContext} = useContext(Context)
   const {id:userid, firstname, lastname} = userSessionContext
 
-
   const [columns, setColumns] = useState(data);
   const [taskForUpdate, setTaskForUpdate] = useState({
     draggableId: "",
