@@ -8,8 +8,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import {
   capitalizeStr,
   formatDate,
-  reorderTasks,
-} from "../../../utils/formatDates";
+  unorderTasks,
+} from "../../../utils/formatUtils";
 import { ProjectDetailsUsers } from "./users/projectdetailsusers";
 import ProjectDetailCyclesList from "./cycles/projectdetailcycles";
 import ProjectDetailTasksByCycle from "./tasks/projectdetailtasksbycycle";
@@ -56,7 +56,7 @@ const ProjectDetail = () => {
     retry: false,
     onSuccess: (data) => {
       const tasks = data.data;
-      const rows = reorderTasks(tasks);
+      const rows = unorderTasks(tasks);
       setTaskRows(rows);
     },
     onError: () => setTaskRows([]),

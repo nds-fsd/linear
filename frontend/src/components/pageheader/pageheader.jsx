@@ -6,6 +6,11 @@ import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOu
 import headerStyle from "./pageheader.module.css";
 import Select from "react-select";
 import { Context } from "../../Context";
+import {
+  unorderTasks,
+  sortTasksByStatus,
+  filterTasksByCycle,
+} from "../../utils/formatUtils";
 
 const PageHeader = ({
   setActiveview,
@@ -16,6 +21,8 @@ const PageHeader = ({
   refetchFn,
   filterData,
   setFilterData,
+  setData,
+  data,
 }) => {
   const emptyOption = { label: "No option selected", id: "No options" };
   const context = useContext(Context);
@@ -25,12 +32,12 @@ const PageHeader = ({
   ]);
 
   useEffect(() => {
-    if(filterData.type === "complex"){
+    if (filterData.type === "complex") {
       setFilterProjectOptions(() => {
         const projects = filterData?.teams?.map((team) => {
           return { label: team.project?.title, id: team.project?._id };
         });
-        return [emptyOption, ...projects];
+        return [...projects];
       });
     }
   }, [filterData]);
@@ -46,6 +53,7 @@ const PageHeader = ({
   const projectOptions = filterProjectOptions?.map((project) => {
     return { label: project.label, value: project.id };
   });
+
   return (
     <div className={headerStyle.header}>
       <div className={headerStyle.wrapper}>
@@ -63,10 +71,11 @@ const PageHeader = ({
               {/* PROJECTS */}
               <Select
                 value={filterData.selectedProject}
-                onChange={(e) => {
+                onChange={(value) => {
                   setFilterData((prevState) => {
-                    return { ...prevState, selectedProject: e };
+                    return { ...prevState, selectedProject: value };
                   });
+                  refetchFn();
                 }}
                 classNames={{ control: () => headerStyle.select }}
                 options={projectOptions}
@@ -75,10 +84,13 @@ const PageHeader = ({
               <Select
                 isMulti
                 value={filterData.selectedCycles}
-                onChange={(e) => {
-                  setFilterData((prevState) => {
-                    return { ...prevState, selectedCycles: e };
-                  });
+                onChange={(value) => {
+                    const unorderedTasks = unorderTasks(data)
+                    const filteredTasks = filterTasksByCycle(value, unorderedTasks)
+                    const sortedTasks = sortTasksByStatus(filteredTasks)
+                    setFilterData((prevState) => {
+                      return { ...prevState, selectedCycles: value, dataToDisplay:sortedTasks };
+                    });
                 }}
                 classNames={{ control: () => headerStyle.select }}
                 options={filterData.cycles}
@@ -101,7 +113,11 @@ const PageHeader = ({
           <div className={headerStyle.switchViewBtnContainer}>
             <button
               onClick={() => {
-                refetchFn();
+                const unorderedTasks = unorderTasks(filterData.dataToDisplay)
+                const sortedTasks = sortTasksByStatus(unorderedTasks)
+                setFilterData((prevState) => {
+                  return { ...prevState, dataToDisplay:sortedTasks };
+                });
                 setActiveview("kanban");
               }}
               className={
