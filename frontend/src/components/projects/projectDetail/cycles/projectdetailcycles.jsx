@@ -18,6 +18,7 @@ const ProjectDetailCyclesList = ({ projectId, handleSelectCycle, selectedCycle }
   } = useQuery({
     queryKey: ["cycles", { project: projectId }],
     queryFn: () => getCyclesByProject(projectId),
+    enabled:!!projectId,
     onSuccess: (data) => {
       setCycles(data.data)}
   });
