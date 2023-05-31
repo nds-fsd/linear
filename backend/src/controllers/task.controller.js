@@ -45,6 +45,9 @@ exports.getAllTasks = asyncHandler(async (req, res) => {
 exports.getTasksByProjectId = asyncHandler(async (req, res) => {
   try {
     const projectId = req.params.projectid;
+    if (!projectId) {
+      return res.status(400).json({ error: "please provide a project" });
+    }
     const project = await Project.findById(projectId);
     if (!project) {
       return res.status(404).json({ error: "Project not found" });
@@ -136,25 +139,29 @@ exports.updateTaskById = asyncHandler(async (req, res) => {
 exports.updateTaskStatus = asyncHandler(async (req, res) => {
   const filter = req.params.id;
   const { title, status, description, user, duedate, cycle } = req.body;
-  if (title) {
-    return res
-      .status(400)
-      .json({ error: "This endpoint is only for updating status" });
-  } else if (!status || !STATUS_ARRAY.includes(status)) {
-    return res.status(400).json({ error: "Valid Status is needed" });
-  } else if (description) {
-    return res
-      .status(400)
-      .json({ error: "This endpoint is only for updating status" });
-  } else if (duedate) {
-    return res
-      .status(400)
-      .json({ error: "This endpoint is only for updating status" });
-  } else if (cycle) {
-    return res
-      .status(400)
-      .json({ error: "This endpoint is only for updating status" });
+  try {
+    if (title) {
+      return res
+        .status(400)
+        .json({ error: "This endpoint is only for updating status" });
+    } else if (!status || !STATUS_ARRAY.includes(status)) {
+      return res.status(400).json({ error: "Valid Status is needed" });
+    } else if (description) {
+      return res
+        .status(400)
+        .json({ error: "This endpoint is only for updating status" });
+    } else if (duedate) {
+      return res
+        .status(400)
+        .json({ error: "This endpoint is only for updating status" });
+    } else if (cycle) {
+      return res
+        .status(400)
+        .json({ error: "This endpoint is only for updating status" });
+    }
+    const selectedTask = await Task.findByIdAndUpdate(filter, req.body);
+    res.json(selectedTask);
+  } catch (e) {
+    res.status(500).json({ message: e });
   }
-  const selectedTask = await Task.findByIdAndUpdate(filter, req.body);
-  res.json(selectedTask);
 });

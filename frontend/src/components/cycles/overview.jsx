@@ -52,6 +52,7 @@ const Overview = () => {
     },
     refetchOnWindowFocus: false,
     retry: false,
+    enabled:filterData.selectedProject.value? true : false,
     onSuccess: (tasks) => {
         setData(tasks.data);
         setFilterData(prevData => {
@@ -71,6 +72,7 @@ const Overview = () => {
     queryKey: ["cycles", { project: filterData.selectedProject?.value }],
     queryFn: () => getCyclesByProject(filterData.selectedProject?.value),
     retry: false,
+    enabled:filterData.selectedProject.value? true : false,
     refetchOnWindowFocus: false,
     onSuccess: (data) => {
       setFilterData((prevState) => {
