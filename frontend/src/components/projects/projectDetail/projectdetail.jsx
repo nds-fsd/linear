@@ -56,10 +56,17 @@ const ProjectDetail = () => {
     retry: false,
     onSuccess: (data) => {
       const tasks = data.data;
-      const rows = unorderTasks(tasks);
-      setTaskRows(rows);
+      
+      if(tasks.length){
+        const rows = unorderTasks(tasks);
+        setTaskRows(rows)
+      }else {
+        setTaskRows([])
+      }
     },
-    onError: () => setTaskRows([]),
+    onError: (err) => {
+      console.log(err)
+      setTaskRows([])},
   });
 
   return (

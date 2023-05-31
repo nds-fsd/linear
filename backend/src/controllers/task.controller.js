@@ -31,8 +31,8 @@ exports.getAllTasks = asyncHandler(async (req, res) => {
   try {
     if (allTasks.length === 0) {
       res
-        .status(404)
-        .json({ message: "No hay tareas que coincidan con tu busqueda" });
+        .status(200)
+        .json([]);
       return;
     }
     const groupedTasks = utils.sortTasksByStatus(allTasks);

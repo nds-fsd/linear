@@ -6,7 +6,7 @@ export const addTask = (data) => {
 };
 
 export const getAllTasks = (queryParams) => {
-  return api.get("/tasks", {params: queryParams});
+  return api.get("/tasks", { params: queryParams });
 };
 
 export const getTasksByUser = (userid) => {
@@ -14,7 +14,11 @@ export const getTasksByUser = (userid) => {
 };
 
 export const getTasksByProject = (projectid) => {
-  return api.get(`/tasks/by-project/${projectid}`);
+  if (!projectid) {
+    return;
+  } else {
+    return api.get(`/tasks/by-project/${projectid}`);
+  }
 };
 
 export const getTaskById = (taskid) => {
@@ -30,7 +34,11 @@ export const deleteTaskById = (taskid) => {
 };
 
 export const patchStatusTaskById = (taskid, data) => {
-  return api.patch(`/tasks/status/${taskid}`, data);
+  if (!taskid) {
+    return;
+  } else {
+    return api.patch(`/tasks/status/${taskid}`, data);
+  }
 };
 
 export const useEditStatusTaskMutation = (taskid, obj) => {
@@ -52,5 +60,5 @@ export const useDeleteTaskMutation = (taskid) => {
       queryClient.refetchQueries("tasks");
     },
     onError: (err) => setErrorMessage(err.response.data.error),
-  })
+  });
 };

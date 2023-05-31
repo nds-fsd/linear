@@ -4,7 +4,7 @@ import ViewKanbanOutlinedIcon from "@mui/icons-material/ViewKanbanOutlined";
 import FormatListBulletedOutlinedIcon from "@mui/icons-material/FormatListBulletedOutlined";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import headerStyle from "./pageheader.module.css";
-import Select from "react-select";
+import Select, { components } from "react-select";
 import { Context } from "../../Context";
 import {
   unorderTasks,
@@ -30,7 +30,7 @@ const PageHeader = ({
   const [filterProjectOptions, setFilterProjectOptions] = useState([
     emptyOption,
   ]);
-
+  const [selectedOptions, setSelectedOptions] = useState(filterData.selectedCycles);
   useEffect(() => {
     if (filterData.type === "complex") {
       setFilterProjectOptions(() => {
@@ -41,7 +41,8 @@ const PageHeader = ({
       });
     }
   }, [filterData]);
-
+  
+  // console.log(filterData.selectedCycles)
   const today = new Date().toLocaleString("en-US", {
     day: "2-digit",
     month: "2-digit",
@@ -53,6 +54,24 @@ const PageHeader = ({
   const projectOptions = filterProjectOptions?.map((project) => {
     return { label: project.label, value: project.id };
   });
+
+  const handleChange = (value) =>{   
+      const unorderedTasks = unorderTasks(data);
+      const filteredTasks = filterTasksByCycle(
+        value,
+        unorderedTasks
+      );
+      const sortedTasks = sortTasksByStatus(filteredTasks);
+      setFilterData((prevState) => {
+        return {
+          ...prevState,
+          selectedCycles: value,
+          dataToDisplay: sortedTasks,
+        };
+      });
+
+  }
+
 
   return (
     <div className={headerStyle.header}>
@@ -84,21 +103,7 @@ const PageHeader = ({
               <Select
                 isMulti
                 value={filterData.selectedCycles}
-                onChange={(value) => {
-                  const unorderedTasks = unorderTasks(data);
-                  const filteredTasks = filterTasksByCycle(
-                    value,
-                    unorderedTasks
-                  );
-                  const sortedTasks = sortTasksByStatus(filteredTasks);
-                  setFilterData((prevState) => {
-                    return {
-                      ...prevState,
-                      selectedCycles: value,
-                      dataToDisplay: sortedTasks,
-                    };
-                  });
-                }}
+                onChange={handleChange}
                 classNames={{ control: () => headerStyle.select }}
                 options={filterData.cycles}
               />
@@ -142,10 +147,11 @@ const PageHeader = ({
             </button>
             <button
               onClick={() => {
-                if(filterData.type === "simple"){
-                  refetchFn()
+                if (filterData.type === "simple") {
+                  refetchFn();
                 }
-                setActiveview("list")}}
+                setActiveview("list");
+              }}
               className={
                 activeView === "list" ? headerStyle.activebtn : headerStyle.btn
               }
