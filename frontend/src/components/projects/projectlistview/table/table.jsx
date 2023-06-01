@@ -71,7 +71,7 @@ export const Table = ({ data, handleEditModal, handleDeleteModal }) => {
           </tr>
         </thead>
         <tbody>
-          {sortedTasks.map(({row, teamid}) => {
+          {sortedTasks?.map(({row, teamid}) => {
             const statusText =
               row?.status === "inprogress"
                 ? "In Progress"
@@ -85,13 +85,14 @@ export const Table = ({ data, handleEditModal, handleDeleteModal }) => {
                   </Link>
                 </td>
                 <td className={styles.description}>{row?.description}</td>
-                <td className={styles.description}>{formatDate(row?.startdate)}</td>
-                <td className={styles.description}>{formatDate(row?.finishdate)}</td>
+                <td className={styles.description}>{row? formatDate(row?.startdate) : ""}</td>
+                <td className={styles.description}>{row? formatDate(row?.finishdate): ""}</td>
 
                 <td className={styles[`label-${row?.status}`]}>
-                  <span>{statusText}</span>
+                  <span>{isNaN(statusText) ? "" : statusText}</span>
                 </td>
                 <td className={styles.fit}>
+                  {row? 
                   <span className={styles.actions}>
                     <DeleteOutlineRoundedIcon
                       className="delete-btn"
@@ -103,7 +104,9 @@ export const Table = ({ data, handleEditModal, handleDeleteModal }) => {
                         handleEditModal(row?._id);
                       }}
                     />
-                  </span>
+                  </span>:
+                  ""                 
+                }
                 </td>
               </tr>
             );
