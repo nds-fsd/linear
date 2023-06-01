@@ -8,8 +8,6 @@ const Projects = () => {
   const [activeView, setActiveview] = useState("list");
   const {teams} = useContext(Context)
 
-  const projectList = teams.map(team => team.project)
-
   const handleEditModal = () =>{
     console.log("hola")
   }

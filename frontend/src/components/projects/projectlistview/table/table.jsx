@@ -10,6 +10,7 @@ import { formatDate } from "../../../../utils/formatUtils";
 
 
 export const Table = ({ data, handleEditModal, handleDeleteModal }) => {
+  
   const rows = data.map(team => {
     return {row:team.project, teamid:team._id}} )
 
@@ -89,7 +90,7 @@ export const Table = ({ data, handleEditModal, handleDeleteModal }) => {
                 <td className={styles.description}>{row? formatDate(row?.finishdate): ""}</td>
 
                 <td className={styles[`label-${row?.status}`]}>
-                  <span>{isNaN(statusText) ? "" : statusText}</span>
+                  <span>{statusText}</span>
                 </td>
                 <td className={styles.fit}>
                   {row? 

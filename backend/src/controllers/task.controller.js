@@ -31,8 +31,8 @@ exports.getAllTasks = asyncHandler(async (req, res) => {
   try {
     if (allTasks.length === 0) {
       res
-        .status(200)
-        .json([]);
+      .status(200)
+      .json({backlog:[], todo:[], inprogress:[], done:[]});
       return;
     }
     const groupedTasks = utils.sortTasksByStatus(allTasks);

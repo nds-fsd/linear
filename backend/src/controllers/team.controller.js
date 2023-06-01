@@ -27,7 +27,7 @@ exports.getTeamsByUserId = asyncHandler(async (req, res) => {
       .populate("project")
       .populate("users");
     if (allTeams.length === 0) {
-      res.status(404).json({ message: "No teams to display with this search" });
+      res.status(200).json([]);
       return;
     }
     res.status(200).json(allTeams);

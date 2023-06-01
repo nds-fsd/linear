@@ -27,7 +27,7 @@ const Overview = () => {
     selectedProject: { value: "", label: "Select one..." },
     selectedCycles: [],
     cycles: [],
-    dataToDisplay:{}
+    dataToDisplay:{backlog:[], todo:[], inprogress:[], done:[]}
   });
   const [data, setData] = useState(MOCK_DATA);
   const [taskId, setTaskId] = useState("");
