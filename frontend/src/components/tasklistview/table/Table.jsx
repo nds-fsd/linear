@@ -78,56 +78,59 @@ export const Table = ({
             </th>
           </tr>
         </thead>
-        <tbody>
-          {sortedTasks.map((row) => {
-            const statusText =
-              row.status === "inprogress"
-                ? "In Progress"
-                : row.status.charAt(0).toUpperCase() + row.status.slice(1);
+          <tbody>
+            {sortedTasks?.map((row) => {
+              
+              const statusText =
+                row.status === "inprogress"
+                  ? "In Progress"
+                  : row.status.charAt(0).toUpperCase() + row.status.slice(1);
 
-            return (
-              <tr key={row._id}>
-                <td
-                  className={styles.titleHeader}
-                  onClick={() => {
-                    handleEditModal(row._id);
-                  }}
-                >
-                  {row.title}
-                </td>
-                {!isReduced && (
-                  <>
-                    <td className={styles.description}>{row?.description}</td>
+              return (
+                <tr key={row._id}>
+                  <td
+                    className={styles.titleHeader}
+                    onClick={() => {
+                      handleEditModal(row._id);
+                    }}
+                  >
+                    {row.title}
+                  </td>
+                  {!isReduced && (
+                    <>
+                      <td className={styles.description}>{row?.description}</td>
+                      <td className={styles.expand}>
+                        {row?.cycle?.project.title}
+                      </td>
+                      <td className={styles.expand}>{row?.cycle?.title}</td>
+                    </>
+                  )}
+                  {isReduced && (
                     <td className={styles.expand}>
-                      {row?.cycle?.project.title}
+                      {row?.asigneduser.firstname} {row?.asigneduser.lastname}
                     </td>
-                    <td className={styles.expand}>{row?.cycle?.title}</td>
-                  </>
-                )}
-                {isReduced && (
-                  <td className={styles.expand}>{row?.asigneduser.firstname} {row?.asigneduser.lastname}</td>
-                )}
-                <td className={styles[`label-${row.status}`]}>
-                  <span>{statusText}</span>
-                </td>
-                <td className={styles.fit}>
-                  <span className={styles.actions}>
-                    <DeleteOutlineRoundedIcon
-                      className="delete-btn"
-                      onClick={() => handleDeleteModal(row._id)}
-                    />
-                    <BorderColorRoundedIcon
-                      className="edit-btn"
-                      onClick={() => {
-                        handleEditModal(row._id);
-                      }}
-                    />
-                  </span>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
+                  )}
+                  <td className={styles[`label-${row.status}`]}>
+                    <span>{statusText}</span>
+                  </td>
+                  <td className={styles.fit}>
+                    <span className={styles.actions}>
+                      <DeleteOutlineRoundedIcon
+                        className="delete-btn"
+                        onClick={() => handleDeleteModal(row._id)}
+                      />
+                      <BorderColorRoundedIcon
+                        className="edit-btn"
+                        onClick={() => {
+                          handleEditModal(row._id);
+                        }}
+                      />
+                    </span>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
       </table>
     </div>
   );

@@ -56,7 +56,6 @@ const ProjectDetail = () => {
     retry: false,
     onSuccess: (data) => {
       const tasks = data.data;
-      
       if(tasks.length){
         const rows = unorderTasks(tasks);
         setTaskRows(rows)
