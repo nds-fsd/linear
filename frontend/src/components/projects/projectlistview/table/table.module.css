@@ -26,6 +26,7 @@
   .table td {
     padding: 0.8rem;
     min-width: 100px;
+    border-bottom:1px solid var(--gray-color);
   }
   
   .description {
