@@ -48,10 +48,8 @@ export const sortTasksByStatus = (taskList) => {
   return groupedTasks;
 };
 
-
-export const filterTasksByCycle = (cycles, tasks) =>  {
-  const cycleValues = cycles.map(cycle => cycle.value);
-  const filteredTasks = tasks.filter(task => cycleValues.includes(task.cycle?._id));
-  // console.log(filteredTasks)
+export const filterTasksByArray = (users, tasks, key) =>  {
+  const userValues = users.map(user => user.value);
+  const filteredTasks = tasks.filter(task => userValues.includes(task[key]?._id));
   return filteredTasks;
 }

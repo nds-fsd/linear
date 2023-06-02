@@ -26,6 +26,8 @@ const Overview = () => {
     teams: teams,
     selectedProject: { value: "", label: "Select one..." },
     selectedCycles: [],
+    selectedUsers:[],
+    users:[],
     cycles: [],
     dataToDisplay:{backlog:[], todo:[], inprogress:[], done:[]}
   });
@@ -56,7 +58,7 @@ const Overview = () => {
     onSuccess: (tasks) => {
         setData(tasks.data);
         setFilterData(prevData => {
-          return{...prevData, dataToDisplay:tasks.data}
+          return{...prevData, dataToDisplay:tasks.data, tasksFilteredByCycle:tasks.data}
         })
     },
     onError: (err) => {

@@ -7,7 +7,7 @@ import ListItemText from "@mui/material/ListItemText";
 import MUISelect from "@mui/material/Select";
 import Checkbox from "@mui/material/Checkbox";
 import OutlinedInput from "@mui/material/OutlinedInput";
-import InputLabel from '@mui/material/InputLabel';
+import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import headerStyle from "./pageheader.module.css";
 import Select, { components } from "react-select";
@@ -15,7 +15,7 @@ import { Context } from "../../Context";
 import {
   unorderTasks,
   sortTasksByStatus,
-  filterTasksByCycle,
+  filterTasksByArray
 } from "../../utils/formatUtils";
 
 const PageHeader = ({
@@ -36,9 +36,7 @@ const PageHeader = ({
   const [filterProjectOptions, setFilterProjectOptions] = useState([
     emptyOption,
   ]);
-  const [selectedOptions, setSelectedOptions] = useState(
-    filterData.selectedCycles
-  );
+
   useEffect(() => {
     if (filterData.type === "complex") {
       setFilterProjectOptions(() => {
@@ -49,10 +47,6 @@ const PageHeader = ({
       });
     }
   }, [filterData]);
-
-  useEffect(() => {
-    setSelectedOptions(filterData.selectedCycles);
-  }, [filterData.selectedCycles]);
 
   // console.log(filterData.selectedCycles)
   const today = new Date().toLocaleString("en-US", {
@@ -69,17 +63,35 @@ const PageHeader = ({
 
   const handleChange = (e) => {
     const selectedValues = e.target.value;
+    const usersArray = filterData.selectedUsers
     const unorderedTasks = unorderTasks(data);
-    const filteredTasks = filterTasksByCycle(selectedValues, unorderedTasks);
-    const sortedTasks = sortTasksByStatus(filteredTasks);
+    const filteredTasks = filterTasksByArray(selectedValues, unorderedTasks, "cycle");
+    const doubleFilter = filterTasksByArray(usersArray, filteredTasks,"asigneduser" )
+    const sortedTasks = sortTasksByStatus(doubleFilter);
     setFilterData((prevState) => {
       return {
         ...prevState,
         selectedCycles: selectedValues,
+        tasksFilteredByCycle:sortedTasks,
         dataToDisplay: sortedTasks,
       };
     });
   };
+
+  const handleUserChange = (e) => {
+    const selectedValues = e.target.value;
+    const unorderedTasks = unorderTasks(filterData.tasksFilteredByCycle);
+    const filteredTasks = filterTasksByArray(selectedValues, unorderedTasks, "asigneduser");
+    const sortedTasks = sortTasksByStatus(filteredTasks);
+    setFilterData((prevState) => {
+      return {
+        ...prevState,
+        selectedUsers: selectedValues,
+        dataToDisplay: sortedTasks,
+      };
+    });
+  };
+
 
   return (
     <div className={headerStyle.header}>
@@ -99,8 +111,19 @@ const PageHeader = ({
               <Select
                 value={filterData.selectedProject}
                 onChange={(value) => {
+                  const selectedTeam = filterData.teams.find(
+                    (team) => team.project._id === value.value
+                  );
+                  const usersWithLabel = selectedTeam.users.map(user =>{
+                    return{label:user.firstname ,value:user._id}
+                  })
                   setFilterData((prevState) => {
-                    return { ...prevState, selectedProject: value };
+                    return {
+                      ...prevState,
+                      selectedProject: value,
+                      users: usersWithLabel,
+                      selectedUsers: usersWithLabel,
+                    };
                   });
                   refetchFn();
                 }}
@@ -110,8 +133,8 @@ const PageHeader = ({
               {/* CYCLES */}
               <MUISelect
                 sx={{
-                  display: 'flex',
-                  gap:'0.5em',
+                  display: "flex",
+                  gap: "0.5em",
                   borderRadius: "6px",
                   height: "50px",
                   width: "200px",
@@ -126,14 +149,42 @@ const PageHeader = ({
                   selected.map((option) => option.label).join(" | ")
                 }
               >
-
                 {filterData.cycles?.map((cycle) => {
                   return (
                     <MenuItem key={cycle.value} value={cycle}>
                       <Checkbox
-                      checked={filterData.selectedCycles.indexOf(cycle) > -1}
+                        checked={filterData.selectedCycles.indexOf(cycle) > -1}
                       />
                       <ListItemText primary={cycle.label} />
+                    </MenuItem>
+                  );
+                })}
+              </MUISelect>
+              <MUISelect
+                sx={{
+                  display: "flex",
+                  gap: "0.5em",
+                  borderRadius: "6px",
+                  height: "50px",
+                  width: "200px",
+                  backgroundColor: "white",
+                  flexWrap: "wrap",
+                }}
+                name="users"
+                multiple
+                value={filterData.selectedUsers}
+                onChange={handleUserChange}
+                renderValue={(selected) =>
+                  selected.map((option) => option.label).join(" | ")
+                }
+              >
+                {filterData.users?.map((user) => {
+                  return (
+                    <MenuItem key={user.value} value={user}>
+                      <Checkbox
+                        checked={filterData.selectedUsers.indexOf(user) > -1}
+                      />
+                      <ListItemText primary={user.label} />
                     </MenuItem>
                   );
                 })}
