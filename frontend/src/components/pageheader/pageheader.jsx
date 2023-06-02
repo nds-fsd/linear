@@ -3,6 +3,12 @@ import SearchIcon from "@mui/icons-material/Search";
 import ViewKanbanOutlinedIcon from "@mui/icons-material/ViewKanbanOutlined";
 import FormatListBulletedOutlinedIcon from "@mui/icons-material/FormatListBulletedOutlined";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
+import ListItemText from "@mui/material/ListItemText";
+import MUISelect from "@mui/material/Select";
+import Checkbox from "@mui/material/Checkbox";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from "@mui/material/MenuItem";
 import headerStyle from "./pageheader.module.css";
 import Select, { components } from "react-select";
 import { Context } from "../../Context";
@@ -30,7 +36,9 @@ const PageHeader = ({
   const [filterProjectOptions, setFilterProjectOptions] = useState([
     emptyOption,
   ]);
-  const [selectedOptions, setSelectedOptions] = useState(filterData.selectedCycles);
+  const [selectedOptions, setSelectedOptions] = useState(
+    filterData.selectedCycles
+  );
   useEffect(() => {
     if (filterData.type === "complex") {
       setFilterProjectOptions(() => {
@@ -41,7 +49,11 @@ const PageHeader = ({
       });
     }
   }, [filterData]);
-  
+
+  useEffect(() => {
+    setSelectedOptions(filterData.selectedCycles);
+  }, [filterData.selectedCycles]);
+
   // console.log(filterData.selectedCycles)
   const today = new Date().toLocaleString("en-US", {
     day: "2-digit",
@@ -55,23 +67,19 @@ const PageHeader = ({
     return { label: project.label, value: project.id };
   });
 
-  const handleChange = (value) =>{   
-      const unorderedTasks = unorderTasks(data);
-      const filteredTasks = filterTasksByCycle(
-        value,
-        unorderedTasks
-      );
-      const sortedTasks = sortTasksByStatus(filteredTasks);
-      setFilterData((prevState) => {
-        return {
-          ...prevState,
-          selectedCycles: value,
-          dataToDisplay: sortedTasks,
-        };
-      });
-
-  }
-
+  const handleChange = (e) => {
+    const selectedValues = e.target.value;
+    const unorderedTasks = unorderTasks(data);
+    const filteredTasks = filterTasksByCycle(selectedValues, unorderedTasks);
+    const sortedTasks = sortTasksByStatus(filteredTasks);
+    setFilterData((prevState) => {
+      return {
+        ...prevState,
+        selectedCycles: selectedValues,
+        dataToDisplay: sortedTasks,
+      };
+    });
+  };
 
   return (
     <div className={headerStyle.header}>
@@ -100,13 +108,36 @@ const PageHeader = ({
                 options={projectOptions}
               />
               {/* CYCLES */}
-              <Select
-                isMulti
+              <MUISelect
+                sx={{
+                  display: 'flex',
+                  gap:'0.5em',
+                  borderRadius: "6px",
+                  height: "50px",
+                  width: "200px",
+                  backgroundColor: "white",
+                  flexWrap: "wrap",
+                }}
+                name="cycles"
+                multiple
                 value={filterData.selectedCycles}
                 onChange={handleChange}
-                classNames={{ control: () => headerStyle.select }}
-                options={filterData.cycles}
-              />
+                renderValue={(selected) =>
+                  selected.map((option) => option.label).join(" | ")
+                }
+              >
+
+                {filterData.cycles?.map((cycle) => {
+                  return (
+                    <MenuItem key={cycle.value} value={cycle}>
+                      <Checkbox
+                      checked={filterData.selectedCycles.indexOf(cycle) > -1}
+                      />
+                      <ListItemText primary={cycle.label} />
+                    </MenuItem>
+                  );
+                })}
+              </MUISelect>
             </>
           ) : (
             <div className={headerStyle.searchDialog}>
