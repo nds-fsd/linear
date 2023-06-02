@@ -80,9 +80,11 @@ const PageHeader = ({
 
   const handleUserChange = (e) => {
     const selectedValues = e.target.value;
-    const unorderedTasks = unorderTasks(filterData.tasksFilteredByCycle);
+    const cyclesArray = filterData.selectedCycles
+    const unorderedTasks = unorderTasks(data);
     const filteredTasks = filterTasksByArray(selectedValues, unorderedTasks, "asigneduser");
-    const sortedTasks = sortTasksByStatus(filteredTasks);
+    const doubleFilter = filterTasksByArray(cyclesArray, filteredTasks,"cycle" )
+    const sortedTasks = sortTasksByStatus(doubleFilter);
     setFilterData((prevState) => {
       return {
         ...prevState,
