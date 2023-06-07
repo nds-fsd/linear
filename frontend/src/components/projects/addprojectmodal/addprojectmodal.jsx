@@ -1,40 +1,44 @@
-import ModalBackground from "../modalbackground/modalbackground";
-import { useMutation, useQueryClient, useQuery } from "react-query";
-import { useState } from "react";
+import ModalBackground from "../../modalbackground/modalbackground";
+import { useMutation, useQueryClient } from "react-query";
+import { useState, useContext} from "react";
 import { useForm } from "react-hook-form";
-import styles from "./addcyclemodal.module.css";
-import Spinner from "../spinner/spinner";
-import { addCycle } from "../../utils/apiCycle";
-import { formatDate } from "../../utils/formatUtils";
+import styles from "./addprojectmodal.module.css";
+import Spinner from "../../spinner/spinner";
+import { addProject } from "../../../utils/apiProject";
+import { formatDate } from "../../../utils/formatUtils";
+import { Context } from "../../../Context";
 
-const AddCycleModal = ({ setShowModal, project }) => {
+const AddProjectModal = ({ setShowModal }) => {
+  const {setTeamsEffect, teamsEffect} = useContext(Context)
   const { register, handleSubmit, reset } = useForm({
-    defaultValues: { project: project._id, active:true }
-    
+    defaultValues:{
+        active:true
+    }
   });
 
   const [errorMessage, setErrorMessage] = useState("");
   const queryClient = useQueryClient();
 
   const {
-    mutate: addCycleMutation,
+    mutate: addProjectMutation,
     isLoading: isPosting,
     isSuccess: isPosted,
     isError,
     error,
   } = useMutation({
-    mutationFn: (data) => addCycle(data),
+    mutationFn: (data) => addProject(data),
     onSuccess: (payload) => {
-      queryClient.refetchQueries("cycles");
+        setTeamsEffect(!teamsEffect)
     },
-    onError: (err) => setErrorMessage(err.response.data.error),
+    onError: (err) => {
+      console.log(err.response.data);
+      // setErrorMessage(err.response.data.error)
+    },
   });
 
   if (isPosted) {
     setShowModal(false);
   }
-
-
 
   return (
     <ModalBackground>
@@ -49,8 +53,8 @@ const AddCycleModal = ({ setShowModal, project }) => {
               setErrorMessage("finishing date cant be before starting date");
               return;
             } else {
-              addCycleMutation(data);
-              console.log(data)
+              addProjectMutation(data);
+              console.log(data);
             }
           })}
         >
@@ -58,40 +62,38 @@ const AddCycleModal = ({ setShowModal, project }) => {
             <Spinner />
           ) : (
             <>
-              <h2 className={styles.formTitle}>
-                Add a new Cycle to {project.title}
-              </h2>
+              <h2 className={styles.formTitle}>Add a new Project</h2>
               {errorMessage && (
                 <p className={styles.addTaskError}>{errorMessage}</p>
               )}
-              <label className={styles.label} htmlFor="cycletitle">
-                Cycle Title
+              <label className={styles.label} htmlFor="projecttitle">
+                Project Title
               </label>
               <input
-                id="cycletitle"
+                id="projecttitle"
                 className={styles.input}
                 type="text"
-                placeholder="Sprint . . ."
+                placeholder="Project title"
                 {...register("title")}
               />
-              <label className={styles.label} htmlFor="taskdescription">
-                Cycle Description
+              <label className={styles.label} htmlFor="projectdescription">
+                Project Description
               </label>
               <textarea
                 rows="6"
                 cols="30"
-                id="taskdescription"
+                id="projectdescription"
                 className={styles.textAreaInput}
                 placeholder="Description"
                 {...register("description")}
               />
               <div className={styles.wrapper}>
                 <div>
-                  <label className={styles.label} htmlFor="cyclestartdate">
+                  <label className={styles.label} htmlFor="projectstartdate">
                     Start date
                   </label>
                   <input
-                    id="cyclestartdate"
+                    id="projectstartdate"
                     className={styles.input}
                     type="date"
                     placeholder="Start date"
@@ -99,11 +101,11 @@ const AddCycleModal = ({ setShowModal, project }) => {
                   />
                 </div>
                 <div>
-                  <label className={styles.label} htmlFor="cyclefinishdate">
+                  <label className={styles.label} htmlFor="projectfinishdate">
                     Finish date
                   </label>
                   <input
-                    id="cyclefinishdate"
+                    id="projectfinishdate"
                     className={styles.input}
                     type="date"
                     placeholder="Finish date"
@@ -121,7 +123,7 @@ const AddCycleModal = ({ setShowModal, project }) => {
                 <input
                   className={styles.submitBtn}
                   type="submit"
-                  value="Create new cycle"
+                  value="Create new project"
                 />
               </div>
             </>
@@ -132,4 +134,4 @@ const AddCycleModal = ({ setShowModal, project }) => {
   );
 };
 
-export default AddCycleModal;
+export default AddProjectModal;
