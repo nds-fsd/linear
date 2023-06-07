@@ -1,11 +1,9 @@
 import ModalBackground from "../../../../modalbackground/modalbackground";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useQuery } from "react-query";
 import { useState, useContext } from "react";
-import { useForm } from "react-hook-form";
 import styles from "./addusermodal.module.css";
 import Spinner from "../../../../spinner/spinner";
 import { Context } from "../../../../../Context";
-import { patchTeam } from "../../../../../utils/apiTeam";
 import { useParams } from "react-router-dom";
 import { useEditTeamMutation } from "../../../../../utils/apiTeam";
 import { getAllUsers } from "../../../../../utils/apiUser";
@@ -19,7 +17,6 @@ const AddUserToProjectModal = ({ setShowModal }) => {
     userId: "",
   });
   const [errorMessage, setErrorMessage] = useState("");
-  const queryClient = useQueryClient();
 
   const {
     mutate: addUserToProject,
@@ -46,10 +43,6 @@ const AddUserToProjectModal = ({ setShowModal }) => {
     userData?.data?.map((user) => {
       return { label: user.email, id: user._id };
     }) || [];
-  const AutocompleteOptions = [
-    { label: "Select One", id: "nooption" },
-    ...userOptions,
-  ];
 
   if (isPosted) {
     setShowModal(false);
@@ -73,9 +66,6 @@ const AddUserToProjectModal = ({ setShowModal }) => {
               {errorMessage && (
                 <p className={styles.addTaskError}>{errorMessage}</p>
               )}
-              <label className={styles.label} htmlFor="userid">
-                Select a user
-              </label>
               <Autocomplete
                 options={userOptions}
                 id="userid"
