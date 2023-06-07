@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import styles from "./projectdetail.module.css";
 import { getTeamById } from "../../../utils/apiTeam";
 import AddCycleModal from "../../addcyclemodal/addcyclemodal";
+
 import { getAllTasks } from "../../../utils/apitask";
 import { useQuery } from "react-query";
 import { useParams, useNavigate } from "react-router-dom";
@@ -16,6 +17,7 @@ import ProjectDetailTasksByCycle from "./tasks/projectdetailtasksbycycle";
 import EditTaskModal from "../../edittaskmodal/edittaskmodal";
 import AddTaskModal from "../../addtaskmodal/addtaskmodal";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
+import AddUserToProjectModal from "./users/addusermodal/addusermodal";
 
 const ProjectDetail = () => {
   const { id } = useParams();
@@ -24,9 +26,13 @@ const ProjectDetail = () => {
   const [taskRows, setTaskRows] = useState([]);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showAddModal, setShowAddModal] = useState(false);
+  const [showAddUserModal, setShowAddUserModal] = useState(false);
   const [showAddCycleModal, setShowAddCycleModal] = useState(false);
   const [selectedTask, setSelectedTask] = useState();
   const navigate = useNavigate();
+
+  
+
 
   const {
     data,
@@ -56,12 +62,13 @@ const ProjectDetail = () => {
     retry: false,
     onSuccess: (data) => {
       const tasks = data.data;
-        const rows = unorderTasks(tasks);
-        setTaskRows(rows)
+      const rows = unorderTasks(tasks);
+      setTaskRows(rows);
     },
     onError: (err) => {
-      console.log(err)
-      setTaskRows([])},
+      console.log(err);
+      setTaskRows([]);
+    },
   });
 
   return (
@@ -83,11 +90,11 @@ const ProjectDetail = () => {
               </button>
               <button
                 onClick={() => {
-                  setShowAddCycleModal(true)
+                  setShowAddCycleModal(true);
                 }}
                 className={styles.addCycleBtn}
               >
-                <AddCircleOutlineOutlinedIcon/>
+                <AddCircleOutlineOutlinedIcon />
                 Add Cycle
               </button>
             </div>
@@ -127,7 +134,12 @@ const ProjectDetail = () => {
           </div>
         </div>
         <div className={styles.colTwo}>
-          {activeOutlet === "users" && <ProjectDetailsUsers users={users} />}
+          {activeOutlet === "users" && (
+            <ProjectDetailsUsers
+              setShowModal={setShowAddUserModal}
+              users={users}
+            />
+          )}
           {activeOutlet === "tasks" && (
             <ProjectDetailTasksByCycle
               setShowAddModal={setShowAddModal}
@@ -142,8 +154,18 @@ const ProjectDetail = () => {
       {showEditModal && (
         <EditTaskModal taskId={selectedTask} closeModal={setShowEditModal} />
       )}
-      {showAddModal && <AddTaskModal defaultValues={{project:project._id, cycle:selectedCycle}} setShowModal={setShowAddModal} />}
-      {showAddCycleModal&& <AddCycleModal  project={project} setShowModal={setShowAddCycleModal}/>}
+      {showAddModal && (
+        <AddTaskModal
+          defaultValues={{ project: project._id, cycle: selectedCycle }}
+          setShowModal={setShowAddModal}
+        />
+      )}
+      {showAddCycleModal && (
+        <AddCycleModal project={project} setShowModal={setShowAddCycleModal} />
+      )}
+      {showAddUserModal && (
+        <AddUserToProjectModal setShowModal={setShowAddUserModal} />
+      )}
     </section>
   );
 };
