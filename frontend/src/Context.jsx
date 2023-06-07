@@ -13,6 +13,7 @@ export const ContextProvider = ({ children }) => {
     getUserSession()
   );
   const [teams, setTeams] = useState([{}]);
+  const [teamsEffect, setTeamsEffect] = useState(false)
   const [invalidLogIn, setInvalidLogIn] = useState(false);
   const [isLoginIn, setIsLoginIn] = useState(false);
   const [error, setError] = useState("");
@@ -81,7 +82,7 @@ export const ContextProvider = ({ children }) => {
     getTeamsByUserId(userSessionContext?.id).then((res) => {
       setTeams(res.data);
     });
-  }, [userSessionContext]);
+  }, [userSessionContext, teamsEffect]);
 
   return (
     <Context.Provider
@@ -90,7 +91,10 @@ export const ContextProvider = ({ children }) => {
         logIn,
         setIsLoginIn,
         registerUser,
+        setTeams,
+        setTeamsEffect,
         teams,
+        teamsEffect,
         error,
         userSessionContext,
         invalidLogIn,

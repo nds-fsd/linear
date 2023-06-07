@@ -6,11 +6,11 @@ const { getAll } = require("../services/db-service.js");
 exports.getAllTeams = asyncHandler(async (req, res) => {
   try {
     const allTeams = await getAll({
-        model:Team,
-        populationFields:['project','users'],
-        entity:"Teams",
-        query: req.query
-     });
+      model: Team,
+      populationFields: ["project", "users"],
+      entity: "Teams",
+      query: req.query,
+    });
     if (allTeams.length === 0) {
       res.status(404).json({ message: "No teams to display" });
       return;
@@ -37,7 +37,9 @@ exports.getTeamsByUserId = asyncHandler(async (req, res) => {
 });
 
 exports.getTeamById = asyncHandler(async (req, res) => {
-  const selectedTeam = await Team.findById(req.params.id).populate("project").populate("users");
+  const selectedTeam = await Team.findById(req.params.id)
+    .populate("project")
+    .populate("users");
   res.json(selectedTeam);
 });
 
@@ -56,6 +58,16 @@ exports.deleteTeamById = asyncHandler(async (req, res) => {
 
 exports.updateTeamById = asyncHandler(async (req, res) => {
   const filter = req.params.id;
-  const selectedTeam = await Team.findByIdAndUpdate(filter, req.body);
-  res.json(selectedTeam);
+  const userId = re.body.userId;
+  if (userId) {
+      const selectedTeam = await Team.findByIdAndUpdate(
+      filter,
+      { $push: { users: userId } },
+      { new: true }
+    );
+    res.json(selectedTeam);
+  } else {
+    const selectedTeam = await Team.findByIdAndUpdate(filter, req.body);
+    res.json(selectedTeam);
+  }
 });

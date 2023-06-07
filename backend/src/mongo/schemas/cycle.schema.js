@@ -1,5 +1,5 @@
 const { Schema, model } = require("mongoose");
-const STATUS_ARRAY = require("../../statusarray")
+const STATUS_ARRAY = require("../../statusarray");
 
 const cycleSchema = new Schema({
   title: { type: String, required: true },
@@ -7,10 +7,7 @@ const cycleSchema = new Schema({
   startdate: { type: Date },
   finishdate: { type: Date },
   project: { type: Schema.Types.ObjectId, ref: "Project" },
-  status: {
-    type: String,
-    enum: STATUS_ARRAY,
-  }
+  active: { type: Boolean, required: true },
 });
 
 const Cycle = model("Cycle", cycleSchema);

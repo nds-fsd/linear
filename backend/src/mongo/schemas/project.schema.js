@@ -8,10 +8,7 @@ const projectSchema = new Schema(
     startdate: { type: Date },
     finishdate: { type: Date },
     description:{ type: String, required: true },
-    status: {
-      type: String,
-      enum: STATUS_ARRAY,
-    }
+    active:{type: Boolean, required:true}
   },
   { timestamps: true }
 );

@@ -2,7 +2,7 @@ const Cycle = require("../mongo/schemas/cycle.schema.js");
 const express = require("express");
 const asyncHandler = require("express-async-handler");
 const STATUS_ARRAY = require("../statusarray.js");
-const crudService = require('../services/crud-service.js')
+const crudService = require("../services/crud-service.js");
 
 exports.getAllCycles = crudService.getAll({
   populationFields: ["project"],
@@ -21,8 +21,8 @@ exports.getCyclesByProject = asyncHandler(async (req, res) => {
     allCycles = await Cycle.find({ project: projectid }).populate("project");
     if (allCycles.length === 0) {
       res
-        .status(404)
-        .json({ message: "No hay Ciclos que coincidan con tu busqueda" });
+        .status(200)
+        .json([]);
       return;
     }
     res.status(200).json(allCycles);
@@ -38,7 +38,7 @@ exports.getCycleById = crudService.getOne({
 
 exports.createCycle = crudService.createOne({
   model: Cycle,
-  requiredKeys: ["title", "description", "startdate", "finishdate", "project"],
+  requiredKeys: ["title", "description", "startdate", "finishdate", "project", "active"],
 });
 
 exports.deleteCycleById = crudService.deleteOne(Cycle);
