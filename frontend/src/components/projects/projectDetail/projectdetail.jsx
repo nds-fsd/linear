@@ -23,6 +23,7 @@ const ProjectDetail = () => {
   const { id } = useParams();
   const [activeOutlet, setActiveOutlet] = useState("users");
   const [selectedCycle, setSelectedCycle] = useState("");
+  const [users, setUsers] = useState([{}])
   const [taskRows, setTaskRows] = useState([]);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showAddModal, setShowAddModal] = useState(false);
@@ -39,16 +40,29 @@ const ProjectDetail = () => {
     isLoading: projectIsLoading,
     isError: projectIsError,
     isSuccess,
+    refetch
   } = useQuery({
     queryKey: ["team", { team: id }],
     queryFn: () => {
       return getTeamById(id);
     },
+    onSuccess:(data)=>{
+      const teamData = data?.data;
+      const confirmedUsers= teamData?.users      
+      const pendingUsers = teamData?.pendingusers.map(usr =>{
+        return{...usr, pending:true}
+      })
+      const users = [...confirmedUsers, ...pendingUsers]
+      setUsers(users)
+    }
   });
+
+
 
   const teamData = data?.data;
   const project = teamData?.project;
-  const users = teamData?.users;
+
+
 
   const handleSelectCycle = (cycleid) => {
     setActiveOutlet("tasks");
@@ -164,7 +178,7 @@ const ProjectDetail = () => {
         <AddCycleModal project={project} setShowModal={setShowAddCycleModal} />
       )}
       {showAddUserModal && (
-        <AddUserToProjectModal setShowModal={setShowAddUserModal} />
+        <AddUserToProjectModal refetch={refetch} setShowModal={setShowAddUserModal} />
       )}
     </section>
   );

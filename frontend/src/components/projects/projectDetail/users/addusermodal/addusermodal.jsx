@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import ModalBackground from "../../../../modalbackground/modalbackground";
 import { useQuery } from "react-query";
 import { useState, useContext } from "react";
@@ -11,12 +12,16 @@ import { getAllUsers } from "../../../../../utils/apiUser";
 import Autocomplete from "@mui/material/Autocomplete";
 import { TextField } from "@mui/material";
 
-const AddUserToProjectModal = ({ setShowModal }) => {
+const AddUserToProjectModal = ({ setShowModal, refetch }) => {
   const { id: teamId } = useParams();
   const [data, setData] = useState({
     userId: "",
   });
   const [errorMessage, setErrorMessage] = useState("");
+
+  const onSuccess = () =>{
+    return refetch()
+  } 
 
   const {
     mutate: addUserToProject,
@@ -24,7 +29,7 @@ const AddUserToProjectModal = ({ setShowModal }) => {
     isSuccess: isPosted,
     isError: isPostingError,
     error: postingError,
-  } = useEditTeamMutation(teamId, data)
+  } = useEditTeamMutation(teamId, data, onSuccess)
 
   const {
     data: userData,
@@ -33,16 +38,27 @@ const AddUserToProjectModal = ({ setShowModal }) => {
     error,
   } = useQuery({
     queryFn: getAllUsers,
-    isSuccess: () => {},
-    isError: () => {
+    onSuccess: () => {
+    },
+    onError: () => {
       setErrorMessage("Error loading users");
     },
   });
+
+
+  useEffect(()=>{
+    if(isPostingError){
+      setErrorMessage(postingError.response.data.message)
+    }
+  },[isPostingError])
 
   const userOptions =
     userData?.data?.map((user) => {
       return { label: user.email, id: user._id };
     }) || [];
+
+    //CREO QUE AQUÍ ES DONDE SE PRODUCE EL ERROR QUE QUERÍA MOSTRARLE A PATO
+
 
   if (isPosted) {
     setShowModal(false);

@@ -22,12 +22,12 @@ export const patchTeam = (teamid, data) => {
 };
 
 
-export const useEditTeamMutation = (teamId, data) => {
+export const useEditTeamMutation = (teamId, data, onSuccess) => {
 
   return useMutation({
     mutationFn: () => patchTeam(teamId, data),
     onSuccess: (payload) => {
-      console.log(payload);
+      onSuccess()
     },
     onError: (err) => {
       console.log(err.response.data);

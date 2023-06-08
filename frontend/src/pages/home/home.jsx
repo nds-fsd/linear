@@ -36,7 +36,7 @@ const Home = () => {
         <Route path={PROJECTS} element={<Projects />} />
         <Route path={`${PROJECTS}/:id`} element={<ProjectDetail />} />
         <Route path={CYCLES} element={<Overview />} />
-        <Route path={`${USER_ID}/${INBOX}`} element={<Inbox />} />
+        <Route path={`${INBOX}`} element={<Inbox />} />
         <Route path={`${USER_ID}/${SETTINGS}`} element={<Settings />} />
         <Route path="" element={<Navigate to={MY_ISSUES} />} />
       </Routes>

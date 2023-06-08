@@ -9,6 +9,7 @@
 
 .userName{
     cursor: pointer;
+    
 }
 
 .img {
@@ -18,16 +19,41 @@
   padding: 0.3em;
 }
 
+.disabledImg {
+  border-radius: 50%;
+  height: 70px;
+  border: 2px solid var(--accent-color);
+  padding: 0.3em;
+  opacity: 0.3;
+}
+
 .cardContainer{
     display:flex;
     align-items:center;
-    gap:1em;
+    justify-content: space-between;
+
     width:100%;
     background-color:var(--main-bg-color);
     border-radius: 10px;
     padding:1em;
   overflow: hidden;
 
+}
+.usrDetails{
+  display:flex;
+  align-items:center;
+  gap:1em;
+}
+
+.disabledUsr{
+  display:flex;
+  align-items:center;
+  gap:1em;
+  opacity: 0.5;
+}
+
+.pendingContainer{
+    width:100px;
 }
 
 .addUserCardContainer{
