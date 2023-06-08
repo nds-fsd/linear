@@ -3,22 +3,29 @@ import projectsStyle from "./projects.module.css";
 import PageHeader from "../pageheader/pageheader";
 import ProjectListView from "./projectlistview/projectlistview";
 import { Context } from "../../Context";
+import AddProjectModal from "./addprojectmodal/addprojectmodal";
 
 const Projects = () => {
   const [activeView, setActiveview] = useState("list");
-  const {teams} = useContext(Context)
+  const [showAddProjectModal, setShowAddProjectModal] = useState(false);
+  const { teams } = useContext(Context);
 
-  const projectList = teams.map(team => team.project)
+  const handleEditModal = () => {
+    console.log("hola");
+  };
 
-  const handleEditModal = () =>{
-    console.log("hola")
-  }
+  const handleDeleteModal = () => {
+    console.log("chau");
+  };
 
-  const handleDeleteModal = () =>{
-    console.log("chau")
-  }
+  const handleAddProjectModal = () => {
+    setShowAddProjectModal(true);
+  };
 
 
+
+
+  const filterData = { type: "simple" };
   return (
     <div className={projectsStyle.projects}>
       <PageHeader
@@ -26,12 +33,17 @@ const Projects = () => {
         setActiveview={setActiveview}
         title="Projects"
         btntitle="Project"
+        filterData={filterData}
+        btnFunction={handleAddProjectModal}
       />
       <ProjectListView
         data={teams}
-        handleEditModal={handleEditModal} 
-        handleDeleteModal={handleDeleteModal}      
+        handleEditModal={handleEditModal}
+        handleDeleteModal={handleDeleteModal}
       />
+      {showAddProjectModal && (
+        <AddProjectModal setShowModal={setShowAddProjectModal} />
+      )}
     </div>
   );
 };

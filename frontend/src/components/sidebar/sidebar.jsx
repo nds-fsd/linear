@@ -80,7 +80,7 @@ const Sidebar = () => {
           </li>
           <li className={sideBarStyles.listItem}>
             <NavLink
-              to={`${USER_ID}/${INBOX}`}
+              to={`${INBOX}`}
               className={sideBarStyles.link}
               style={({ isActive }) => {
                 return {

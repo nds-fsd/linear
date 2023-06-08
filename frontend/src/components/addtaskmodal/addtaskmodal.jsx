@@ -31,6 +31,7 @@ const AddTaskModal = ({ defaultValues, setShowModal }) => {
     isLoading: cyclesIsLoading,
     isError: cyclesIsError,
   } = useQuery({
+    enabled:!!selectedProject,
     queryKey: ["cycles", { project: selectedProject }],
     queryFn: () => getCyclesByProject(selectedProject),
   });

@@ -5,7 +5,15 @@
   justify-content: space-between;
   min-height: 150px;
   width: 100%;
-  padding-top:1.5em;
+}
+
+.header > * {
+  /* border:2px solid red; */
+}
+
+.filterWrapper {
+  display: flex;
+  gap: 1em;
 }
 
 .toolBar {
@@ -13,12 +21,12 @@
   flex-wrap: wrap;
   width: 100%;
   justify-content: space-between;
-  padding: 1em;
+  padding: 0.5em 2em 0.5em 2em;
 }
 
-.date{
-  background-color:white;
-  padding:.5em 1em;
+.date {
+  background-color: white;
+  padding: 0.5em 1em;
   border-radius: 10px;
   font-weight: 500;
 }
@@ -38,6 +46,19 @@
   color: var(--darkgray-color);
 }
 
+.select {
+  display: flex;
+  gap: 0.5em;
+  border-radius: 6px;
+  height: 50px;
+  width: 200px;
+  background-color: white;
+  overflow: auto;
+  flex-wrap: wrap;
+}
+
+
+
 .searchDialog > input {
   all: unset;
   height: 100%;
@@ -46,7 +67,6 @@
 .switchViewBtnContainer {
   display: flex;
   position: relative;
-  /* margin-left:-100px; */
   gap: 0.3em;
 }
 
@@ -97,20 +117,20 @@
   margin-bottom: 0;
 }
 
-.wrapper{
-  display:flex;
-  width:100%;
+.wrapper {
+  display: flex;
+  width: 100%;
   justify-content: space-between;
   align-items: center;
-  padding:0 1.5em;
+  padding: 0 1.5em;
 }
 
-.titleContainer{
-  display:flex;
+.titleContainer {
+  display: flex;
   flex-direction: column;
   align-items: center;
-  gap:1em;
+  gap: 1em;
 }
-.titleContainer *{
-  margin:0;
+.titleContainer * {
+  margin: 0;
 }

@@ -48,7 +48,6 @@ export const Table = ({
             </th>
             {!isReduced && (
               <>
-                {" "}
                 <th className={styles.expand}>
                   <h2>Description</h2>
                 </th>
@@ -79,7 +78,7 @@ export const Table = ({
           </tr>
         </thead>
         <tbody>
-          {sortedTasks.map((row) => {
+          {sortedTasks?.map((row) => {
             const statusText =
               row.status === "inprogress"
                 ? "In Progress"
@@ -105,7 +104,9 @@ export const Table = ({
                   </>
                 )}
                 {isReduced && (
-                  <td className={styles.expand}>{row?.asigneduser.firstname} {row?.asigneduser.lastname}</td>
+                  <td className={styles.expand}>
+                    {row?.asigneduser.firstname} {row?.asigneduser.lastname}
+                  </td>
                 )}
                 <td className={styles[`label-${row.status}`]}>
                   <span>{statusText}</span>

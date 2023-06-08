@@ -6,8 +6,10 @@ const teamSchema = new Schema(
   {
     title: { type: String, required: true },
     users: [{ type: Schema.Types.ObjectId, ref: "User" }],
+    pendingusers:[{ type: Schema.Types.ObjectId, ref: "User" }],
     project: { type: Schema.Types.ObjectId, ref: "Project" },
     admin: { type: Schema.Types.ObjectId, ref: "User" },
+    active:{type:Boolean, required:true}
   },
   { timestamps: true }
 );

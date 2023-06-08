@@ -1,54 +1,92 @@
-import { useState, useContext } from "react";
-import {useQuery} from "react-query"
-import { getAllTasks, getTaskById } from "../../utils/apitask";
+import { useState, useContext, useEffect } from "react";
+import { useQuery, useQueryClient } from "react-query";
+import { getAllTasks, getTasksByProject } from "../../utils/apitask";
+import { getAllCycles, getCyclesByProject } from "../../utils/apiCycle";
 import KanbanDnd from "../kanban-dnd/kanban-dnd";
 import AddTaskModal from "../addtaskmodal/addtaskmodal";
 import { Context } from "../../Context";
-import MOCK_DATA from "../kanban-dnd/mock-data"
+import MOCK_DATA from "../kanban-dnd/mock-data";
 import styles from "./overview.module.css";
 import PageHeader from "../pageheader/pageheader";
 import TaskListView from "../tasklistview/tasklistview";
 import EditTaskModal from "../edittaskmodal/edittaskmodal";
 import DeleteModal from "../confirmdeletemodal/confirmdeletemodal";
 
-
 const Overview = () => {
+  const {
+    userSessionContext: { id: userid, firstname, lastname },
+    teams,
+  } = useContext(Context);
   const [activeView, setActiveview] = useState("kanban");
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [filter, setFilter]= useState({})
-
-  const {
-    userSessionContext: { id: userid, firstname, lastname },
-    teams
-  } = useContext(Context);
+  const [filterData, setFilterData] = useState({
+    type: "complex",
+    teams: teams,
+    selectedProject: { value: "", label: "Select one..." },
+    selectedCycles: [],
+    selectedUsers:[],
+    users:[],
+    cycles: [],
+    dataToDisplay:{backlog:[], todo:[], inprogress:[], done:[]}
+  });
   const [data, setData] = useState(MOCK_DATA);
   const [taskId, setTaskId] = useState("");
-  const [taskDataState, setTaskDataState] = useState("");
+  const queryClient = useQueryClient();
 
+  // const userFullName = `${firstname} ${lastname}`;
 
-  const userFullName = `${firstname} ${lastname}`;
+  useEffect(() => {
+    setFilterData((prevState) => {
+      return { ...filterData, teams: teams };
+    });
+  }, [teams]);
 
-
-  const { data: tasks, isLoading: taskLoading, refetch: refetchTasks } = useQuery({
-    queryKey: ["tasks", {}],
-    queryFn: () => getAllTasks(),
-    enabled: true,
+  const {
+    data: tasks,
+    isLoading: taskLoading,
+    refetch: refetchTasks,
+  } = useQuery({
+    queryKey: ["tasks", { project: filterData.selectedProject }],
+    queryFn: () => {
+      return getTasksByProject(filterData.selectedProject.value);
+    },
+    refetchOnWindowFocus: false,
     retry: false,
+    enabled:filterData.selectedProject.value? true : false,
     onSuccess: (tasks) => {
-      setData(tasks.data);
+        setData(tasks.data);
+        setFilterData(prevData => {
+          return{...prevData, dataToDisplay:tasks.data, tasksFilteredByCycle:tasks.data}
+        })
     },
     onError: (err) => {
-      console.log(err);
+      setData(MOCK_DATA);
     },
   });
 
-  const { data: taskData } = useQuery({
-    queryKey: ["task", { taskId: taskId }],
-    queryFn: () => getTaskById(taskId),
-    onSuccess: (task) => {
-      setTaskDataState(task);
+  const {
+    data: cycles,
+    isLoading: cyclesIsLoading,
+    refetch: refetchCycles,
+  } = useQuery({
+    queryKey: ["cycles", { project: filterData.selectedProject?.value }],
+    queryFn: () => getCyclesByProject(filterData.selectedProject?.value),
+    retry: false,
+    enabled:filterData.selectedProject.value? true : false,
+    refetchOnWindowFocus: false,
+    onSuccess: (data) => {
+      setFilterData((prevState) => {
+        const cyclesWithLabel = data.data.map((cycle) => {
+          return { label: cycle.title, value: cycle._id };
+        });
+        return {
+          ...prevState,
+          selectedCycles: cyclesWithLabel,
+          cycles: cyclesWithLabel,
+        };
+      });
     },
     onError: (err) => {
       console.log(err);
@@ -65,9 +103,13 @@ const Overview = () => {
   };
 
 
-
   
-
+  // const optionElements =  filterData.cycles?.map((cycle) => (
+  //     <MenuItem key={cycle.value} value={cycle.value}>
+  //       <Checkbox checked={filterData.selectedCycles.indexOf(cycle) > -1} />
+  //       <ListItemText primary={cycle.label} />
+  //     </MenuItem>
+  //   ))
 
   const headerElements = Object.keys(MOCK_DATA).map((columnHeader) => {
     let headerName = "";
@@ -87,8 +129,6 @@ const Overview = () => {
     );
   });
 
-  const filterData = {active:true}
-
   return (
     <div className={styles.cycles}>
       <PageHeader
@@ -99,13 +139,13 @@ const Overview = () => {
         btntitle="task"
         btnFunction={setShowAddModal}
         filterData={filterData}
+        setFilterData={setFilterData}
+        setData={setData}
+        data={data}
       />
       {showAddModal && <AddTaskModal setShowModal={setShowAddModal} />}
       {showEditModal && (
-        <EditTaskModal
-          taskId={taskId}
-          closeModal={setShowEditModal}
-        />
+        <EditTaskModal taskId={taskId} closeModal={setShowEditModal} />
       )}
       {showDeleteModal && (
         <DeleteModal
@@ -117,14 +157,18 @@ const Overview = () => {
       {activeView === "kanban" ? (
         <>
           <div className={styles.header}>{headerElements}</div>
-          <KanbanDnd handleEditModal={handleEditModal} 
-          handleDeleteModal={handleDeleteModal}
-          data={data} />
+          <KanbanDnd
+            handleEditModal={handleEditModal}
+            handleDeleteModal={handleDeleteModal}
+            data={filterData.dataToDisplay}
+          />
         </>
       ) : (
-        <TaskListView handleEditModal={handleEditModal}
-        handleDeleteModal={handleDeleteModal}
-        data={data} />
+        <TaskListView
+          handleEditModal={handleEditModal}
+          handleDeleteModal={handleDeleteModal}
+          data={filterData.dataToDisplay}
+        />
       )}
     </div>
   );
