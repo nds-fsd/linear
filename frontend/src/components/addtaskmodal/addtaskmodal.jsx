@@ -12,16 +12,17 @@ import Spinner from "../spinner/spinner";
 
 const AddTaskModal = ({ defaultValues, setShowModal }) => {
 
-  console.log(defaultValues)
 
 
-  const { register, handleSubmit, reset } = useForm({defaultValues:{
-    cycle:defaultValues.cycle
-  }});
   const { teams , userSessionContext } = useContext(Context);
   const [errorMessage, setErrorMessage] = useState("");
-  const [selectedTeam, setSelectedTeam] = useState(defaultValues?.team._id);
+  const [selectedTeam, setSelectedTeam] = useState(defaultValues?.team._id ?? "");
   const [selectedCycle, setSelectedCycle] = useState(defaultValues?.cycle);
+  const { register, handleSubmit, reset } = useForm({defaultValues:{
+    cycle:selectedCycle
+  }});
+
+
   const [selectedProject, setSelectedProject] = useState("");
   const queryClient = useQueryClient();
   const [users, setUsers] = useState();
@@ -33,11 +34,15 @@ const AddTaskModal = ({ defaultValues, setShowModal }) => {
   }, [selectedTeam]);
 
 
+  const onSuccess = ()=>{}
+  const onError = ()=>{}
+  const enabled = !!selectedProject
+
   const {
     data: cycles,
     isLoading: cyclesIsLoading,
     isError: cyclesIsError,
-  } = useCyclesByProjectData(selectedProject)
+  } = useCyclesByProjectData(selectedProject, onSuccess, onError, enabled)
 
   const {
     mutate: addTaskMutation,
@@ -165,6 +170,7 @@ const AddTaskModal = ({ defaultValues, setShowModal }) => {
                   <select
                     disabled={cyclesIsLoading || cyclesIsError}
                     id="taskcycle"
+                    value={selectedCycle}
                     className={addTaskStyles.selectInput}
                     {...register("cycle")}
                   >

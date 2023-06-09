@@ -13,11 +13,12 @@ export const getCyclesByProject = (projectid) => {
   }
 };
 
-export const useCyclesByProjectData = (projectid, onSuccess, onError)=>{
+export const useCyclesByProjectData = (projectid, onSuccess, onError, enabled)=>{
 
   return useQuery({
     queryKey: ["cycles", { project: projectid }],
     queryFn:() => getCyclesByProject(projectid),
+    enabled:enabled,
     onSuccess:onSuccess,
     onError:onError
     })
