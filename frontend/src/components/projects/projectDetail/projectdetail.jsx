@@ -170,7 +170,7 @@ const ProjectDetail = () => {
       )}
       {showAddModal && (
         <AddTaskModal
-          defaultValues={{ project: project._id, cycle: selectedCycle }}
+          defaultValues={{ project: project._id, cycle: selectedCycle, team:teamData }}
           setShowModal={setShowAddModal}
         />
       )}
