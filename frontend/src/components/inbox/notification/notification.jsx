@@ -10,6 +10,8 @@ const Notification = ({ notificationid, notification }) => {
     title,
   } = notification;
 
+  const senderFullName = `${sender.firstname} ${sender.lastname}`
+
   const acceptInvitation = () => {
     //Hacer un patch al proyecto correspondiente donde se saque el 
     //ID del usuario enviando la peticion del array de pending 
@@ -20,11 +22,11 @@ const Notification = ({ notificationid, notification }) => {
     <div className={styles.container}>
       <div className={styles.header}>
         <h2>{notification.title}</h2>
-        <p>{notification.sender}</p>
+        <p>{notification.senderFullName}</p>
       </div>
       <div className={styles.bodyContainer}>
         <div className={styles.body}>
-          <p>{`${message} ${data.teamtitle} by ${sender}`}</p>
+          <p>{`${message} ${data.teamtitle} by ${senderFullName}`}</p>
           {notification.type === "invitation" && (
             <button className={styles.acceptBtn} onClick={() => {}}>
               Accept Invitation
