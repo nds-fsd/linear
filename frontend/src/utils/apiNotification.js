@@ -1,5 +1,6 @@
 import { api } from "./api";
 import { useQuery } from "react-query";
+import { useMutation } from "react-query";
 
 
 
@@ -14,6 +15,24 @@ export const getAllNotifications = (queryParams) => {
 export const getNotificationById = (notificationid) => {
     return api.get(`/notifications/${notificationid}`);
   };
+
+  export const patchNotification = (notificationid, data) => {
+    return api.patch(`/notifications/${notificationid}`, data);
+  };
+  
+  
+  export const useEditNotificationMutation = (notificationid, data, onSuccess) => {
+  
+    return useMutation({
+      mutationFn: () => patchNotification(notificationid, data),
+      onSuccess: (payload) => {
+        onSuccess()
+      },
+      onError: (err) => {
+        console.log(err.response.data);
+      },
+    });
+  }   
 
 
 export const useAllNotificationsQuery = (queryParams, onSuccess, onError) => {

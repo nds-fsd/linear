@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import styles from "./inbox.module.css";
 import { Context } from "../../Context";
 import { formatDate } from "../../utils/formatUtils";
-import { useAllNotificationsQuery } from "../../utils/apiNotification";
+import { useAllNotificationsQuery, useEditNotificationMutation } from "../../utils/apiNotification";
 import MarkChatUnreadOutlinedIcon from "@mui/icons-material/MarkChatUnreadOutlined";
 import MarkChatReadOutlinedIcon from "@mui/icons-material/MarkChatReadOutlined";
 import Notification from "./notification/notification";
@@ -11,34 +11,15 @@ const Inbox = () => {
   const [selectedNotification, setSelectedNotification] = useState();
   const {userSessionContext} = useContext(Context)
   const {id:userId} = userSessionContext
+  const onMutationSuccess = ()=>{
 
+  }
 
   const {data, isLoading, isError, error} = useAllNotificationsQuery({receiver:userId})
-
-
-  console.log(data?.data)
-
-  // const notificationArr = [
-  //   {
-  //     _id: "id",
-  //     title: "Notification title",
-  //     seen: true,
-  //     type: "invitation",
-  //     message: "You have been invited to team",
-  //     sender: "Sender Name",
-  //     receiver: "userid",
-  //     date: formatDate(Date()),
-  //     data:{
-  //       teamid:"asljhdkaj",
-  //       teamtitle:"Mugiwara no ichimi"
-  //     }
-  //   },
-  // ];
-
+  const {mutate, isLoading:isMutating, isError:mutateError, error:mutationError} = useEditNotificationMutation()
   const notificationArr = data?.data
 
   const notificationElementList = notificationArr?.map((notification) => {
-
     return (
       <div 
       onClick={()=>{setSelectedNotification(notification)}}
