@@ -69,12 +69,12 @@ const updateOne = (model) => {
   return asyncHandler(async (req, res) => {
     const filter = req.params.id;
     console.log(filter);
-    const selectedCycle = await updateItem({
+    const selectedItem = await updateItem({
       model,
       id: req.params.id,
       data: req.body,
     });
-    res.json(selectedCycle);
+    res.json(selectedItem);
   });
 };
 
