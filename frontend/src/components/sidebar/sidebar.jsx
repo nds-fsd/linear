@@ -1,4 +1,4 @@
-import React from "react";
+import { useContext } from "react";
 import { getUserSession, removeSession } from "../../utils/localStorage.utils";
 import UserDatacard from "../userdatacard/userdatacard";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -7,7 +7,7 @@ import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
 import InboxOutlinedIcon from "@mui/icons-material/InboxOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
-import AnalyticsOutlinedIcon from '@mui/icons-material/AnalyticsOutlined';
+import AnalyticsOutlinedIcon from "@mui/icons-material/AnalyticsOutlined";
 import {
   HOME,
   USERS,
@@ -19,10 +19,17 @@ import {
   INBOX,
   LOGIN,
 } from "../../route-path";
+import { Context } from "../../Context";
 import sideBarStyles from "./sidebar.module.css";
 
 const Sidebar = () => {
   const navigate = useNavigate();
+
+  const { notificationData } = useContext(Context);
+
+  const unreadNotifications = notificationData?.data.filter(
+    (notification) => !notification.seen
+  ).length;
 
   return (
     <div className={sideBarStyles.sidebarContainer}>
@@ -91,6 +98,11 @@ const Sidebar = () => {
               }}
             >
               <InboxOutlinedIcon className={sideBarStyles.icon} />
+              {unreadNotifications !== 0 && (
+                <span className={sideBarStyles.notificationsMark}>
+                  {unreadNotifications}
+                </span>
+              )}
               Inbox
             </NavLink>
           </li>

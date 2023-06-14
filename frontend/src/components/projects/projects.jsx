@@ -8,7 +8,8 @@ import AddProjectModal from "./addprojectmodal/addprojectmodal";
 const Projects = () => {
   const [activeView, setActiveview] = useState("list");
   const [showAddProjectModal, setShowAddProjectModal] = useState(false);
-  const { teams } = useContext(Context);
+  const { teams, userSessionContext } = useContext(Context);
+  const {id} = userSessionContext
 
   const handleEditModal = () => {
     console.log("hola");
@@ -21,6 +22,15 @@ const Projects = () => {
   const handleAddProjectModal = () => {
     setShowAddProjectModal(true);
   };
+  
+const filteredTeams = teams.filter(team => {
+  const userIdsArray = team.users?.map(user=> user._id)
+  return userIdsArray?.includes(id)
+})
+
+
+
+
 
 
 
@@ -37,7 +47,7 @@ const Projects = () => {
         btnFunction={handleAddProjectModal}
       />
       <ProjectListView
-        data={teams}
+        data={filteredTeams}
         handleEditModal={handleEditModal}
         handleDeleteModal={handleDeleteModal}
       />

@@ -1,5 +1,5 @@
 const Team = require("../mongo/schemas/team.schema.js");
-const Notification = require("../mongo/schemas/notification.schema.js")
+const Notification = require("../mongo/schemas/notification.schema.js");
 const express = require("express");
 const asyncHandler = require("express-async-handler");
 const { getAll } = require("../services/db-service.js");
@@ -24,7 +24,9 @@ exports.getAllTeams = asyncHandler(async (req, res) => {
 
 exports.getTeamsByUserId = asyncHandler(async (req, res) => {
   try {
-    const allTeams = await Team.find({ users: req.query.userid })
+    const allTeams = await Team.find({
+      $or: [{ pendingusers: req.query.userid }, { users: req.query.userid }],
+    })
       .populate("project")
       .populate("users")
       .populate("pendingusers");
@@ -62,9 +64,10 @@ exports.deleteTeamById = asyncHandler(async (req, res) => {
 exports.updateTeamById = asyncHandler(async (req, res) => {
   const filter = req.params.id;
   const userId = req.body.userId;
-  const payload = req.jwtPayload
+  const payload = req.jwtPayload;
   try {
     if (userId) {
+      console.log("🚀 ~ file: team.controller.js:70 ~ exports.updateTeamById=asyncHandler ~ userId:", userId)
       const teamPending = await Team.findOne({
         _id: filter,
         pendingusers: userId,
@@ -92,9 +95,10 @@ exports.updateTeamById = asyncHandler(async (req, res) => {
           receiver: userId,
           data: {
             teamid: selectedTeam._id,
-            teamtitle:selectedTeam.title
+            teamtitle: selectedTeam.title,
+            accepted:false
           },
-        }
+        };
         const newNotification = new Notification(data);
         await newNotification.save();
         res
@@ -104,10 +108,12 @@ exports.updateTeamById = asyncHandler(async (req, res) => {
       }
     } else {
       const selectedTeam = await Team.findByIdAndUpdate(filter, req.body);
-      res.status(200).res.json(selectedTeam);
+      console.log("🚀 ~ file: team.controller.js:110 ~ exports.updateTeamById=asyncHandler ~ selectedTeam:", selectedTeam)
+      res.status(200).json(selectedTeam);
       return;
     }
   } catch (error) {
+    console.log("🚀 ~ file: team.controller.js:115 ~ exports.updateTeamById=asyncHandler ~ error:", error)
     res.status(500).json({ message: error });
   }
 });
