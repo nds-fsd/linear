@@ -1,5 +1,6 @@
 import { useState, createContext, useEffect } from "react";
 import { getUserSession, setUserSession } from "./utils/localStorage.utils";
+import { useAllNotificationsQuery } from "./utils/apiNotification";
 import { useNavigate } from "react-router-dom";
 import { LOGIN, HOME, MY_ISSUES } from "./route-path";
 import { api } from "./utils/api";
@@ -13,7 +14,7 @@ export const ContextProvider = ({ children }) => {
     getUserSession()
   );
   const [teams, setTeams] = useState([{}]);
-  const [teamsEffect, setTeamsEffect] = useState(false)
+  const [teamsEffect, setTeamsEffect] = useState(false);
   const [invalidLogIn, setInvalidLogIn] = useState(false);
   const [isLoginIn, setIsLoginIn] = useState(false);
   const [error, setError] = useState("");
@@ -78,6 +79,15 @@ export const ContextProvider = ({ children }) => {
       });
   };
 
+  const {
+    data: notificationData,
+    isLoading: notificationIsLoading,
+    isError: notificationIsError,
+    error: notificationError,
+  } = useAllNotificationsQuery({
+    receiver: userSessionContext?.id,
+  });
+
   useEffect(() => {
     getTeamsByUserId(userSessionContext?.id).then((res) => {
       setTeams(res.data);
@@ -95,6 +105,7 @@ export const ContextProvider = ({ children }) => {
         setTeamsEffect,
         teams,
         teamsEffect,
+        notificationData,
         error,
         userSessionContext,
         invalidLogIn,

@@ -18,7 +18,6 @@ exports.getAllNotifications = crudService.getAll({
     model: Notification,
     requiredKeys: ["title", "message", "sender", "receiver", "date", "type", "seen"],
   });
-  
+
   exports.deleteNotificationById = crudService.deleteOne(Notification);
-  
   exports.updateNotificationById = crudService.updateOne(Notification);

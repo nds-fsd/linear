@@ -17,6 +17,7 @@ const Overview = () => {
     userSessionContext: { id: userid, firstname, lastname },
     teams,
   } = useContext(Context);
+
   const [activeView, setActiveview] = useState("kanban");
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
@@ -24,12 +25,12 @@ const Overview = () => {
   const [filterData, setFilterData] = useState({
     type: "complex",
     teams: teams,
-    selectedProject: { value: "", label: "Select one..." },
-    selectedCycles: [],
-    selectedUsers:[],
-    users:[],
+    selectedProject: { value: "", label: "Select a Project..." },
+    selectedCycles: [{ value: "", label: "Select a Cycle..." }],
+    selectedUsers: [{ value: "", label: "Select a User..." }],
+    users: [],
     cycles: [],
-    dataToDisplay:{backlog:[], todo:[], inprogress:[], done:[]}
+    dataToDisplay: { backlog: [], todo: [], inprogress: [], done: [] },
   });
   const [data, setData] = useState(MOCK_DATA);
   const [taskId, setTaskId] = useState("");
@@ -54,12 +55,16 @@ const Overview = () => {
     },
     refetchOnWindowFocus: false,
     retry: false,
-    enabled:filterData.selectedProject.value? true : false,
+    enabled: filterData.selectedProject.value ? true : false,
     onSuccess: (tasks) => {
-        setData(tasks.data);
-        setFilterData(prevData => {
-          return{...prevData, dataToDisplay:tasks.data, tasksFilteredByCycle:tasks.data}
-        })
+      setData(tasks.data);
+      setFilterData((prevData) => {
+        return {
+          ...prevData,
+          dataToDisplay: tasks.data,
+          tasksFilteredByCycle: tasks.data,
+        };
+      });
     },
     onError: (err) => {
       setData(MOCK_DATA);
@@ -74,17 +79,22 @@ const Overview = () => {
     queryKey: ["cycles", { project: filterData.selectedProject?.value }],
     queryFn: () => getCyclesByProject(filterData.selectedProject?.value),
     retry: false,
-    enabled:filterData.selectedProject.value? true : false,
+    enabled: filterData.selectedProject.value ? true : false,
     refetchOnWindowFocus: false,
     onSuccess: (data) => {
       setFilterData((prevState) => {
         const cyclesWithLabel = data.data.map((cycle) => {
           return { label: cycle.title, value: cycle._id };
         });
+
+        if(cyclesWithLabel.length === 0) {
+          cyclesWithLabel.push({ value: "", label: "No cycles available" })
+        }
+        
         return {
           ...prevState,
-          selectedCycles: cyclesWithLabel,
-          cycles: cyclesWithLabel,
+          selectedCycles: cyclesWithLabel ,
+          cycles: cyclesWithLabel ,
         };
       });
     },
@@ -101,15 +111,6 @@ const Overview = () => {
     setTaskId(taskid);
     setShowDeleteModal(true);
   };
-
-
-  
-  // const optionElements =  filterData.cycles?.map((cycle) => (
-  //     <MenuItem key={cycle.value} value={cycle.value}>
-  //       <Checkbox checked={filterData.selectedCycles.indexOf(cycle) > -1} />
-  //       <ListItemText primary={cycle.label} />
-  //     </MenuItem>
-  //   ))
 
   const headerElements = Object.keys(MOCK_DATA).map((columnHeader) => {
     let headerName = "";

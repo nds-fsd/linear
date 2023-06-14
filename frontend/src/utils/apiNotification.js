@@ -26,7 +26,7 @@ export const getNotificationById = (notificationid) => {
     return useMutation({
       mutationFn: () => patchNotification(notificationid, data),
       onSuccess: (payload) => {
-        onSuccess()
+        onSuccess(payload)
       },
       onError: (err) => {
         console.log(err.response.data);

@@ -48,8 +48,22 @@
     font-weight: 700;
     letter-spacing: 1px;
     cursor:pointer;
-
 }
+
+.acceptBtnDisabled{
+    align-self: flex-end;
+    width:150px;
+    height:80px;
+    border-radius:10px;
+    border:none;
+    background-color: var(--main-bg-color);
+    color:var(--accent-color);
+    font-size: 1em;
+    font-weight: 700;
+    letter-spacing: 1px;
+    cursor: not-allowed;
+}
+
 
 .acceptBtn:active {
     transform: scale(98%);
