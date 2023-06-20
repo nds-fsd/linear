@@ -1,13 +1,30 @@
 import { useState, createContext, useEffect } from "react";
-import { getUserSession, setUserSession } from "./utils/localStorage.utils";
+import {
+  getUserSession,
+  setUserSession,
+  getUserToken,
+} from "./utils/localStorage.utils";
 import { useAllNotificationsQuery } from "./utils/apiNotification";
 import { useNavigate } from "react-router-dom";
 import { LOGIN, HOME, MY_ISSUES } from "./route-path";
 import { api } from "./utils/api";
 import { getTeamsByUserId } from "./utils/apiTeam";
 import { useQueryClient } from "react-query";
+import { io } from "socket.io-client";
 
 export const Context = createContext();
+
+const token = getUserToken();
+let socket;
+if (token) {
+  socket = io("http://localhost:3001", {
+    path: "/private",
+    reconnectionDelayMax: 10000,
+    auth: {
+      token,
+    },
+  });
+}
 
 export const ContextProvider = ({ children }) => {
   const [userSessionContext, setUserSessionContext] = useState(
@@ -110,6 +127,7 @@ export const ContextProvider = ({ children }) => {
         userSessionContext,
         invalidLogIn,
         isLoginIn,
+        SOCKET: socket,
       }}
     >
       {children}

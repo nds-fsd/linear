@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { getUserSession, removeSession } from "../../utils/localStorage.utils";
 import UserDatacard from "../userdatacard/userdatacard";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -25,12 +25,35 @@ import sideBarStyles from "./sidebar.module.css";
 const Sidebar = () => {
   const navigate = useNavigate();
 
-  const { notificationData, userSessionContext } = useContext(Context);
-  const {id:userid} = userSessionContext
+  const { notificationData, userSessionContext, SOCKET } = useContext(Context);
+  const { id: userid } = userSessionContext;
 
   const unreadNotifications = notificationData?.data.filter(
     (notification) => !notification.seen
   ).length;
+
+  useEffect(() => {
+    if (SOCKET) {
+      SOCKET.connect();
+      SOCKET.on("connection", (data) => {
+        console.log("Connected");
+      });
+      return () => {
+        SOCKET.disconnect();
+      };
+    }
+  }, [SOCKET]);
+
+  useEffect(() => {
+    const recievedInvitation = (newInvitation) => {
+      console.log('NEW INVITATION',newInvitation)
+      // aqui va la de set notification
+    };
+
+    if(SOCKET){
+      SOCKET.on('new-invitation',recievedInvitation)
+    }
+  },[SOCKET])
 
   return (
     <div className={sideBarStyles.sidebarContainer}>
