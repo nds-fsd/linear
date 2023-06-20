@@ -19,10 +19,12 @@ const UserDatacard = () => {
     role = "Staff";
   }
 
+  const userImg = userSessionContext.profilepic ? userSessionContext.profilepic : userImage
+
   return (
     <div className={userDatacardStyles.userData}>
 
-      <img src={userImage} className={userDatacardStyles.img} alt="" />
+      <img src={userImg} className={userDatacardStyles.img} alt="" />
       <div className={userDatacardStyles.userDataContainer}>
         <h3>{`${firstname} ${lastname}`}</h3>
         <p>{role}</p>

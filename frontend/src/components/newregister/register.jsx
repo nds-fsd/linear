@@ -5,7 +5,12 @@ import { Context } from "../../Context";
 import registerFormStyles from "./register.module.css";
 
 const Register = () => {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit } = useForm({
+    defaultValues: {
+      profilepic:
+        "https://res.cloudinary.com/djcaqznth/image/upload/v1687185608/xyfxc4asmepjssisngh4.jpg",
+    },
+  });
   const context = useContext(Context);
   const [validatonMessage, setValidationMessage] = useState();
   const { isLoginIn, registerUser, error, setError } = context;

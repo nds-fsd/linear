@@ -1,0 +1,40 @@
+.userDetailsContainer {
+  padding-top: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: space-between;
+  justify-content: center;
+}
+
+.fieldWrapper {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  width: 100%;
+  padding: 1em;
+  gap: 1em;
+}
+
+.fieldTag {
+  font-size: 2rem;
+}
+
+.fieldContent {
+  font-size: 1.5rem;
+  width:50%
+}
+
+.inputBtn{
+    height:50px;
+    background-color:var(--accent-color);
+    color:white;
+    font-size: 1rem;
+    border-radius: 10px;
+    cursor:pointer;
+}
+
+.inputBtn:active{
+  transform:scale(0.98);
+}
+
+
