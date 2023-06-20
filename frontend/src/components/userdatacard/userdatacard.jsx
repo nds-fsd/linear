@@ -20,6 +20,8 @@ const UserDatacard = () => {
   }
 
   const userImg = userSessionContext.profilepic ? userSessionContext.profilepic : userImage
+  
+  console.log(userSessionContext)
 
   return (
     <div className={userDatacardStyles.userData}>

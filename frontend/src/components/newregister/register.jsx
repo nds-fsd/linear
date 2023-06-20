@@ -8,7 +8,7 @@ const Register = () => {
   const { register, handleSubmit } = useForm({
     defaultValues: {
       profilepic:
-        "https://res.cloudinary.com/djcaqznth/image/upload/v1687185608/xyfxc4asmepjssisngh4.jpg",
+        "https://res.cloudinary.com/djcaqznth/image/upload/v1687175840/vurbpjn8hawhjx5rleoj.jpg",
     },
   });
   const context = useContext(Context);
@@ -43,6 +43,7 @@ const Register = () => {
             return;
           }
           setValidationMessage("");
+          console.log(data)
           registerUser(data);
         })}
       >

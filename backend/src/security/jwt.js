@@ -34,6 +34,7 @@ authRouter.post("/register", async (req, res) => {
       pronouns: data.pronouns,
       teamrole: data.teamrole,
       birthday: data.birthday,
+      profilepic: data.profilepic,
     });
     const savedUser = await newUser.save();
     if (savedUser) {
@@ -47,6 +48,7 @@ authRouter.post("/register", async (req, res) => {
           teamrole: savedUser.teamrole,
           birthday: savedUser.birthday,
           id: savedUser._id,
+          profilepic: data.profilepic,
         },
       });
     } else {

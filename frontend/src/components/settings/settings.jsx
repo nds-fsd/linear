@@ -17,8 +17,6 @@ const Settings = () => {
     // setUserSessionContext({...userSessionContext, profilepic:imgUrl})
   };
 
-  // const {mutate, isLoading, isError, error} = usePatchUserMutation(userId, objToSend, onSuccess)
-
   return (
     <div className={settingsStyle.settings}>
       <div className={settingsStyle.settingsContainer}>
