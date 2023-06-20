@@ -21,13 +21,16 @@ const EditTaskModal = ({ closeModal, taskDataState, taskId }) => {
   const { register, handleSubmit, reset } = useForm({
     defaultValues: () =>
       getTaskById(taskId).then((res) => {
-        const { title, description, duedate, cycle, status, asigneduser } = res.data;
+        const { title, description, duedate, cycle, status, asigneduser } =
+          res.data;
         const formatedDueDate = new Date(duedate).toISOString().split("T")[0];
         const projectid = cycle.project._id;
         const cycleid = cycle._id;
-        const userid = asigneduser._id
+        const userid = asigneduser._id;
         const team = teams.find((team) => team.project._id === projectid);
         setSelectedTeam(team._id);
+        setUsers(team?.users);
+
         setSelectedProject(projectid);
         return {
           title,
@@ -35,7 +38,7 @@ const EditTaskModal = ({ closeModal, taskDataState, taskId }) => {
           duedate: formatedDueDate,
           status,
           cycle: cycleid,
-          user:userid
+          user: userid,
         };
       }),
   });
@@ -193,7 +196,6 @@ const EditTaskModal = ({ closeModal, taskDataState, taskId }) => {
                   Asigned to
                   <select
                     id="taskuser"
-                    defaultValue=""
                     className={styles.selectInput}
                     {...register("user")}
                   >

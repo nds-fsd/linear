@@ -16,6 +16,7 @@ const UserSchema = new Schema(
       required: true,
     },
     birthday: { type: Date },
+    profilepic:{type: String}
   },
   { timestamps: true }
 );

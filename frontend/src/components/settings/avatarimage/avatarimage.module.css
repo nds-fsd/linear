@@ -1,0 +1,48 @@
+.avatarImage {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.avatarInput {
+  display: none;
+}
+
+.inputLabel {
+  height: 50px;
+  background-color: var(--accent-color);
+  cursor: pointer;
+  border-radius: 10px;
+  color:white;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+.inputLabel:active, .avatarButton:active {
+  transform: scale(0.98);
+}
+
+.avatarImageContainer {
+    display:flex;
+    flex-direction: column;
+    gap:1em;
+    
+}
+
+.avatarButton{
+    height:40px;
+    border:none;
+    cursor:pointer;
+    background-color: var(--darkgray-color);
+    border-radius:10px;
+    color:white;
+    letter-spacing: 2px;
+    font-size:1rem;
+}

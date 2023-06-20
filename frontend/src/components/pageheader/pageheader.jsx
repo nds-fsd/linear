@@ -6,11 +6,9 @@ import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOu
 import ListItemText from "@mui/material/ListItemText";
 import MUISelect from "@mui/material/Select";
 import Checkbox from "@mui/material/Checkbox";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import headerStyle from "./pageheader.module.css";
-import Select, { components } from "react-select";
+import Select from "react-select";
 import { Context } from "../../Context";
 import {
   unorderTasks,

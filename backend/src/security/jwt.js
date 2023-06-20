@@ -90,6 +90,7 @@ authRouter.post("/login", async (req, res) => {
         pronouns: foundUser.pronouns,
         birthday: foundUser.birthday,
         teamrole: foundUser.teamrole,
+        profilepic: foundUser.profilepic,
         id: foundUser._id,
       },
     });

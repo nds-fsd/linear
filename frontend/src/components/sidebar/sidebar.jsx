@@ -25,7 +25,8 @@ import sideBarStyles from "./sidebar.module.css";
 const Sidebar = () => {
   const navigate = useNavigate();
 
-  const { notificationData } = useContext(Context);
+  const { notificationData, userSessionContext } = useContext(Context);
+  const {id:userid} = userSessionContext
 
   const unreadNotifications = notificationData?.data.filter(
     (notification) => !notification.seen
@@ -108,7 +109,7 @@ const Sidebar = () => {
           </li>
           <li className={sideBarStyles.listItem}>
             <NavLink
-              to={`${USER_ID}/${SETTINGS}`}
+              to={`${userid}/${SETTINGS}`}
               className={sideBarStyles.link}
               style={({ isActive }) => {
                 return {
@@ -126,7 +127,6 @@ const Sidebar = () => {
       </nav>
       <div
         onClick={() => {
-          console.log("clicked");
           removeSession();
           navigate(LOGIN);
         }}
