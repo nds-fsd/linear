@@ -4,56 +4,63 @@ import { useForm } from "react-hook-form";
 import { TextField, MenuItem } from "@mui/material";
 import { usePatchUserMutation, patchUserById } from "../../../utils/apiUser";
 import { Context } from "../../../Context";
-import Spinner from "../../spinner/spinner"
+import Spinner from "../../spinner/spinner";
 
 const EditUserForm = ({ userData, setEditMode }) => {
   const { email, firstname, lastname, pronouns, teamrole, id } = userData;
   const { userSessionContext, setUserSessionContext } = useContext(Context);
-  const [objToSend, setObjToSend] = useState({})
+  const [objToSend, setObjToSend] = useState({});
+  const [errorMessage, setErrorMessage] = useState("");
   const roleOptions = [
     { value: "cyclemanager", label: "Time Manager" },
     { value: "projectmanager", label: "Project Manager" },
     { value: "tecnicstaff", label: "Staff" },
   ];
 
+  const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 
+  const handleChange = (name, value) => {
+    setObjToSend((prevState) => {
+      return { ...prevState, [name]: value };
+    });
+  };
+  const onSuccess = (data) => {
+    setUserSessionContext((prevState) => {
+      return { ...prevState, ...objToSend };
+    });
+  };
 
-  const handleChange = (name, value) =>{
-    setObjToSend(prevState =>{
-      return{...prevState, [name]:value}
-    })
-  }
-  const onSuccess = (data)=>{setUserSessionContext(prevState =>{
-    return {...prevState, ...objToSend}
-  })}
+  const { mutate, isLoading, isSuccess, isError, error } = usePatchUserMutation(
+    id,
+    objToSend,
+    onSuccess
+  );
 
-  const {mutate, isLoading, isSuccess, isError, error} = usePatchUserMutation(id, objToSend, onSuccess)
-  
-    useEffect(()=>{
-      if(isSuccess){
-        setEditMode(false)
-      }
-    },[isSuccess])
+  useEffect(() => {
+    if (isSuccess) {
+      setEditMode(false);
+    }
+  }, [isSuccess]);
 
-  if(isLoading){
-    return <div className={styles.userDetailsContainer}>
-      <Spinner/>
-    </div>
+  if (isLoading) {
+    return (
+      <div className={styles.userDetailsContainer}>
+        <Spinner />
+      </div>
+    );
   }
 
   return (
-    <div
-      className={styles.userDetailsContainer}
-    >
+    <div className={styles.userDetailsContainer}>
       <div className={styles.fieldWrapper}>
         <div className={styles.fieldTag}>Name</div>
         <TextField
           defaultValue={firstname}
           className={styles.fieldContent}
           name="firstname"
-          onChange={(e)=>{
-            const{name, value} = e.target
-            handleChange(name,value)
+          onChange={(e) => {
+            const { name, value } = e.target;
+            handleChange(name, value);
           }}
         />
       </div>
@@ -63,9 +70,9 @@ const EditUserForm = ({ userData, setEditMode }) => {
           defaultValue={lastname}
           className={styles.fieldContent}
           name="lastname"
-          onChange={(e)=>{
-            const{name, value} = e.target
-            handleChange(name,value)
+          onChange={(e) => {
+            const { name, value } = e.target;
+            handleChange(name, value);
           }}
         />
       </div>
@@ -75,9 +82,9 @@ const EditUserForm = ({ userData, setEditMode }) => {
           defaultValue={email}
           className={styles.fieldContent}
           name="email"
-          onChange={(e)=>{
-            const{name, value} = e.target
-            handleChange(name,value)
+          onChange={(e) => {
+            const { name, value } = e.target;
+            handleChange(name, value);
           }}
         />
       </div>
@@ -89,9 +96,9 @@ const EditUserForm = ({ userData, setEditMode }) => {
           className={styles.fieldContent}
           defaultValue={teamrole}
           name="teamrole"
-          onChange={(e)=>{
-            const{name, value} = e.target
-            handleChange(name,value)
+          onChange={(e) => {
+            const { name, value } = e.target;
+            handleChange(name, value);
           }}
         >
           {roleOptions.map((option) => {
@@ -103,14 +110,23 @@ const EditUserForm = ({ userData, setEditMode }) => {
           })}
         </TextField>
       </div>
+      <p>{errorMessage}</p>
       <button
-      onClick={(e)=>{ 
-        e.preventDefault
-        console.log(objToSend)
-        mutate()
-      }}
-      className={styles.inputBtn} 
-       >
+        onClick={(e) => {
+          e.preventDefault;
+          if(objToSend.email && emailRegex.test(objToSend.email)) {
+            mutate();
+            return;
+          } else if(objToSend.email && !emailRegex.test(objToSend.email)) {
+            setErrorMessage("Please enter a valid email");
+            return;
+          } else {
+            mutate()
+            return;
+          }
+        }}
+        className={styles.inputBtn}
+      >
         Update profile
       </button>
     </div>
