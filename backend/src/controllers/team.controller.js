@@ -103,7 +103,7 @@ exports.updateTeamById = asyncHandler(async (req, res) => {
         };
         const newNotification = new Notification(data);
         await newNotification.save();
-        m.io.to(`user-${userId}`).emit("new-invitation", newNotification)
+        // m.io.to(`user-${userId}`).emit("new-invitation", newNotification)
         res
           .status(200)
           .json({ message: "User has been invited, waiting for confirmation" });
