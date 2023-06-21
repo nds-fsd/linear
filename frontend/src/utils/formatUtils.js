@@ -30,6 +30,7 @@ export const unorderTasks = (tasks)=>{
 
 
 export const sortTasksByStatus = (taskList) => {
+    if(!taskList){return}
      const groupedTasks =  taskList.reduce(
     (acc, task) => {
       if (!acc[task.status]) {
