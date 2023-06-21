@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useQuery } from "react-query";
 import { getTasksByUser, getTaskById } from "../../utils/apitask";
 import myIssuesStyle from "./myissues.module.css";
@@ -10,6 +10,8 @@ import MOCK_DATA from "../kanban-dnd/mock-data";
 import TaskListView from "../tasklistview/tasklistview";
 import EditTaskModal from "../edittaskmodal/edittaskmodal";
 import DeleteModal from "../confirmdeletemodal/confirmdeletemodal";
+import { handleSearch } from "../../utils/searchInput";
+import { sortTasksByStatus } from "../../utils/formatUtils";
 
 const MyIssues = () => {
   const [activeView, setActiveview] = useState("kanban");
@@ -22,6 +24,7 @@ const MyIssues = () => {
   const [data, setData] = useState(MOCK_DATA);
   const [taskId, setTaskId] = useState("");
   const [taskDataState, setTaskDataState] = useState("");
+  const [searchbarFilter, setSearchbarFilter] = useState("");
 
   const userFullName = `${firstname} ${lastname}`;
 
@@ -29,8 +32,13 @@ const MyIssues = () => {
     queryKey: ["tasks", { userid: userid, username: userFullName }],
     queryFn: () => getTasksByUser(userid),
     onSuccess: (tasks) => {
-      setData(tasks.data);
-    },
+      if (searchbarFilter) {
+        const filteredTasks = handleSearch(searchbarFilter, tasks.data);
+        const reorderedTasks = sortTasksByStatus(filteredTasks);
+        setData(reorderedTasks);
+      } else if(!searchbarFilter){
+        setData(tasks.data );
+    }},
     onError: (err) => {
       console.log(err);
     },
@@ -56,9 +64,15 @@ const MyIssues = () => {
     setShowDeleteModal(true);
   };
 
-
-  
-
+  useEffect(() => {
+    if (searchbarFilter) {
+      const filteredTasks = handleSearch(searchbarFilter, myTasks.data);
+      const reorderedTasks = sortTasksByStatus(filteredTasks);
+      setData(reorderedTasks);
+    } else if(!searchbarFilter){
+      setData(myTasks?.data ?? MOCK_DATA);
+    }
+  }, [searchbarFilter]);
 
   const headerElements = Object.keys(MOCK_DATA).map((columnHeader) => {
     let headerName = "";
@@ -78,7 +92,7 @@ const MyIssues = () => {
     );
   });
 
-  const filterData = {type:"simple"}
+  const filterData = { type: "simple" };
 
   return (
     <div className={myIssuesStyle.myIssues}>
@@ -90,13 +104,11 @@ const MyIssues = () => {
         btntitle="Issue"
         btnFunction={setShowAddModal}
         filterData={filterData}
+        setSearchbarFilter={setSearchbarFilter}
       />
       {showAddModal && <AddTaskModal setShowModal={setShowAddModal} />}
       {showEditModal && (
-        <EditTaskModal
-          taskId={taskId}
-          closeModal={setShowEditModal}
-        />
+        <EditTaskModal taskId={taskId} closeModal={setShowEditModal} />
       )}
       {showDeleteModal && (
         <DeleteModal
@@ -108,14 +120,18 @@ const MyIssues = () => {
       {activeView === "kanban" ? (
         <>
           <div className={myIssuesStyle.header}>{headerElements}</div>
-          <KanbanDnd handleEditModal={handleEditModal} 
-          handleDeleteModal={handleDeleteModal}
-          data={data} />
+          <KanbanDnd
+            handleEditModal={handleEditModal}
+            handleDeleteModal={handleDeleteModal}
+            data={data}
+          />
         </>
       ) : (
-        <TaskListView handleEditModal={handleEditModal}
-        handleDeleteModal={handleDeleteModal}
-        data={data} />
+        <TaskListView
+          handleEditModal={handleEditModal}
+          handleDeleteModal={handleDeleteModal}
+          data={data}
+        />
       )}
     </div>
   );

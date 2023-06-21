@@ -3,6 +3,8 @@ const Notification = require("../mongo/schemas/notification.schema.js");
 const express = require("express");
 const asyncHandler = require("express-async-handler");
 const { getAll } = require("../services/db-service.js");
+const m = require("../index.js")
+
 
 exports.getAllTeams = asyncHandler(async (req, res) => {
   try {
@@ -101,6 +103,7 @@ exports.updateTeamById = asyncHandler(async (req, res) => {
         };
         const newNotification = new Notification(data);
         await newNotification.save();
+        // m.io.to(`user-${userId}`).emit("new-invitation", newNotification)
         res
           .status(200)
           .json({ message: "User has been invited, waiting for confirmation" });

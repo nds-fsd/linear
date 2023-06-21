@@ -26,6 +26,7 @@ const PageHeader = ({
   filterData,
   setFilterData,
   setData,
+  setSearchbarFilter,
   data,
 }) => {
   const emptyOption = { label: "No option selected", id: "No options" };
@@ -222,7 +223,8 @@ const PageHeader = ({
               <input
                 id="searchinput"
                 type="text"
-                placeholder="Search an issue"
+                placeholder={`Search ${title.toLowerCase()}`}
+                onChange={(e)=>{setSearchbarFilter(e.target.value)}}
               />
             </div>
           )}

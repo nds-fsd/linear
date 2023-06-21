@@ -10,8 +10,13 @@ dotenv.config();
 app.use(cors());
 app.use(express.json());
 app.use(generalRouter);
+const { configurePrivateSocket } = require("./socket");
 
 const PORT = process.env.PORT || 3001;
 const server = app.listen(PORT, () => {
   console.log(`Server is up and running at port ${PORT} ⚡`);
 });
+
+module.exports = {
+  io:configurePrivateSocket(server)
+}

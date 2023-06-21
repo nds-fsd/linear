@@ -130,7 +130,12 @@ const jwtMiddleware = (req, res, next) => {
   next();
 };
 
+const jwtVerifier = (token, callback) => {
+  jwt.verify(token, jwtSecret, callback);
+};
+
 module.exports = {
   authRouter,
   jwtMiddleware,
+  jwtVerifier
 };
