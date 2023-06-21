@@ -9,13 +9,7 @@ import EditUserForm from "./edituserform/edituserform";
 const Settings = () => {
   const { userSessionContext, setUserSessionContext } = useContext(Context);
   const { id: userId, profilepic } = userSessionContext;
-  const [objToSend, setObjToSend] = useState({});
   const [editMode, setEditMode] = useState(false);
-
-  const onSuccess = (res) => {
-    console.log(res);
-    // setUserSessionContext({...userSessionContext, profilepic:imgUrl})
-  };
 
   return (
     <div className={settingsStyle.settings}>
