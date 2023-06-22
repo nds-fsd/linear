@@ -5,6 +5,7 @@ import ProjectListView from "./projectlistview/projectlistview";
 import { Context } from "../../Context";
 import AddProjectModal from "./addprojectmodal/addprojectmodal";
 import { handleSearch } from "../../utils/searchInput";
+import { useEditProjectMutation } from "../../utils/apiProject";
 
 const Projects = () => {
   const { teams, userSessionContext } = useContext(Context);
@@ -19,9 +20,12 @@ const Projects = () => {
   const [showAddProjectModal, setShowAddProjectModal] = useState(false);
   const [searchbarFilter, setSearchbarFilter] = useState("");
   const [filteredTeams, setFilteredTeams] = useState(initialData);
+  const [selectedProject, setSelectedProject] = useState("")
+  const [objToSend, setObjToSend] = useState({})
 
-  const handleEditModal = () => {
-    console.log("hola");
+  const handleEditModal = (projectId) => {
+    setSelectedProject(projectId)
+    setShowAddProjectModal(true)
   };
 
   const handleDeleteModal = () => {
@@ -54,8 +58,11 @@ const Projects = () => {
       });
     }
   }, [teams, searchbarFilter]);
-
   const filterData = { type: "simple" };
+
+  const {mutate, data, isLoading, isError, error} = useEditProjectMutation(selectedProject, objToSend)
+
+
   return (
     <div className={projectsStyle.projects}>
       <PageHeader
@@ -73,7 +80,9 @@ const Projects = () => {
         handleDeleteModal={handleDeleteModal}
       />
       {showAddProjectModal && (
-        <AddProjectModal setShowModal={setShowAddProjectModal} />
+        <AddProjectModal 
+        selectedProject={selectedProject}
+        setShowModal={setShowAddProjectModal} />
       )}
     </div>
   );

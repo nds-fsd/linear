@@ -8,10 +8,16 @@ import { addProject } from "../../../utils/apiProject";
 import { formatDate } from "../../../utils/formatUtils";
 import { Context } from "../../../Context";
 
-const AddProjectModal = ({ setShowModal }) => {
+const AddProjectModal = ({ selectedProject, setShowModal }) => {
   const {setTeamsEffect, teamsEffect} = useContext(Context)
+
+ 
+
   const { register, handleSubmit, reset } = useForm({
-    defaultValues:{
+    defaultValues:
+    // acá tengo que hacer el fetch para setear los default values después de la petición
+    // el id del proyecto es "selected project" y ya está montado
+    {
         active:true
     }
   });
