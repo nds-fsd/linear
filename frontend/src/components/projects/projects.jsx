@@ -4,8 +4,8 @@ import PageHeader from "../pageheader/pageheader";
 import ProjectListView from "./projectlistview/projectlistview";
 import { Context } from "../../Context";
 import AddProjectModal from "./addprojectmodal/addprojectmodal";
-import { handleSearch } from "../../utils/searchInput";
-import { useEditProjectMutation } from "../../utils/apiProject";
+import { deleteProjectById } from "../../utils/apiProject";
+import DeleteModal from "../confirmdeletemodal/confirmdeletemodal";
 
 const Projects = () => {
   const { teams, userSessionContext } = useContext(Context);
@@ -18,21 +18,28 @@ const Projects = () => {
 
   const [activeView, setActiveview] = useState("list");
   const [showAddProjectModal, setShowAddProjectModal] = useState(false);
+  const [showDeleteProjectModal, setShowDeleteProjectModal] = useState(false);
   const [searchbarFilter, setSearchbarFilter] = useState("");
   const [filteredTeams, setFilteredTeams] = useState(initialData);
-  const [selectedProject, setSelectedProject] = useState("")
-  const [objToSend, setObjToSend] = useState({})
+  const [selectedTeamId, setSelectedTeamId] = useState("");
+  //this is for passing default values to the add project modal on editmode
+  const [selectedProject, setSelectedProject] = useState({});
+  const [modalType, setModalType] = useState("");
 
-  const handleEditModal = (projectId) => {
-    setSelectedProject(projectId)
-    setShowAddProjectModal(true)
+  const handleEditModal = (data) => {
+    setModalType("edit");
+    setSelectedProject(data);
+    setShowAddProjectModal(true);
   };
 
-  const handleDeleteModal = () => {
-    console.log("chau");
+  const handleDeleteModal = (teamid) => {
+    setModalType("deleteproject");
+    setSelectedTeamId(teamid);
+    setShowDeleteProjectModal(true)
   };
 
   const handleAddProjectModal = () => {
+    setModalType("add");
     setShowAddProjectModal(true);
   };
 
@@ -60,9 +67,6 @@ const Projects = () => {
   }, [teams, searchbarFilter]);
   const filterData = { type: "simple" };
 
-  const {mutate, data, isLoading, isError, error} = useEditProjectMutation(selectedProject, objToSend)
-
-
   return (
     <div className={projectsStyle.projects}>
       <PageHeader
@@ -80,10 +84,20 @@ const Projects = () => {
         handleDeleteModal={handleDeleteModal}
       />
       {showAddProjectModal && (
-        <AddProjectModal 
-        selectedProject={selectedProject}
-        setShowModal={setShowAddProjectModal} />
+        <AddProjectModal
+          modalType={modalType}
+          selectedProject={selectedProject}
+          setShowModal={setShowAddProjectModal}
+          setSelectedProject={setSelectedProject}
+        />
       )}
+      {showDeleteProjectModal && <DeleteModal 
+      deletedSchema={"Project"}
+      cancelFn={setShowDeleteProjectModal}
+      modalType={modalType} 
+      teamId={selectedTeamId}
+      
+      />}
     </div>
   );
 };

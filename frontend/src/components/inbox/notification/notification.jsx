@@ -23,6 +23,7 @@ const Notification = ({markAsSeen, notification, teams, selectedNotification }) 
   useEffect(() => {
     if (notification.type === "invitation") {
       const teamToUpdate = teams.find((team) => team._id === data?.teamid);
+      if(!teamToUpdate){return}
       const { pendingusers, users, _id: teamId } = teamToUpdate;
       const userIds = users.map((user) => user._id);
       const { id: userId } = userSessionContext;
