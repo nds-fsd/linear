@@ -1,20 +1,21 @@
 .userListContainer {
   width: 100%;
   height: 100%;
-  display:flex;
-  flex-direction:column;
-  gap:1.5em;
-  padding:1em;  
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+  padding: 1em;
 }
 
-.userName{
-    cursor: pointer;
-    
+.userName {
+  cursor: pointer;
 }
 
 .img {
   border-radius: 50%;
   height: 70px;
+  width: 70px;
+  object-fit: cover;
   border: 2px solid var(--accent-color);
   padding: 0.3em;
 }
@@ -27,50 +28,47 @@
   opacity: 0.3;
 }
 
-.cardContainer{
-    display:flex;
-    align-items:center;
-    justify-content: space-between;
-
-    width:100%;
-    background-color:var(--main-bg-color);
-    border-radius: 10px;
-    padding:1em;
+.cardContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background-color: var(--main-bg-color);
+  border-radius: 10px;
+  padding: 1em;
   overflow: hidden;
-
 }
-.usrDetails{
-  display:flex;
-  align-items:center;
-  gap:1em;
+.usrDetails {
+  display: flex;
+  align-items: center;
+  gap: 1em;
 }
 
-.disabledUsr{
-  display:flex;
-  align-items:center;
-  gap:1em;
+.disabledUsr {
+  display: flex;
+  align-items: center;
+  gap: 1em;
   opacity: 0.5;
 }
 
-.pendingContainer{
-    width:100px;
+.pendingContainer {
+  width: 100px;
 }
 
-.addUserCardContainer{
-    display:flex;
-    align-items:center;
-    justify-content: center;
-    color:var(--accent-color);
-    cursor:pointer;
-    gap:1em;
-    width:100%;
-    height:60px;
-    background-color:var(--main-bg-color);
-    border-radius: 10px;
-    padding:1em;
+.addUserCardContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-color);
+  cursor: pointer;
+  gap: 1em;
+  width: 100%;
+  height: 60px;
+  background-color: var(--main-bg-color);
+  border-radius: 10px;
+  padding: 1em;
 }
 
 .addUserCardContainer:active {
-    transform: scale(0.98);
-  }
-
+  transform: scale(0.98);
+}
