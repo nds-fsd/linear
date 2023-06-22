@@ -3,6 +3,7 @@ import { patchUserById } from "../../../utils/apiUser";
 import { setUserSession } from "../../../utils/localStorage.utils";
 import styles from "./avatarimage.module.css";
 import axios from "axios";
+import { CLOUDINARY_ID, CLOUDINARY_UPLOAD_PRESET } from "../../../route-path";
 
 const AvatarImage = ({ userSessionContext, setUserSessionContext }) => {
   const { id: userId, profilepic } = userSessionContext;
@@ -10,17 +11,19 @@ const AvatarImage = ({ userSessionContext, setUserSessionContext }) => {
   const [previewImage, setPreviewImage] = useState(profilepic);
   const [buttonState, setButtonState] = useState(false);
 
+  
+
   const handleImageUpload = async () => {
     if (!selectedImage) {
       return;
     }
     const formData = new FormData();
     formData.append("file", selectedImage);
-    formData.append("upload_preset", "mzhflh8v"); // Replace with your upload preset name
+    formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
 
     try {
       const response = await axios.post(
-        "https://api.cloudinary.com/v1_1/djcaqznth/image/upload",
+        `https://api.cloudinary.com/v1_1/${CLOUDINARY_ID}/image/upload`,
         formData
       );
       if (response.statusText === "OK") {
