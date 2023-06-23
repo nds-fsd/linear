@@ -19,10 +19,6 @@ const Inbox = () => {
     queryClient.invalidateQueries(["notifications"]);
   };
 
-  
-  
-
-
 
   const {
     mutate,
@@ -71,7 +67,7 @@ const Inbox = () => {
         <div className={styles.colTwo}>
           {selectedNotification && (
             <Notification
-            selectedNotification={selectedNotification}
+            setSelectedNotification={setSelectedNotification}
             markAsSeen={mutate} 
             teams={teams}
             notification={selectedNotification} />

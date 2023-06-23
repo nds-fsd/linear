@@ -5,19 +5,19 @@ import { useEditTeamMutation } from "../../../utils/apiTeam";
 import { useEditNotificationMutation } from "../../../utils/apiNotification";
 import { useQueryClient } from "react-query";
 
-const Notification = ({markAsSeen, notification, teams, selectedNotification }) => {
+const Notification = ({markAsSeen, notification, teams, setSelectedNotification }) => {
   const { data, message, sender, title } = notification;
   const [objToSend, setObjToSend] = useState({});
-  const [dataFromNotification, setDataFromNotification] = useState(data)
-  const [selectedTeam, setSelectedTeam] = useState("");
+  // const [dataFromNotification, setDataFromNotification] = useState(data)
+  const [selectedTeam, setSelectedTeam] = useState();
   const queryClient = useQueryClient();
 
-  const { userSessionContext, setTeamsEffect, teamsEffect } = useContext(Context);
+  const { userSessionContext, setTeamsEffect, teamsEffect, notificationsRefetch } = useContext(Context);
 
-  const onNotificationMutationSuccess = () => {
-    console.log("notification uppdated Succesfully");
-    queryClient.invalidateQueries(["notifications"]);
-    setDataFromNotification({...data, accepted:true})
+  const onNotificationMutationSuccess = (data) => {
+    console.log(data.data)
+    setSelectedNotification(data.data)
+    notificationsRefetch()
   };
 
   useEffect(() => {
@@ -37,7 +37,7 @@ const Notification = ({markAsSeen, notification, teams, selectedNotification }) 
       setObjToSend(teamModification);
       setSelectedTeam(teamId);
     }
-  }, [selectedTeam]);
+  }, [notification]);
 
   const senderFullName = `${sender.firstname} ${sender.lastname}`;
 
@@ -67,7 +67,7 @@ const Notification = ({markAsSeen, notification, teams, selectedNotification }) 
 
   useEffect(() => {
       markAsSeen()
-  }, [selectedNotification]);
+  }, [notification]);
 
 
   const acceptInvitation = () => {
@@ -83,19 +83,20 @@ const Notification = ({markAsSeen, notification, teams, selectedNotification }) 
       </div>
       <div className={styles.bodyContainer}>
         <div className={styles.body}>
-          {dataFromNotification.accepted ? (
+          {data.accepted ? (
             <p>you already accepted the invitation for {data.teamtitle}</p>
           ) : (
             <p>{`${message} ${data.teamtitle} by ${senderFullName}`}</p>
           )}
           {notification.type === "invitation" && (
             <button
-              disabled={dataFromNotification.accepted}
+              disabled={data.accepted}
               className={
-                dataFromNotification.accepted ? styles.acceptBtnDisabled : styles.acceptBtn
+                data.accepted ? styles.acceptBtnDisabled : styles.acceptBtn
               }
               onClick={() => {
                 acceptInvitation();
+                console.log(selectedTeam)
               }}
             >
               Accept Invitation

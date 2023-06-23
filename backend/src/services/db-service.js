@@ -50,7 +50,7 @@ const updateOne = ({model,id,data})=>{
     if(!model || !data || !id){
         throw new Error('Missing Model or data or id')
     }
-    return model.findByIdAndUpdate(id,data)
+    return model.findByIdAndUpdate(id,data,{new:true})
 
 }
 //Delete

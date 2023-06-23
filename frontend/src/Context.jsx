@@ -101,6 +101,7 @@ export const ContextProvider = ({ children }) => {
     isLoading: notificationIsLoading,
     isError: notificationIsError,
     error: notificationError,
+    refetch:notificationsRefetch
   } = useAllNotificationsQuery({
     receiver: userSessionContext?.id,
   });
@@ -120,6 +121,7 @@ export const ContextProvider = ({ children }) => {
         registerUser,
         setTeams,
         setTeamsEffect,
+        notificationsRefetch,
         teams,
         teamsEffect,
         notificationData,
