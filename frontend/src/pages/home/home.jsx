@@ -19,6 +19,7 @@ import {
   HOME,
   LOGIN,
 } from "../../route-path";
+import NotFound from "../../components/notfound/notfound";
 
 const Home = () => {
   const context = useContext(Context);
@@ -39,6 +40,7 @@ const Home = () => {
         <Route path={`${INBOX}`} element={<Inbox />} />
         <Route path={`${USER_ID}/${SETTINGS}`} element={<Settings />} />
         <Route path="" element={<Navigate to={MY_ISSUES} />} />
+        <Route path="/*" element={<NotFound/>} />
       </Routes>
     </div>
   );
