@@ -5,11 +5,12 @@ import { useForm } from "react-hook-form";
 import styles from "./addcyclemodal.module.css";
 import Spinner from "../spinner/spinner";
 import { addCycle } from "../../utils/apiCycle";
-import { formatDate } from "../../utils/formatDates";
+import { formatDate } from "../../utils/formatUtils";
 
 const AddCycleModal = ({ setShowModal, project }) => {
   const { register, handleSubmit, reset } = useForm({
-    defaultValues: { project: project._id },
+    defaultValues: { project: project._id, active:true }
+    
   });
 
   const [errorMessage, setErrorMessage] = useState("");

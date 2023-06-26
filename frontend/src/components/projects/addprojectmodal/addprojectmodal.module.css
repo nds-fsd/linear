@@ -1,0 +1,150 @@
+.formContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.formTitle {
+  margin: 0;
+}
+
+.form {
+  width: 600px;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1em;
+  padding: 2em;
+  border-radius: 10px;
+  background-color: var(--main-bg-color);
+}
+
+.input {
+  all: unset;
+  min-width: 192px;
+  height: 30px;
+  border-radius: 5px;
+  padding: 0.5em;
+  color: rgb(97, 93, 93);
+  border: 1px solid #dadde1;
+  background-color: #dadde1;
+  display: flex;
+}
+
+.textAreaInput {
+  min-height: 150px;
+  resize: none;
+  outline: none;
+  border: none;
+  font-size: 1rem;
+  font-family: "Roboto", sans-serif;
+  border-radius: 5px;
+  padding: 1em;
+  color: rgb(97, 93, 93);
+  border: 1px solid #dadde1;
+  background-color: #dadde1;
+  display: flex;
+}
+
+.selectInput {
+  display: flex;
+  text-overflow: "";
+  position: relative;
+  cursor: pointer;
+  width: 210px;
+  height: 45px;
+  font-size: 1rem;
+  color: rgb(97, 93, 93);
+  border-radius: 5px;
+  border: 1px solid #dadde1;
+  background-color: #dadde1;
+}
+.selectInput option {
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+
+.label {
+  font-size: 1.2rem;
+}
+
+.wrapper {
+  display: flex;
+  width: 100;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.selectInput:before {
+  content: "";
+  position: absolute;
+  left: 40px;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid #333;
+}
+
+.selectInput:after {
+  content: "";
+  position: absolute;
+  left: 40px;
+  top: 3px;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid #333;
+}
+
+.btnContainer {
+  display: flex;
+  justify-content: space-evenly;
+  height: 70px;
+}
+
+.submitBtn {
+  all: unset;
+  min-width: 120px;
+  border: 2px solid var(--accent-color);
+  border-radius: 6px;
+  padding: 0 10px;
+  color: var(--main-bg-color);
+  background-color: var(--accent-color);
+  cursor: pointer;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+.submitBtn:active {
+  transform: scale(98%);
+}
+
+.closeBtn {
+  all: unset;
+  min-width: 120px;
+  text-align: center;
+  border: 2px solid var(--accent-color);
+  border-radius: 6px;
+  padding: 0 10px;
+  color: var(--accent-color);
+  background-color: var(--main-bg-color);
+  cursor: pointer;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.closeBtn:active {
+  transform: scale(98%);
+}
+
+.addTaskError {
+  color: red;
+  padding: 0;
+  margin: 0;
+}

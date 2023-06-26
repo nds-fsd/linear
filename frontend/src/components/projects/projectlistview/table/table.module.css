@@ -7,7 +7,6 @@
     overflow: hidden;
     table-layout: fixed;
     border-collapse: collapse;
-    box-shadow: 0px 3px 3px #ccc;
     white-space: nowrap;
     max-width: 100%;
     margin: auto;
@@ -27,6 +26,7 @@
   .table td {
     padding: 0.8rem;
     min-width: 100px;
+    border-bottom:1px solid var(--gray-color);
   }
   
   .description {

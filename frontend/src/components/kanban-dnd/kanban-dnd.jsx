@@ -27,18 +27,17 @@ const KanbanDnd = ({ data, handleEditModal, handleDeleteModal }) => {
   const {userSessionContext} = useContext(Context)
   const {id:userid, firstname, lastname} = userSessionContext
 
-
   const [columns, setColumns] = useState(data);
   const [taskForUpdate, setTaskForUpdate] = useState({
     draggableId: "",
     status: "",
   });
 
-  const { mutate: updateTaskStatus, data:mutationData} = useEditStatusTaskMutation(
-    taskForUpdate.draggableId,
-    { status: taskForUpdate.status },
-    {userid, username:`${firstname} ${lastname}`}
-  );
+    const { mutate: updateTaskStatus, data:mutationData} = useEditStatusTaskMutation(
+      taskForUpdate.draggableId,
+      { status: taskForUpdate.status}
+    );
+  
 
   useEffect(() => {
     setColumns(data);
@@ -48,7 +47,6 @@ const KanbanDnd = ({ data, handleEditModal, handleDeleteModal }) => {
   useEffect(() => {
     if (taskForUpdate) {
       updateTaskStatus();
-      
       const {status, draggableId} = taskForUpdate
       const indexOfCardInColumn = columns[status]?.findIndex(task => task._id === draggableId)
       const columnToModify = columns[status]

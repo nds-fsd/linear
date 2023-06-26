@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useContext } from "react";
 import styles from "./projectdetail.module.css";
 import { getTeamById } from "../../../utils/apiTeam";
 import AddCycleModal from "../../addcyclemodal/addcyclemodal";
@@ -8,41 +8,69 @@ import { useParams, useNavigate } from "react-router-dom";
 import {
   capitalizeStr,
   formatDate,
-  reorderTasks,
-} from "../../../utils/formatDates";
+  unorderTasks,
+} from "../../../utils/formatUtils";
 import { ProjectDetailsUsers } from "./users/projectdetailsusers";
 import ProjectDetailCyclesList from "./cycles/projectdetailcycles";
 import ProjectDetailTasksByCycle from "./tasks/projectdetailtasksbycycle";
 import EditTaskModal from "../../edittaskmodal/edittaskmodal";
 import AddTaskModal from "../../addtaskmodal/addtaskmodal";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
+import AddUserToProjectModal from "./users/addusermodal/addusermodal";
+import NotFound from "../../notfound/notfound";
+import {Context} from '../../../Context.jsx'
+
 
 const ProjectDetail = () => {
   const { id } = useParams();
+  const {teams} = useContext(Context)
   const [activeOutlet, setActiveOutlet] = useState("users");
   const [selectedCycle, setSelectedCycle] = useState("");
+  const [users, setUsers] = useState([{}])
   const [taskRows, setTaskRows] = useState([]);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showAddModal, setShowAddModal] = useState(false);
+  const [showAddUserModal, setShowAddUserModal] = useState(false);
   const [showAddCycleModal, setShowAddCycleModal] = useState(false);
   const [selectedTask, setSelectedTask] = useState();
   const navigate = useNavigate();
+  const teamIds = teams.map(team=>team._id)
+
+
+  if(!teamIds.includes(id)){
+    return <NotFound/>
+  }
+  
+
 
   const {
     data,
     isLoading: projectIsLoading,
     isError: projectIsError,
     isSuccess,
+    refetch
   } = useQuery({
     queryKey: ["team", { team: id }],
     queryFn: () => {
       return getTeamById(id);
     },
+    onSuccess:(data)=>{
+      const teamData = data?.data;
+      const confirmedUsers= teamData?.users      
+      const pendingUsers = teamData?.pendingusers.map(usr =>{
+        return{...usr, pending:true}
+      })
+      const users = [...confirmedUsers, ...pendingUsers]
+      setUsers(users)
+    }
   });
+
+
 
   const teamData = data?.data;
   const project = teamData?.project;
-  const users = teamData?.users;
+
+
 
   const handleSelectCycle = (cycleid) => {
     setActiveOutlet("tasks");
@@ -56,10 +84,13 @@ const ProjectDetail = () => {
     retry: false,
     onSuccess: (data) => {
       const tasks = data.data;
-      const rows = reorderTasks(tasks);
+      const rows = unorderTasks(tasks);
       setTaskRows(rows);
     },
-    onError: () => setTaskRows([]),
+    onError: (err) => {
+      console.log(err);
+      setTaskRows([]);
+    },
   });
 
   return (
@@ -81,11 +112,11 @@ const ProjectDetail = () => {
               </button>
               <button
                 onClick={() => {
-                  setShowAddCycleModal(true)
+                  setShowAddCycleModal(true);
                 }}
                 className={styles.addCycleBtn}
               >
-                <AddCircleOutlineOutlinedIcon/>
+                <AddCircleOutlineOutlinedIcon />
                 Add Cycle
               </button>
             </div>
@@ -125,7 +156,12 @@ const ProjectDetail = () => {
           </div>
         </div>
         <div className={styles.colTwo}>
-          {activeOutlet === "users" && <ProjectDetailsUsers users={users} />}
+          {activeOutlet === "users" && (
+            <ProjectDetailsUsers
+              setShowModal={setShowAddUserModal}
+              users={users}
+            />
+          )}
           {activeOutlet === "tasks" && (
             <ProjectDetailTasksByCycle
               setShowAddModal={setShowAddModal}
@@ -140,8 +176,18 @@ const ProjectDetail = () => {
       {showEditModal && (
         <EditTaskModal taskId={selectedTask} closeModal={setShowEditModal} />
       )}
-      {showAddModal && <AddTaskModal defaultValues={{project:project._id, cycle:selectedCycle}} setShowModal={setShowAddModal} />}
-      {showAddCycleModal&& <AddCycleModal  project={project} setShowModal={setShowAddCycleModal}/>}
+      {showAddModal && (
+        <AddTaskModal
+          defaultValues={{ project: project._id, cycle: selectedCycle, team:teamData }}
+          setShowModal={setShowAddModal}
+        />
+      )}
+      {showAddCycleModal && (
+        <AddCycleModal project={project} setShowModal={setShowAddCycleModal} />
+      )}
+      {showAddUserModal && (
+        <AddUserToProjectModal refetch={refetch} setShowModal={setShowAddUserModal} />
+      )}
     </section>
   );
 };

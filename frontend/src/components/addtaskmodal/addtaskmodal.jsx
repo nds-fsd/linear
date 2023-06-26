@@ -4,7 +4,7 @@ import { useMutation, useQueryClient, useQuery } from "react-query";
 import { useState, useContext } from "react";
 import { useForm } from "react-hook-form";
 import { addTask } from "../../utils/apitask";
-import { getCyclesByProject } from "../../utils/apiCycle";
+import { useCyclesByProjectData } from "../../utils/apiCycle";
 import { Context } from "../../Context";
 import addTaskStyles from "./addtaskmodal.module.css";
 import { STATUS_ARRAY } from "../../statusarray";
@@ -12,10 +12,17 @@ import Spinner from "../spinner/spinner";
 
 const AddTaskModal = ({ defaultValues, setShowModal }) => {
 
-  const { register, handleSubmit, reset } = useForm();
+
+
   const { teams , userSessionContext } = useContext(Context);
   const [errorMessage, setErrorMessage] = useState("");
-  const [selectedTeam, setSelectedTeam] = useState("");
+  const [selectedTeam, setSelectedTeam] = useState(defaultValues?.team._id ?? "");
+  const [selectedCycle, setSelectedCycle] = useState(defaultValues?.cycle);
+  const { register, handleSubmit, reset } = useForm({defaultValues:{
+    cycle:selectedCycle
+  }});
+
+
   const [selectedProject, setSelectedProject] = useState("");
   const queryClient = useQueryClient();
   const [users, setUsers] = useState();
@@ -26,14 +33,16 @@ const AddTaskModal = ({ defaultValues, setShowModal }) => {
     setSelectedProject(fullSelectedTeam?.project._id);
   }, [selectedTeam]);
 
+
+  const onSuccess = ()=>{}
+  const onError = ()=>{}
+  const enabled = !!selectedProject
+
   const {
     data: cycles,
     isLoading: cyclesIsLoading,
     isError: cyclesIsError,
-  } = useQuery({
-    queryKey: ["cycles", { project: selectedProject }],
-    queryFn: () => getCyclesByProject(selectedProject),
-  });
+  } = useCyclesByProjectData(selectedProject, onSuccess, onError, enabled)
 
   const {
     mutate: addTaskMutation,
@@ -143,6 +152,7 @@ const AddTaskModal = ({ defaultValues, setShowModal }) => {
                   <select
                     id="taskproject"
                     defaultValue=""
+                    value={selectedTeam}
                     className={addTaskStyles.selectInput}
                     onChange={(e) => {
                       reset({ cycle: "" });
@@ -160,7 +170,7 @@ const AddTaskModal = ({ defaultValues, setShowModal }) => {
                   <select
                     disabled={cyclesIsLoading || cyclesIsError}
                     id="taskcycle"
-                    defaultValue=""
+                    value={selectedCycle}
                     className={addTaskStyles.selectInput}
                     {...register("cycle")}
                   >

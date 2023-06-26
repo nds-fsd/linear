@@ -1,4 +1,4 @@
-import React from "react";
+import { useContext, useEffect } from "react";
 import { getUserSession, removeSession } from "../../utils/localStorage.utils";
 import UserDatacard from "../userdatacard/userdatacard";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -7,7 +7,7 @@ import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
 import InboxOutlinedIcon from "@mui/icons-material/InboxOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
-import AnalyticsOutlinedIcon from '@mui/icons-material/AnalyticsOutlined';
+import AnalyticsOutlinedIcon from "@mui/icons-material/AnalyticsOutlined";
 import {
   HOME,
   USERS,
@@ -19,10 +19,41 @@ import {
   INBOX,
   LOGIN,
 } from "../../route-path";
+import { Context } from "../../Context";
 import sideBarStyles from "./sidebar.module.css";
 
 const Sidebar = () => {
   const navigate = useNavigate();
+
+  const { notificationData, userSessionContext, SOCKET } = useContext(Context);
+  const { id: userid } = userSessionContext;
+
+  const unreadNotifications = notificationData?.data.filter(
+    (notification) => !notification.seen
+  ).length;
+
+  useEffect(() => {
+    if (SOCKET) {
+      SOCKET.connect();
+      SOCKET.on("connection", (data) => {
+        console.log("Connected");
+      });
+      return () => {
+        SOCKET.disconnect();
+      };
+    }
+  }, [SOCKET]);
+
+  useEffect(() => {
+    const recievedInvitation = (newInvitation) => {
+      console.log('NEW INVITATION',newInvitation)
+      // aqui va la de set notification
+    };
+
+    if(SOCKET){
+      SOCKET.on('new-invitation',recievedInvitation)
+    }
+  },[SOCKET])
 
   return (
     <div className={sideBarStyles.sidebarContainer}>
@@ -80,7 +111,7 @@ const Sidebar = () => {
           </li>
           <li className={sideBarStyles.listItem}>
             <NavLink
-              to={`${USER_ID}/${INBOX}`}
+              to={`${INBOX}`}
               className={sideBarStyles.link}
               style={({ isActive }) => {
                 return {
@@ -91,12 +122,17 @@ const Sidebar = () => {
               }}
             >
               <InboxOutlinedIcon className={sideBarStyles.icon} />
+              {unreadNotifications !== 0 && (
+                <span className={sideBarStyles.notificationsMark}>
+                  {unreadNotifications}
+                </span>
+              )}
               Inbox
             </NavLink>
           </li>
           <li className={sideBarStyles.listItem}>
             <NavLink
-              to={`${USER_ID}/${SETTINGS}`}
+              to={`${userid}/${SETTINGS}`}
               className={sideBarStyles.link}
               style={({ isActive }) => {
                 return {
@@ -114,7 +150,6 @@ const Sidebar = () => {
       </nav>
       <div
         onClick={() => {
-          console.log("clicked");
           removeSession();
           navigate(LOGIN);
         }}
