@@ -20,6 +20,7 @@
   padding: 2em;
   border-radius: 10px;
   background-color: var(--main-bg-color);
+  z-index: 999;
 }
 
 .input {
