@@ -27,20 +27,14 @@ const AvatarImage = ({ userSessionContext, setUserSessionContext }) => {
         `https://api.cloudinary.com/v1_1/${CLOUDINARY_ID}/image/upload`,
         formData
       );
-      console.log(response);
       if (response.status === 200) {
         const imgUrl = response.data.url;
         const resFromUserPatch = await patchUserById(userId, {
           profilepic: imgUrl,
         });
         if (resFromUserPatch.status !== 200) {
-          console.log(
-            "resFromUserPatch, somethingWent wrong:",
-            resFromUserPatch
-          );
           alert("something went updating your profile");
         } else {
-          console.log("resFromUserPatch everythingok:", resFromUserPatch);
           const token = getUserToken();
           setUserSessionContext({ ...userSessionContext, profilepic: imgUrl });
           setUserSession({
