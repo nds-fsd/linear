@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { patchUserById } from "../../../utils/apiUser";
-import { setUserSession } from "../../../utils/localStorage.utils";
+import {
+  setUserSession,
+  getUserToken,
+} from "../../../utils/localStorage.utils";
 import styles from "./avatarimage.module.css";
 import axios from "axios";
 import { CLOUDINARY_ID, CLOUDINARY_UPLOAD_PRESET } from "../../../route-path";
@@ -10,8 +13,6 @@ const AvatarImage = ({ userSessionContext, setUserSessionContext }) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [previewImage, setPreviewImage] = useState(profilepic);
   const [buttonState, setButtonState] = useState(false);
-
-  
 
   const handleImageUpload = async () => {
     if (!selectedImage) {
@@ -26,20 +27,24 @@ const AvatarImage = ({ userSessionContext, setUserSessionContext }) => {
         `https://api.cloudinary.com/v1_1/${CLOUDINARY_ID}/image/upload`,
         formData
       );
-      console.log(response)
+      console.log(response);
       if (response.status === 200) {
         const imgUrl = response.data.url;
         const resFromUserPatch = await patchUserById(userId, {
           profilepic: imgUrl,
         });
         if (resFromUserPatch.status !== 200) {
-          console.log("resFromUserPatch, somethingWent wrong:",resFromUserPatch)
+          console.log(
+            "resFromUserPatch, somethingWent wrong:",
+            resFromUserPatch
+          );
           alert("something went updating your profile");
         } else {
-          console.log("resFromUserPatch everythingok:",resFromUserPatch)
+          console.log("resFromUserPatch everythingok:", resFromUserPatch);
+          const token = getUserToken();
           setUserSessionContext({ ...userSessionContext, profilepic: imgUrl });
-          setUserSession({ ...userSessionContext, profilepic: imgUrl });
-          setButtonState(false)
+          setUserSession({ ...userSessionContext, profilepic: imgUrl, token:token });
+          setButtonState(false);
         }
       } else {
         alert("something went wrong");
@@ -74,8 +79,9 @@ const AvatarImage = ({ userSessionContext, setUserSessionContext }) => {
           <button
             className={styles.inputLabel}
             onClick={() => {
-                setPreviewImage(profilepic)
-                setButtonState(false)}}
+              setPreviewImage(profilepic);
+              setButtonState(false);
+            }}
           >
             Cancel
           </button>
