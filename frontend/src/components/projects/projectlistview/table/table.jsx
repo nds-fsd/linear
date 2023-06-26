@@ -7,16 +7,13 @@ import { Link } from "react-router-dom";
 import styles from "./table.module.css";
 import { formatDate } from "../../../../utils/formatUtils";
 
-
-
 export const Table = ({ data, handleEditModal, handleDeleteModal }) => {
-  
-  const rows = data.map(team => {
-    return {row:team.project, teamid:team._id}} )
+  const rows = data.map((team) => {
+    return { row: team.project, teamid: team._id };
+  });
 
   const [sortedProjects, setSortedProjects] = useState([...rows]);
-  const [sortOrder, setSortOrder    ] = useState("desc");
-
+  const [sortOrder, setSortOrder] = useState("desc");
 
   useEffect(() => {
     setSortedProjects([...rows]);
@@ -72,11 +69,8 @@ export const Table = ({ data, handleEditModal, handleDeleteModal }) => {
           </tr>
         </thead>
         <tbody>
-          {sortedProjects?.map(({row, teamid}) => {
-            const statusText =
-              row?.active
-                ? "Active"
-                : "Inactive"
+          {sortedProjects?.map(({ row, teamid }) => {
+            const statusText = row?.active ? "Active" : "Inactive";
 
             return (
               <tr key={row?._id}>
@@ -86,28 +80,35 @@ export const Table = ({ data, handleEditModal, handleDeleteModal }) => {
                   </Link>
                 </td>
                 <td className={styles.description}>{row?.description}</td>
-                <td className={styles.description}>{row? formatDate(row?.startdate) : ""}</td>
-                <td className={styles.description}>{row? formatDate(row?.finishdate): ""}</td>
+                <td className={styles.description}>
+                  {row ? formatDate(row?.startdate) : ""}
+                </td>
+                <td className={styles.description}>
+                  {row ? formatDate(row?.finishdate) : ""}
+                </td>
 
                 <td className={styles[`label-${row?.status}`]}>
                   <span>{statusText}</span>
                 </td>
                 <td className={styles.fit}>
-                  {row? 
-                  <span className={styles.actions}>
-                    <DeleteOutlineRoundedIcon
-                      className="delete-btn"
-                      onClick={() => handleDeleteModal(row?._id)}
-                    />
-                    <BorderColorRoundedIcon
-                      className="edit-btn"
-                      onClick={() => {
-                        handleEditModal(row?._id);
-                      }}
-                    />
-                  </span>:
-                  ""                 
-                }
+                  {row ? (
+                    <span className={styles.actions}>
+                      <DeleteOutlineRoundedIcon
+                        className="delete-btn"
+                        onClick={() => {
+                          handleDeleteModal(teamid);
+                        }}
+                      />
+                      <BorderColorRoundedIcon
+                        className="edit-btn"
+                        onClick={() => {
+                          handleEditModal(row);
+                        }}
+                      />
+                    </span>
+                  ) : (
+                    ""
+                  )}
                 </td>
               </tr>
             );

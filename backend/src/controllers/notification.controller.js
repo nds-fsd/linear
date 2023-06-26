@@ -4,7 +4,7 @@ const asyncHandler = require("express-async-handler");
 const crudService = require("../services/crud-service.js");
 
 exports.getAllNotifications = crudService.getAll({
-    populationFields: ["sender"],
+    populationFields: ["sender", "receiver"],
     entity: "Notifications",
     model: Notification,
   });
@@ -18,7 +18,6 @@ exports.getAllNotifications = crudService.getAll({
     model: Notification,
     requiredKeys: ["title", "message", "sender", "receiver", "date", "type", "seen"],
   });
-  
+
   exports.deleteNotificationById = crudService.deleteOne(Notification);
-  
   exports.updateNotificationById = crudService.updateOne(Notification);

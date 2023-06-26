@@ -1,5 +1,8 @@
 const Project = require("../mongo/schemas/project.schema.js");
 const Team = require("../mongo/schemas/team.schema.js");
+const Cycle = require("../mongo/schemas/cycle.schema.js");
+const Task = require("../mongo/schemas/task.schema.js");
+3;
 const express = require("express");
 const asyncHandler = require("express-async-handler");
 
@@ -56,8 +59,31 @@ exports.createProject = asyncHandler(async (req, res) => {
 });
 
 exports.deleteProjectById = asyncHandler(async (req, res) => {
-  const selectedProject = await Project.findByIdAndDelete(req.params.id);
-  res.json(selectedProject);
+  try {
+    const selectedTeam = await Team.findById(req.params.id);
+    const selectedProject = await Project.findById(selectedTeam.project);
+    const selectedCycles = await Cycle.find({ project: selectedProject._id });
+
+    // Create an array of promises for deletion
+    const deletionPromises = [];
+    // Delete teams
+    deletionPromises.push(Team.findByIdAndDelete(selectedTeam._id));
+    // Delete project
+    deletionPromises.push(Project.findByIdAndDelete(selectedTeam.project));
+    // Delete cycles
+    selectedCycles.forEach((cycle) => {
+      deletionPromises.push(Cycle.findByIdAndDelete(cycle._id));
+    });
+    // Delete tasks
+    selectedCycles.forEach((cycle) => {
+      deletionPromises.push(Task.deleteMany({ cycle: cycle._id }));
+    });
+    // Wait for all the deletion promises to complete
+    await Promise.all(deletionPromises);
+    res.json({ message: `${selectedProject.title} deleted` });
+  } catch (e) {
+    res.status(500).json({ message: "Something went wrong" });
+  }
 });
 
 exports.updateProjectById = asyncHandler(async (req, res) => {

@@ -6,16 +6,14 @@ import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOu
 import ListItemText from "@mui/material/ListItemText";
 import MUISelect from "@mui/material/Select";
 import Checkbox from "@mui/material/Checkbox";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import headerStyle from "./pageheader.module.css";
-import Select, { components } from "react-select";
+import Select from "react-select";
 import { Context } from "../../Context";
 import {
   unorderTasks,
   sortTasksByStatus,
-  filterTasksByArray
+  filterTasksByArray,
 } from "../../utils/formatUtils";
 
 const PageHeader = ({
@@ -28,11 +26,13 @@ const PageHeader = ({
   filterData,
   setFilterData,
   setData,
+  setSearchbarFilter,
   data,
 }) => {
   const emptyOption = { label: "No option selected", id: "No options" };
   const context = useContext(Context);
   const { userSessionContext } = context;
+  const { id: userid } = userSessionContext;
   const [filterProjectOptions, setFilterProjectOptions] = useState([
     emptyOption,
   ]);
@@ -40,7 +40,12 @@ const PageHeader = ({
   useEffect(() => {
     if (filterData.type === "complex") {
       setFilterProjectOptions(() => {
-        const projects = filterData?.teams?.map((team) => {
+        const filteredTeams = filterData?.teams.filter((team) => {
+          const userIdsArray = team.users?.map((user) => user._id);
+          return userIdsArray?.includes(userid);
+        });
+
+        const projects = filteredTeams?.map((team) => {
           return { label: team.project?.title, id: team.project?._id };
         });
         return [...projects];
@@ -48,7 +53,6 @@ const PageHeader = ({
     }
   }, [filterData]);
 
-  // console.log(filterData.selectedCycles)
   const today = new Date().toLocaleString("en-US", {
     day: "2-digit",
     month: "2-digit",
@@ -63,16 +67,24 @@ const PageHeader = ({
 
   const handleChange = (e) => {
     const selectedValues = e.target.value;
-    const usersArray = filterData.selectedUsers
+    const usersArray = filterData.selectedUsers;
     const unorderedTasks = unorderTasks(data);
-    const filteredTasks = filterTasksByArray(selectedValues, unorderedTasks, "cycle");
-    const doubleFilter = filterTasksByArray(usersArray, filteredTasks,"asigneduser" )
+    const filteredTasks = filterTasksByArray(
+      selectedValues,
+      unorderedTasks,
+      "cycle"
+    );
+    const doubleFilter = filterTasksByArray(
+      usersArray,
+      filteredTasks,
+      "asigneduser"
+    );
     const sortedTasks = sortTasksByStatus(doubleFilter);
     setFilterData((prevState) => {
       return {
         ...prevState,
         selectedCycles: selectedValues,
-        tasksFilteredByCycle:sortedTasks,
+        tasksFilteredByCycle: sortedTasks,
         dataToDisplay: sortedTasks,
       };
     });
@@ -80,10 +92,18 @@ const PageHeader = ({
 
   const handleUserChange = (e) => {
     const selectedValues = e.target.value;
-    const cyclesArray = filterData.selectedCycles
+    const cyclesArray = filterData.selectedCycles;
     const unorderedTasks = unorderTasks(data);
-    const filteredTasks = filterTasksByArray(selectedValues, unorderedTasks, "asigneduser");
-    const doubleFilter = filterTasksByArray(cyclesArray, filteredTasks,"cycle" )
+    const filteredTasks = filterTasksByArray(
+      selectedValues,
+      unorderedTasks,
+      "asigneduser"
+    );
+    const doubleFilter = filterTasksByArray(
+      cyclesArray,
+      filteredTasks,
+      "cycle"
+    );
     const sortedTasks = sortTasksByStatus(doubleFilter);
     setFilterData((prevState) => {
       return {
@@ -93,7 +113,6 @@ const PageHeader = ({
       };
     });
   };
-
 
   return (
     <div className={headerStyle.header}>
@@ -116,9 +135,9 @@ const PageHeader = ({
                   const selectedTeam = filterData.teams.find(
                     (team) => team.project._id === value.value
                   );
-                  const usersWithLabel = selectedTeam.users.map(user =>{
-                    return{label:user.firstname ,value:user._id}
-                  })
+                  const usersWithLabel = selectedTeam.users.map((user) => {
+                    return { label: user.firstname, value: user._id };
+                  });
                   setFilterData((prevState) => {
                     return {
                       ...prevState,
@@ -147,16 +166,20 @@ const PageHeader = ({
                 multiple
                 value={filterData.selectedCycles}
                 onChange={handleChange}
-                renderValue={(selected) =>
-                  selected.map((option) => option.label).join(" | ")
-                }
+                renderValue={(selected) => {
+                  return selected.map((option) => option.label).join(" | ");
+                }}
               >
                 {filterData.cycles?.map((cycle) => {
                   return (
                     <MenuItem key={cycle.value} value={cycle}>
-                      <Checkbox
-                        checked={filterData.selectedCycles.indexOf(cycle) > -1}
-                      />
+                      {cycle.value && (
+                        <Checkbox
+                          checked={
+                            filterData.selectedCycles.indexOf(cycle) > -1
+                          }
+                        />
+                      )}
                       <ListItemText primary={cycle.label} />
                     </MenuItem>
                   );
@@ -200,7 +223,8 @@ const PageHeader = ({
               <input
                 id="searchinput"
                 type="text"
-                placeholder="Search an issue"
+                placeholder={`Search ${title.toLowerCase()}`}
+                onChange={(e)=>{setSearchbarFilter(e.target.value)}}
               />
             </div>
           )}

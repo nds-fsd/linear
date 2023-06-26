@@ -34,6 +34,7 @@ authRouter.post("/register", async (req, res) => {
       pronouns: data.pronouns,
       teamrole: data.teamrole,
       birthday: data.birthday,
+      profilepic: data.profilepic,
     });
     const savedUser = await newUser.save();
     if (savedUser) {
@@ -47,6 +48,7 @@ authRouter.post("/register", async (req, res) => {
           teamrole: savedUser.teamrole,
           birthday: savedUser.birthday,
           id: savedUser._id,
+          profilepic: data.profilepic,
         },
       });
     } else {
@@ -90,6 +92,7 @@ authRouter.post("/login", async (req, res) => {
         pronouns: foundUser.pronouns,
         birthday: foundUser.birthday,
         teamrole: foundUser.teamrole,
+        profilepic: foundUser.profilepic,
         id: foundUser._id,
       },
     });
@@ -127,7 +130,12 @@ const jwtMiddleware = (req, res, next) => {
   next();
 };
 
+const jwtVerifier = (token, callback) => {
+  jwt.verify(token, jwtSecret, callback);
+};
+
 module.exports = {
   authRouter,
   jwtMiddleware,
+  jwtVerifier
 };

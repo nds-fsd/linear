@@ -1,23 +1,33 @@
+import { useState, useContext, useEffect } from "react";
 import ModalBackground from "../../modalbackground/modalbackground";
 import { useMutation, useQueryClient } from "react-query";
-import { useState, useContext} from "react";
 import { useForm } from "react-hook-form";
 import styles from "./addprojectmodal.module.css";
 import Spinner from "../../spinner/spinner";
-import { addProject } from "../../../utils/apiProject";
-import { formatDate } from "../../../utils/formatUtils";
+import { addProject, patchProjectById } from "../../../utils/apiProject";
 import { Context } from "../../../Context";
 
-const AddProjectModal = ({ setShowModal }) => {
-  const {setTeamsEffect, teamsEffect} = useContext(Context)
-  const { register, handleSubmit, reset } = useForm({
-    defaultValues:{
-        active:true
-    }
-  });
-
+const AddProjectModal = ({
+  selectedProject,
+  setShowModal,
+  setSelectedProject,
+  modalType,
+}) => {
+  const { setTeamsEffect, teamsEffect } = useContext(Context);
   const [errorMessage, setErrorMessage] = useState("");
-  const queryClient = useQueryClient();
+
+  const { register, handleSubmit, reset } = useForm({
+    defaultValues: {
+      ...selectedProject,
+      startdate: selectedProject?.startdate
+        ? new Date(selectedProject?.startdate).toISOString().split("T")[0]
+        : new Date().toISOString().split("T")[0],
+      finishdate: selectedProject?.finishdate
+        ? new Date(selectedProject?.finishdate).toISOString().split("T")[0]
+        : "",
+      active: true,
+    },
+  });
 
   const {
     mutate: addProjectMutation,
@@ -28,7 +38,25 @@ const AddProjectModal = ({ setShowModal }) => {
   } = useMutation({
     mutationFn: (data) => addProject(data),
     onSuccess: (payload) => {
-        setTeamsEffect(!teamsEffect)
+      setTeamsEffect(!teamsEffect);
+    },
+    onError: (err) => {
+      console.log(err.response.data);
+      // setErrorMessage(err.response.data.error)
+    },
+  });
+
+  const {
+    mutate: editProjectMutation,
+    isLoading: isMutating,
+    isSuccess: isMutated,
+    isError: isMutationError,
+    error: mutationError,
+  } = useMutation({
+    mutationFn: (data) => patchProjectById(selectedProject._id, data),
+    onSuccess: (payload) => {
+      setTeamsEffect(!teamsEffect);
+      setShowModal(false);
     },
     onError: (err) => {
       console.log(err.response.data);
@@ -48,15 +76,15 @@ const AddProjectModal = ({ setShowModal }) => {
           onSubmit={handleSubmit((data) => {
             const formatedStartDate = new Date(data.startdate);
             const formatedFinishDate = new Date(data.finishdate);
-
             if (formatedStartDate >= formatedFinishDate) {
               setErrorMessage("finishing date cant be before starting date");
               return;
-            } else {
-              addProjectMutation(data);
-              console.log(data);
-            }
-          })}
+              } else if (modalType !== "edit") {
+                addProjectMutation(data);
+              } else {
+                editProjectMutation(data);
+              }
+            })}
         >
           {isPosting ? (
             <Spinner />
@@ -116,14 +144,17 @@ const AddProjectModal = ({ setShowModal }) => {
               <div className={styles.btnContainer}>
                 <button
                   className={styles.closeBtn}
-                  onClick={() => setShowModal(false)}
+                  onClick={() => {
+                    setSelectedProject({});
+                    setShowModal(false);
+                  }}
                 >
                   Close
                 </button>
                 <input
                   className={styles.submitBtn}
                   type="submit"
-                  value="Create new project"
+                  value={modalType === "edit"? "Edit Project":"Create new project"}
                 />
               </div>
             </>

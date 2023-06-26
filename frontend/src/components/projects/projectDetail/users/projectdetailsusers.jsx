@@ -9,7 +9,7 @@ export const ProjectDetailsUsers = ({ users, setShowModal }) => {
 
 
   const userList = users?.map((user, i) => {
-    const { firstname, lastname, email, teamrole, _id, pending } = user;
+    const { firstname, lastname, email, teamrole, _id, pending, profilepic } = user;
 
     let role = "";
     if (teamrole === "projectmanager") {
@@ -23,7 +23,7 @@ export const ProjectDetailsUsers = ({ users, setShowModal }) => {
     return (
       <div className={styles.cardContainer} key={_id+i}>
         <div className={pending? styles.disabledUsr :styles.usrDetails}>
-          <img className={styles.img} src={userImage} />
+          <img className={styles.img} src={profilepic} />
           <div>
             <h3 className={styles.userName}>
               {firstname} {lastname}

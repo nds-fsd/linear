@@ -2,4 +2,53 @@
   width: 100%;
   background-color: var(--main-bg-color);
   border: 2px solid var(--gray-color);
+  padding: 3em;
 }
+
+.settingsContainer {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  background: white;
+  display: flex;
+  padding: 3em;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.editBtn {
+  align-self: flex-start;
+  width: 120px;
+  padding: 1em;
+  background-color: var(--accent-color);
+  border-radius: 10px;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  letter-spacing: 2px;
+
+}
+
+.editBtn:active {
+  transform: scale(0.98);
+}
+
+.wrapper {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1em;
+}
+
+.dataWrapper {
+
+  width:100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 2em;
+}
+
+

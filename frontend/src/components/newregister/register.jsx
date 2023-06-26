@@ -5,7 +5,12 @@ import { Context } from "../../Context";
 import registerFormStyles from "./register.module.css";
 
 const Register = () => {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit } = useForm({
+    defaultValues: {
+      profilepic:
+        "https://res.cloudinary.com/djcaqznth/image/upload/v1687175840/vurbpjn8hawhjx5rleoj.jpg",
+    },
+  });
   const context = useContext(Context);
   const [validatonMessage, setValidationMessage] = useState();
   const { isLoginIn, registerUser, error, setError } = context;
@@ -38,6 +43,7 @@ const Register = () => {
             return;
           }
           setValidationMessage("");
+          console.log(data)
           registerUser(data);
         })}
       >
