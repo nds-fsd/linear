@@ -36,7 +36,7 @@ const AvatarImage = ({ userSessionContext, setUserSessionContext }) => {
           console.log("resFromUserPatch, somethingWent wrong:",resFromUserPatch)
           alert("something went updating your profile");
         } else {
-          console.log("resFromUserPatch, somethingWent everythingok:",resFromUserPatch)
+          console.log("resFromUserPatch everythingok:",resFromUserPatch)
           setUserSessionContext({ ...userSessionContext, profilepic: imgUrl });
           setUserSession({ ...userSessionContext, profilepic: imgUrl });
           setButtonState(false)
