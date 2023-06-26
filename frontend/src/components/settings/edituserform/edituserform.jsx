@@ -27,7 +27,6 @@ const EditUserForm = ({ userData, setEditMode }) => {
   };
 
   const onSuccess = (data) => {
-    console.log(data.data)
     const token = getUserToken()
     const usrData = {...data.data, id:data.data._id}
     setUserSessionContext((prevState) => {
