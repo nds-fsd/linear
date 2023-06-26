@@ -26,6 +26,7 @@ const AvatarImage = ({ userSessionContext, setUserSessionContext }) => {
         `https://api.cloudinary.com/v1_1/${CLOUDINARY_ID}/image/upload`,
         formData
       );
+      console.log(response)
       if (response.statusText === "OK") {
         const imgUrl = response.data.url;
         const resFromUserPatch = await patchUserById(userId, {
