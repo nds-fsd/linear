@@ -27,16 +27,16 @@ const AvatarImage = ({ userSessionContext, setUserSessionContext }) => {
         formData
       );
       console.log(response)
-      if (response.statusText === "OK") {
+      if (response.status === 200) {
         const imgUrl = response.data.url;
         const resFromUserPatch = await patchUserById(userId, {
           profilepic: imgUrl,
         });
-        if (resFromUserPatch.statusText !== "OK") {
+        if (resFromUserPatch.status !== 200) {
           console.log("resFromUserPatch, somethingWent wrong:",resFromUserPatch)
           alert("something went updating your profile");
         } else {
-          console.log("resFromUserPatch, somethingWent everythingok:",resFromUserPatch)
+          console.log("resFromUserPatch everythingok:",resFromUserPatch)
           setUserSessionContext({ ...userSessionContext, profilepic: imgUrl });
           setUserSession({ ...userSessionContext, profilepic: imgUrl });
           setButtonState(false)
