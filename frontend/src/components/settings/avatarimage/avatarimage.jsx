@@ -43,7 +43,10 @@ const AvatarImage = ({ userSessionContext, setUserSessionContext }) => {
           console.log("resFromUserPatch everythingok:", resFromUserPatch);
           const token = getUserToken();
           setUserSessionContext({ ...userSessionContext, profilepic: imgUrl });
-          setUserSession({ ...userSessionContext, profilepic: imgUrl, token:token });
+          setUserSession({
+            user: { ...userSessionContext, profilepic: imgUrl },
+            token: token,
+          });
           setButtonState(false);
         }
       } else {
