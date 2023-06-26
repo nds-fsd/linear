@@ -1,10 +1,10 @@
 import { useEffect, useContext, useState } from "react";
 import styles from "./edituserform.module.css";
-import { useForm } from "react-hook-form";
 import { TextField, MenuItem } from "@mui/material";
 import { usePatchUserMutation, patchUserById } from "../../../utils/apiUser";
 import { Context } from "../../../Context";
 import Spinner from "../../spinner/spinner";
+import { setUserSession, getUserToken } from "../../../utils/localStorage.utils";
 
 const EditUserForm = ({ userData, setEditMode }) => {
   const { email, firstname, lastname, pronouns, teamrole, id } = userData;
@@ -17,6 +17,7 @@ const EditUserForm = ({ userData, setEditMode }) => {
     { value: "tecnicstaff", label: "Staff" },
   ];
 
+
   const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 
   const handleChange = (name, value) => {
@@ -24,10 +25,16 @@ const EditUserForm = ({ userData, setEditMode }) => {
       return { ...prevState, [name]: value };
     });
   };
+
   const onSuccess = (data) => {
+    console.log(data.data)
+    const token = getUserToken()
+    const usrData = {...data.data, id:data.data._id}
     setUserSessionContext((prevState) => {
-      return { ...prevState, ...objToSend };
+      return { ...prevState, ...usrData };
     });
+    const userSession = {token:token, user:usrData}
+    setUserSession(userSession)
   };
 
   const { mutate, isLoading, isSuccess, isError, error } = usePatchUserMutation(
