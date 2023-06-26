@@ -37,12 +37,8 @@ const ProjectDetail = () => {
   const teamIds = teams.map(team=>team._id)
 
 
-  if(!teamIds.includes(id)){
-    return <NotFound/>
-  }
   
-
-
+  
   const {
     data,
     isLoading: projectIsLoading,
@@ -64,19 +60,19 @@ const ProjectDetail = () => {
       setUsers(users)
     }
   });
-
-
-
+  
+  
+  
   const teamData = data?.data;
   const project = teamData?.project;
-
-
-
+  
+  
+  
   const handleSelectCycle = (cycleid) => {
     setActiveOutlet("tasks");
     setSelectedCycle(cycleid);
   };
-
+  
   const { data: taskData, isLoading: taskLoading } = useQuery({
     queryKey: ["tasks", { cycle: selectedCycle }],
     queryFn: () => getAllTasks({ cycle: selectedCycle }),
@@ -92,7 +88,11 @@ const ProjectDetail = () => {
       setTaskRows([]);
     },
   });
-
+  
+  if(!teamIds.includes(id)){
+    return <NotFound/>
+  }
+  
   return (
     <section className={styles.projectDetails}>
       <div className={styles.container}>

@@ -21,7 +21,9 @@ exports.getUserById = asyncHandler(async (req, res) => {
 });
 
 exports.updateUserById = asyncHandler(async (req, res) => {
-  const selectedUser = await User.findByIdAndUpdate(req.params.id, req.body);
+  const selectedUser = await User.findByIdAndUpdate(req.params.id, req.body, {new:true});
+  const jwtPayload = req.headers.authorization
+  console.log(jwtPayload)
   res.json(selectedUser);
 });
 

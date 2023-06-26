@@ -1,9 +1,6 @@
 import cardStyles from "./card.module.css";
 import { useForm } from "react-hook-form";
 const Card = () => {
-  // const { register, handleSubmit, watch, formState: { errors } } = useForm();
-  // const onSubmit = data => console.log(data);
-  // console.log(watch("example"));
 
   const addFriend = (name) => {
     alert(`Añadir a ${name}`);

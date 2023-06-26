@@ -8,7 +8,7 @@ import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOu
 
 const ProjectDetailTasksByCycle = ({ taskRows, isLoading, setSelectedTask, setShowEditModal, setShowAddModal }) => {
   const handleDeleteModal = () => {
-    console.log("hey");
+    
   };
 
   const handleEditModal = (taskid) => {

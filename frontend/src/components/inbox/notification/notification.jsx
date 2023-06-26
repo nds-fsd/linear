@@ -15,7 +15,6 @@ const Notification = ({markAsSeen, notification, teams, setSelectedNotification 
   const { userSessionContext, setTeamsEffect, teamsEffect, notificationsRefetch } = useContext(Context);
 
   const onNotificationMutationSuccess = (data) => {
-    console.log(data.data)
     setSelectedNotification(data.data)
     notificationsRefetch()
   };
@@ -96,7 +95,6 @@ const Notification = ({markAsSeen, notification, teams, setSelectedNotification 
               }
               onClick={() => {
                 acceptInvitation();
-                console.log(selectedTeam)
               }}
             >
               Accept Invitation
