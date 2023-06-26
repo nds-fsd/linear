@@ -96,6 +96,10 @@ const MyIssues = () => {
 
   return (
     <div className={myIssuesStyle.myIssues}>
+      {showAddModal && <AddTaskModal setShowModal={setShowAddModal} />}
+      {showEditModal && (
+        <EditTaskModal taskId={taskId} closeModal={setShowEditModal} />
+      )}
       <PageHeader
         activeView={activeView}
         setActiveview={setActiveview}
@@ -106,10 +110,6 @@ const MyIssues = () => {
         filterData={filterData}
         setSearchbarFilter={setSearchbarFilter}
       />
-      {showAddModal && <AddTaskModal setShowModal={setShowAddModal} />}
-      {showEditModal && (
-        <EditTaskModal taskId={taskId} closeModal={setShowEditModal} />
-      )}
       {showDeleteModal && (
         <DeleteModal
           taskId={taskId}

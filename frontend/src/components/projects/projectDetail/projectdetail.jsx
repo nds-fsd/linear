@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useContext } from "react";
 import styles from "./projectdetail.module.css";
 import { getTeamById } from "../../../utils/apiTeam";
 import AddCycleModal from "../../addcyclemodal/addcyclemodal";
-
 import { getAllTasks } from "../../../utils/apitask";
 import { useQuery } from "react-query";
 import { useParams, useNavigate } from "react-router-dom";
@@ -18,9 +17,13 @@ import EditTaskModal from "../../edittaskmodal/edittaskmodal";
 import AddTaskModal from "../../addtaskmodal/addtaskmodal";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import AddUserToProjectModal from "./users/addusermodal/addusermodal";
+import NotFound from "../../notfound/notfound";
+import {Context} from '../../../Context.jsx'
+
 
 const ProjectDetail = () => {
   const { id } = useParams();
+  const {teams} = useContext(Context)
   const [activeOutlet, setActiveOutlet] = useState("users");
   const [selectedCycle, setSelectedCycle] = useState("");
   const [users, setUsers] = useState([{}])
@@ -31,7 +34,12 @@ const ProjectDetail = () => {
   const [showAddCycleModal, setShowAddCycleModal] = useState(false);
   const [selectedTask, setSelectedTask] = useState();
   const navigate = useNavigate();
+  const teamIds = teams.map(team=>team._id)
 
+
+  if(!teamIds.includes(id)){
+    return <NotFound/>
+  }
   
 
 
