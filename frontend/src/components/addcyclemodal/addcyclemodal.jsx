@@ -50,7 +50,6 @@ const AddCycleModal = ({ setShowModal, project }) => {
               return;
             } else {
               addCycleMutation(data);
-              console.log(data)
             }
           })}
         >
