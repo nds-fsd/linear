@@ -65,7 +65,7 @@ const createOne = ({ model, requiredKeys = [] }) => {
   });
 };
 
-const updateOne = (model) => {
+const updateOne = ({model, populationFields}) => {
   return asyncHandler(async (req, res) => {
     const filter = req.params.id;
     console.log(filter);
@@ -73,6 +73,7 @@ const updateOne = (model) => {
       model,
       id: req.params.id,
       data: req.body,
+      populationFields
     });
     res.json(selectedItem);
   });
