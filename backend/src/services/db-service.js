@@ -46,11 +46,17 @@ const create = (model,data)=>{
     return newEntity.save()
 }
 //Update
-const updateOne = ({model,id,data})=>{
+const updateOne = ({model, id, data, populationFields = []})=>{
     if(!model || !data || !id){
         throw new Error('Missing Model or data or id')
     }
-    return model.findByIdAndUpdate(id,data,{new:true})
+    let operation = model.findByIdAndUpdate(id,data,{new:true})
+    if(populationFields.length > 0){
+        populationFields.forEach((popField)=>{
+            operation = operation.populate(popField)
+        })
+    }
+    return operation
 
 }
 //Delete

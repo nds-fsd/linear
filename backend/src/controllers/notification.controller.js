@@ -4,20 +4,31 @@ const asyncHandler = require("express-async-handler");
 const crudService = require("../services/crud-service.js");
 
 exports.getAllNotifications = crudService.getAll({
-    populationFields: ["sender", "receiver"],
-    entity: "Notifications",
-    model: Notification,
-  });
-  
-  exports.getNotificationById = crudService.getOne({
-    model: Notification,
-    populationFields: ["sender", "reciever"],
-  });
-  
-  exports.createNotification = crudService.createOne({
-    model: Notification,
-    requiredKeys: ["title", "message", "sender", "receiver", "date", "type", "seen"],
-  });
+  populationFields: ["sender", "receiver"],
+  entity: "Notifications",
+  model: Notification,
+});
 
-  exports.deleteNotificationById = crudService.deleteOne(Notification);
-  exports.updateNotificationById = crudService.updateOne(Notification);
+exports.getNotificationById = crudService.getOne({
+  model: Notification,
+  populationFields: ["sender", "reciever"],
+});
+
+exports.createNotification = crudService.createOne({
+  model: Notification,
+  requiredKeys: [
+    "title",
+    "message",
+    "sender",
+    "receiver",
+    "date",
+    "type",
+    "seen",
+  ],
+});
+
+exports.deleteNotificationById = crudService.deleteOne(Notification);
+exports.updateNotificationById = crudService.updateOne({
+  model: Notification,
+  populationFields: ["sender"],
+});
