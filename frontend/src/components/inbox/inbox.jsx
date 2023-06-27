@@ -2,9 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import styles from "./inbox.module.css";
 import { Context } from "../../Context";
 import { formatDate } from "../../utils/formatUtils";
-import {
-  useEditNotificationMutation,
-} from "../../utils/apiNotification";
+import { useEditNotificationMutation } from "../../utils/apiNotification";
 import MarkChatUnreadOutlinedIcon from "@mui/icons-material/MarkChatUnreadOutlined";
 import MarkChatReadOutlinedIcon from "@mui/icons-material/MarkChatReadOutlined";
 import Notification from "./notification/notification";
@@ -12,13 +10,13 @@ import { useQueryClient } from "react-query";
 
 const Inbox = () => {
   const [selectedNotification, setSelectedNotification] = useState();
-  const { notificationData, teams } = useContext(Context);
+  const { notificationData, teams, setTeamsEffect, teamsEffect } =
+    useContext(Context);
 
   const queryClient = useQueryClient();
   const onMutationSuccess = () => {
     queryClient.invalidateQueries(["notifications"]);
   };
-
 
   const {
     mutate,
@@ -28,16 +26,16 @@ const Inbox = () => {
   } = useEditNotificationMutation(
     selectedNotification?._id,
     { seen: true },
-    onMutationSuccess,
+    onMutationSuccess
   );
 
   const notificationArr = notificationData?.data;
-
 
   const notificationElementList = notificationArr?.map((notification) => {
     return (
       <div
         onClick={() => {
+          setTeamsEffect(!teamsEffect);
           setSelectedNotification(notification);
         }}
         className={
@@ -47,7 +45,10 @@ const Inbox = () => {
       >
         <div>
           <h3>{notification.title}</h3>
-          <p>{notification.sender.firstname} {notification.sender.lastname} - {notification.data.teamtitle}</p>
+          <p>
+            {notification.sender.firstname} {notification.sender.lastname} -{" "}
+            {notification.data.teamtitle}
+          </p>
         </div>
         <div>
           {notification.seen ? (
@@ -67,10 +68,11 @@ const Inbox = () => {
         <div className={styles.colTwo}>
           {selectedNotification && (
             <Notification
-            setSelectedNotification={setSelectedNotification}
-            markAsSeen={mutate} 
-            teams={teams}
-            notification={selectedNotification} />
+              setSelectedNotification={setSelectedNotification}
+              markAsSeen={mutate}
+              teams={teams}
+              notification={selectedNotification}
+            />
           )}
         </div>
       </div>

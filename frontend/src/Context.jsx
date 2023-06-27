@@ -110,7 +110,9 @@ export const ContextProvider = ({ children }) => {
     getTeamsByUserId(userSessionContext?.id).then((res) => {
       setTeams(res.data);
     });
-  }, [userSessionContext, teamsEffect]);
+
+  }, [userSessionContext, teamsEffect, notificationData]);
+
 
   return (
     <Context.Provider
