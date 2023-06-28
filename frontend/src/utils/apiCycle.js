@@ -25,8 +25,26 @@ export const useCyclesByProjectData = (projectid, onSuccess, onError, enabled)=>
 }
 
 
-
-
 export const getAllCycles = (queryParams) => {
   return api.get(`/cycles`, { params: queryParams });
+};
+
+
+
+export const patchCycleById = (cycleid, data) => {
+  return api.patch(`/cycles/${cycleid}`, data);
+};
+
+export const useEditCycleMutation = (cycleid, data, onSuccess, onError) => {
+  return useMutation({
+    mutationFn: () => {
+      patchCycleById(cycleid, data);
+    },
+    onSuccess: (data) => {
+      onSuccess(data);
+    },
+    onError: (err) => {
+      onError(err);
+    },
+  });
 };

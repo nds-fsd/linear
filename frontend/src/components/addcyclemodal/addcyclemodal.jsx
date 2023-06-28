@@ -1,15 +1,25 @@
 import ModalBackground from "../modalbackground/modalbackground";
-import { useMutation, useQueryClient, useQuery } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import styles from "./addcyclemodal.module.css";
 import Spinner from "../spinner/spinner";
-import { addCycle } from "../../utils/apiCycle";
-import { formatDate, checkEmptyValues } from "../../utils/formatUtils";
+import { addCycle, patchCycleById } from "../../utils/apiCycle";
+import { checkEmptyValues } from "../../utils/formatUtils";
 
-const AddCycleModal = ({ setShowModal, project }) => {
+const AddCycleModal = ({ setShowModal, project, selectedCycle }) => {
   const { register, handleSubmit, reset } = useForm({
-    defaultValues: { project: project._id, active: true },
+    defaultValues: {
+      ...selectedCycle,
+      startdate: selectedCycle?.startdate
+        ? new Date(selectedCycle?.startdate).toISOString().split("T")[0]
+        : new Date().toISOString().split("T")[0],
+      finishdate: selectedCycle?.finishdate
+        ? new Date(selectedCycle?.finishdate).toISOString().split("T")[0]
+        : "",
+      project: project._id,
+      active: true,
+    },
   });
 
   const [errorMessage, setErrorMessage] = useState("");
@@ -36,6 +46,24 @@ const AddCycleModal = ({ setShowModal, project }) => {
     setShowModal(false);
   }
 
+  const {
+    mutate: editCycleMutation,
+    isLoading: isMutating,
+    isSuccess: isMutated,
+    isError: isMutationError,
+    error: mutationError,
+  } = useMutation({
+    mutationFn: (data) => patchCycleById(selectedCycle._id, data),
+    onSuccess: (payload) => {
+      setShowModal(false);
+      queryClient.refetchQueries("cycles");
+    },
+    onError: (err) => {
+      const missigFields = err.response.data.missingFields.join(", ");
+      setErrorMessage(`missing fields: ${missigFields}`);
+    },
+  });
+
   return (
     <ModalBackground>
       <div className={styles.formContainer}>
@@ -48,15 +76,15 @@ const AddCycleModal = ({ setShowModal, project }) => {
               setErrorMessage(`${missingFields} cant be empty`);
               return;
             }
-
             const formatedStartDate = new Date(data.startdate);
             const formatedFinishDate = new Date(data.finishdate);
-
             if (formatedStartDate >= formatedFinishDate) {
               setErrorMessage("finishing date cant be before starting date");
               return;
-            } else {
+            } else if (selectedCycle.modalType !== "edit") {
               addCycleMutation(data);
+            } else {
+              editCycleMutation(data);
             }
           })}
         >
@@ -127,7 +155,11 @@ const AddCycleModal = ({ setShowModal, project }) => {
                 <input
                   className={styles.submitBtn}
                   type="submit"
-                  value="Create new cycle"
+                  value={
+                    selectedCycle.modalType === "edit"
+                      ? "Edit cycle"
+                      : "Create new cycle"
+                  }
                 />
               </div>
             </>

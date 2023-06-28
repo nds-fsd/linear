@@ -1,5 +1,6 @@
 import { useState } from "react";
-import QueryBuilderOutlinedIcon from "@mui/icons-material/QueryBuilderOutlined";
+import BorderColorRoundedIcon from "@mui/icons-material/BorderColorRounded";
+
 import styles from "./projectdetailcycles.module.css";
 import KeyboardDoubleArrowRightRoundedIcon from "@mui/icons-material/KeyboardDoubleArrowRightRounded";
 import { useQuery } from "react-query";
@@ -10,6 +11,7 @@ const ProjectDetailCyclesList = ({
   projectId,
   handleSelectCycle,
   selectedCycle,
+  setShowAddCycleModal
 }) => {
   const [cycles, setCycles] = useState([]);
 
@@ -17,6 +19,7 @@ const ProjectDetailCyclesList = ({
     data: rawCycles,
     isLoading: cyclesIsLoading,
     isError: cyclesIsError,
+    refetch:refetchCycles
   } = useQuery({
     queryKey: ["cycles", { project: projectId }],
     queryFn: () => getCyclesByProject(projectId),
@@ -27,11 +30,11 @@ const ProjectDetailCyclesList = ({
   });
 
   const cycleElements = cycles?.map((cycle) => {
-    const selected = selectedCycle === cycle._id;
+    const selected = selectedCycle._id === cycle._id;
     return (
       <li
         onClick={() => {
-          handleSelectCycle(cycle._id);
+          handleSelectCycle(cycle);
         }}
         key={cycle._id}
         className={selected ? styles.selected : styles.cycleListItem}
@@ -49,7 +52,9 @@ const ProjectDetailCyclesList = ({
             <h3>Finish Date</h3>
             <p>{formatDate(cycle.finishdate)}</p>
           </div>
-          <KeyboardDoubleArrowRightRoundedIcon className={styles.icon} />
+          <BorderColorRoundedIcon 
+          onClick={()=>setShowAddCycleModal(true)}
+          className={styles.icon} />
         </div>
       </li>
     );
