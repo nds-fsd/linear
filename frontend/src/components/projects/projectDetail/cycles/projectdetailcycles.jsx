@@ -1,4 +1,4 @@
-import {useState} from "react";
+import { useState } from "react";
 import QueryBuilderOutlinedIcon from "@mui/icons-material/QueryBuilderOutlined";
 import styles from "./projectdetailcycles.module.css";
 import KeyboardDoubleArrowRightRoundedIcon from "@mui/icons-material/KeyboardDoubleArrowRightRounded";
@@ -6,10 +6,12 @@ import { useQuery } from "react-query";
 import { getCyclesByProject } from "../../../../utils/apiCycle";
 import { formatDate } from "../../../../utils/formatUtils";
 
-const ProjectDetailCyclesList = ({ projectId, handleSelectCycle, selectedCycle }) => {
-
-  const [cycles, setCycles] = useState([])
-
+const ProjectDetailCyclesList = ({
+  projectId,
+  handleSelectCycle,
+  selectedCycle,
+}) => {
+  const [cycles, setCycles] = useState([]);
 
   const {
     data: rawCycles,
@@ -18,22 +20,22 @@ const ProjectDetailCyclesList = ({ projectId, handleSelectCycle, selectedCycle }
   } = useQuery({
     queryKey: ["cycles", { project: projectId }],
     queryFn: () => getCyclesByProject(projectId),
-    enabled:!!projectId,
+    enabled: !!projectId,
     onSuccess: (data) => {
-      setCycles(data.data)}
+      setCycles(data.data);
+    },
   });
 
-
-
   const cycleElements = cycles?.map((cycle) => {
-    const selected = (selectedCycle === cycle._id)
+    const selected = selectedCycle === cycle._id;
     return (
-      <li 
-      onClick={()=> {
-        handleSelectCycle(cycle._id)
-      }}
-      key={cycle._id} 
-      className={selected?styles.selected :styles.cycleListItem}>
+      <li
+        onClick={() => {
+          handleSelectCycle(cycle._id);
+        }}
+        key={cycle._id}
+        className={selected ? styles.selected : styles.cycleListItem}
+      >
         <div>
           <h2 className={styles.cycleTitle}>{cycle.title}</h2>
           <p>{cycle.status}</p>
@@ -46,7 +48,6 @@ const ProjectDetailCyclesList = ({ projectId, handleSelectCycle, selectedCycle }
           <div>
             <h3>Finish Date</h3>
             <p>{formatDate(cycle.finishdate)}</p>
-
           </div>
           <KeyboardDoubleArrowRightRoundedIcon className={styles.icon} />
         </div>
@@ -54,7 +55,11 @@ const ProjectDetailCyclesList = ({ projectId, handleSelectCycle, selectedCycle }
     );
   });
 
-  return <ul className={styles.cycleList}>{cycleElements? cycleElements : <div>No Sprints to display</div>}</ul>;
+  return (
+    <ul className={styles.cycleList}>
+      {cycleElements ? cycleElements : <li>No Sprints to display</li>}
+    </ul>
+  );
 };
 
 export default ProjectDetailCyclesList;

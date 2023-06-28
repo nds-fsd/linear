@@ -6,6 +6,7 @@ import styles from "./addprojectmodal.module.css";
 import Spinner from "../../spinner/spinner";
 import { addProject, patchProjectById } from "../../../utils/apiProject";
 import { Context } from "../../../Context";
+import { checkEmptyValues } from "../../../utils/formatUtils";
 
 const AddProjectModal = ({
   selectedProject,
@@ -42,7 +43,8 @@ const AddProjectModal = ({
     },
     onError: (err) => {
       console.log(err.response.data);
-      // setErrorMessage(err.response.data.error)
+      const missigFields = err.response.data.missingFields.join(", ");
+      setErrorMessage(`missing fields: ${missigFields}`);
     },
   });
 
@@ -60,7 +62,8 @@ const AddProjectModal = ({
     },
     onError: (err) => {
       console.log(err.response.data);
-      // setErrorMessage(err.response.data.error)
+      const missigFields = err.response.data.missingFields.join(", ");
+      setErrorMessage(`missing fields: ${missigFields}`);
     },
   });
 
@@ -74,17 +77,23 @@ const AddProjectModal = ({
         <form
           className={styles.form}
           onSubmit={handleSubmit((data) => {
+            const emptyValues = checkEmptyValues(data);
+            if (emptyValues.length > 0) {
+              const missingFields = emptyValues.join(", ")
+              setErrorMessage(`${missingFields} cant be empty`);
+              return;
+            }
             const formatedStartDate = new Date(data.startdate);
             const formatedFinishDate = new Date(data.finishdate);
             if (formatedStartDate >= formatedFinishDate) {
               setErrorMessage("finishing date cant be before starting date");
               return;
-              } else if (modalType !== "edit") {
-                addProjectMutation(data);
-              } else {
-                editProjectMutation(data);
-              }
-            })}
+            } else if (modalType !== "edit") {
+              addProjectMutation(data);
+            } else {
+              editProjectMutation(data);
+            }
+          })}
         >
           {isPosting ? (
             <Spinner />
@@ -154,7 +163,9 @@ const AddProjectModal = ({
                 <input
                   className={styles.submitBtn}
                   type="submit"
-                  value={modalType === "edit"? "Edit Project":"Create new project"}
+                  value={
+                    modalType === "edit" ? "Edit Project" : "Create new project"
+                  }
                 />
               </div>
             </>

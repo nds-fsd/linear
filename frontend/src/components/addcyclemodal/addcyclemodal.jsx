@@ -5,12 +5,11 @@ import { useForm } from "react-hook-form";
 import styles from "./addcyclemodal.module.css";
 import Spinner from "../spinner/spinner";
 import { addCycle } from "../../utils/apiCycle";
-import { formatDate } from "../../utils/formatUtils";
+import { formatDate, checkEmptyValues } from "../../utils/formatUtils";
 
 const AddCycleModal = ({ setShowModal, project }) => {
   const { register, handleSubmit, reset } = useForm({
-    defaultValues: { project: project._id, active:true }
-    
+    defaultValues: { project: project._id, active: true },
   });
 
   const [errorMessage, setErrorMessage] = useState("");
@@ -27,14 +26,15 @@ const AddCycleModal = ({ setShowModal, project }) => {
     onSuccess: (payload) => {
       queryClient.refetchQueries("cycles");
     },
-    onError: (err) => setErrorMessage(err.response.data.error),
+    onError: (err) => {
+      const missigFields = err.response.data.missingFields.join(", ");
+      setErrorMessage(`missing fields: ${missigFields}`);
+    },
   });
 
   if (isPosted) {
     setShowModal(false);
   }
-
-
 
   return (
     <ModalBackground>
@@ -42,6 +42,13 @@ const AddCycleModal = ({ setShowModal, project }) => {
         <form
           className={styles.form}
           onSubmit={handleSubmit((data) => {
+            const emptyValues = checkEmptyValues(data);
+            if (emptyValues.length > 0) {
+              const missingFields = emptyValues.join(", ");
+              setErrorMessage(`${missingFields} cant be empty`);
+              return;
+            }
+
             const formatedStartDate = new Date(data.startdate);
             const formatedFinishDate = new Date(data.finishdate);
 
