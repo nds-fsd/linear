@@ -68,9 +68,9 @@ const ProjectDetail = () => {
   
   
   
-  const handleSelectCycle = (cycleid) => {
+  const handleSelectCycle = (cycle) => {
     setActiveOutlet("tasks");
-    setSelectedCycle(cycleid);
+    setSelectedCycle({...cycle, modalType:"edit"});
   };
   
   const { data: taskData, isLoading: taskLoading } = useQuery({
@@ -113,6 +113,9 @@ const ProjectDetail = () => {
               <button
                 onClick={() => {
                   setShowAddCycleModal(true);
+                  setSelectedCycle(prevstate => {
+                    return {...prevstate, modalType:"add"}
+                  })
                 }}
                 className={styles.addCycleBtn}
               >
@@ -141,6 +144,7 @@ const ProjectDetail = () => {
               selectedCycle={selectedCycle}
               handleSelectCycle={handleSelectCycle}
               projectId={project?._id}
+              setShowAddCycleModal={setShowAddCycleModal}
             />
           </div>
           <div className={styles.buttonsContainer}>
@@ -183,7 +187,7 @@ const ProjectDetail = () => {
         />
       )}
       {showAddCycleModal && (
-        <AddCycleModal project={project} setShowModal={setShowAddCycleModal} />
+        <AddCycleModal project={project} selectedCycle={selectedCycle} setShowModal={setShowAddCycleModal} />
       )}
       {showAddUserModal && (
         <AddUserToProjectModal refetch={refetch} setShowModal={setShowAddUserModal} />

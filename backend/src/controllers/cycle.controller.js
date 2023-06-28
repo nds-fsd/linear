@@ -43,4 +43,4 @@ exports.createCycle = crudService.createOne({
 
 exports.deleteCycleById = crudService.deleteOne(Cycle);
 
-exports.updateCycleById = crudService.updateOne(Cycle);
+exports.updateCycleById = crudService.updateOne({model:Cycle});
