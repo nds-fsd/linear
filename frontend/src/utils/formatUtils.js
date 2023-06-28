@@ -54,3 +54,10 @@ export const filterTasksByArray = (users, tasks, key) =>  {
   const filteredTasks = tasks.filter(task => userValues.includes(task[key]?._id));
   return filteredTasks;
 }
+
+
+export const checkEmptyValues = (obj) =>{
+ const listOfEmptyFields = Object.keys(obj).map(key => obj[key] === "" ? key : "").filter(key => key !== "")
+ return listOfEmptyFields
+ 
+}
