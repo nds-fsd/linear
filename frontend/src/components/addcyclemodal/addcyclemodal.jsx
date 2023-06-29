@@ -94,7 +94,7 @@ const AddCycleModal = ({ setShowModal, project, selectedCycle }) => {
             <>
               <h2 className={styles.formTitle}>
                 {selectedCycle.modalType === "edit"
-                  ? "Edit cycle of"
+                  ? "Edit cycle of "
                   : "Add new Cycle to "}
                 {project.title}
               </h2>
