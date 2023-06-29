@@ -93,7 +93,10 @@ const AddCycleModal = ({ setShowModal, project, selectedCycle }) => {
           ) : (
             <>
               <h2 className={styles.formTitle}>
-                Add a new Cycle to {project.title}
+                {selectedCycle.modalType === "edit"
+                  ? "Edit cycle of"
+                  : "Add new Cycle to "}
+                {project.title}
               </h2>
               {errorMessage && (
                 <p className={styles.addTaskError}>{errorMessage}</p>
