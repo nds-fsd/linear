@@ -17,22 +17,22 @@ Maki was made as part of Nuclio's school Full-stack course. The asignment was me
 
 ![Screenshot](./screenshoots/db_schema.png)
 
-Here, we can see that basically the App's structure consists in 6 main schemas: Teams, that have users, pending users, and an administrator wich are all refered in the User schema, then we have Issues, that have a status (Enum), User and a Cycle asigned, Cycles that have a Project and finally Projects that just contain specific project data. Finally, notifications are used to transfer information between users, for now, they are ment to be just invitations.
+Here, we can see that basically the App's structure consists in 6 main schemas: Teams, that have users, pending users, and an administrator wich are all refered to the User schema, then we have Issues, that have a status (Enum), one User and one Cycle asigned, Cycles that have one Project and finally Projects that just contain specific project data. Notifications are used to transfer information between users, wich for now, are ment to be just invitations.
 
-With this simple DB schema you can make powerful planning through dates and stages, because in the end, its all about breaking big parts into smaller pieces.
+With this simple DB schema you can make powerful planning through dates and stages, because in the end, its all about breaking big tasks into smaller pieces and planning their execution over time, right?
 
 # Platform overview
 
 ### Login / Register Page
 
-To plan your projects you first have to be registered, right? here are the register and login pages:
+To plan your projects you first have to be registered, here are the register and login pages, pretty standard stuff:
 
 ![Screenshot](./screenshoots/register.JPG)
 ![Screenshot](./screenshoots/login.JPG)
 
 ### My-Issues tab
 
-This view is planned to give you an instant feedback of your pending and done issues, while giving you the posibility of creating new ones and updating the status in the kanban view, the filter works with the issue's name in both list and Kanban view.
+This view is planned to give you an instant feedback of your pending and done issues, while giving you the posibility of creating new ones and updating their status in the kanban view, the filter works with the issue's name in both list and Kanban view.
 
 ![Screenshot](./screenshoots/My-issues/Kanban_view.JPG)
 ![Screenshot](./screenshoots/My-issues/list_view.JPG)
@@ -40,9 +40,9 @@ This view is planned to give you an instant feedback of your pending and done is
 
 ### Projects tab
 
-In this view you can see the projects that you have created and the one's you're part of, by clicking into their name, you can access the detailed view of the project, listing the details of the project, it's cycles, issues and users. You can also add new cycles (or edit them) and issues, as well as invite new users to join this project from this view.
+In this view you can see the projects that you have created and the ones you're part of, by clicking into their name, you can access the detailed view of the project, listing the details of the project, it's cycles, issues and users. You can also add new cycles (or edit them) and issues, as well as invite new users to join this project.
 
-in the list view of the projects, you can modify their data by clicking in the "edit" button placed on the top right of the table.
+in the list view of the projects, you can modify their data by clicking in the "edit" button placed on the right side of each row.
 
 ![Screenshot](./screenshoots/projects/project_list_view.JPG)
 ![Screenshot](./screenshoots/projects/project_edit_modal.JPG)
@@ -52,13 +52,13 @@ in the list view of the projects, you can modify their data by clicking in the "
 
 ### Overview tab
 
-from this view the user can see the list and kanban of issues with a set of filters: Project, cycles, and users. Issues can also be updated and added from this view, just as in "My-Issues" tab.
+from this view the user can see the list and kanban of issues with a set of filters: Project, cycles, and users. Issues can also be updated and added from this view, just as in "My-Issues" tab. This is ment to give the user the posibility to see what's the state of the different tasks across cycles and users.
 
 ![Screenshot](./screenshoots/Overview/overview_kanban.JPG)
 
 ### Notifications tab
 
-In this view the user recieves invitations for new projects, when a user invites anotherone, it creates a notification so the invited user can accept the invitation and be part of the project. Invitations also have a "seen" state, indicating the user wether he or she has something to be attended. Once the user reads the notification, it automatically changes the state, and indicates that he or she has one less unread message
+In this view the user recieves invitations for new projects, when a user invites another one, it creates a notification so the invited user can accept the invitation and be part of the project. Invitations also have a "seen" state, indicating the user wether he or she has something to be attended. Once the user reads the notification, it automatically changes the state, and indicates that he or she has one less unread message
 
 ![Screenshot](./screenshoots/notifications/notification_alert.JPG)
 ![Screenshot](./screenshoots/notifications/accept_invitation.JPG)
@@ -66,7 +66,7 @@ In this view the user recieves invitations for new projects, when a user invites
 
 ### Settings Page
 
-Want to change your profile picture? (even though I know you will love the default one, I mean, who's not a one piece fan nowatdays)
+Want to change your profile picture? (even though I know you will love the default one, I mean, who's not a one piece fan nowadays)
 Here you can update your profile information such as your name, lastname, email, and profile picture. You can also change your general role if you want to.
 
 ![Screenshot](./screenshoots/settings/personal_settings.JPG)
