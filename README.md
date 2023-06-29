@@ -71,7 +71,7 @@ Here you can update your profile information such as your name, lastname, email,
 
 ![Screenshot](./screenshoots/settings/personal_settings.JPG)
 
-# Tecnologías utilizadas
+# Used technologies
 
 ### Front-End libraries:
 
@@ -90,7 +90,7 @@ Here you can update your profile information such as your name, lastname, email,
 - Cloudinary
 - JWT
 
-# Instalación
+# Instalation
 
 ## 1. Pre-requisites
 
@@ -99,7 +99,7 @@ You must first have installed in your computer:
 - Node.js
 - MongoDB
 
-## 2. Configuración:
+## 2. Configuration:
 
 - Clone this Monorepo
 
