@@ -8,7 +8,6 @@ const STATUS_ARRAY = require("../statusarray.js");
 const utils = require("../utils/utils.js");
 
 exports.getAllTasks = asyncHandler(async (req, res) => {
-  return res.status(200).json({hola:"hola"})
   const user = req.params.userid;
   const query = req.query;
   let allTasks = [];
@@ -72,7 +71,6 @@ exports.getTasksByProjectId = asyncHandler(async (req, res) => {
 });
 
 exports.createTask = asyncHandler(async (req, res) => {
-  return res.status(200).json({sucess:true, ipn:req.body})
   const { title, status, description, user, duedate, cycle } = req.body;
   if (!title) {
     return res.status(400).json({ error: "Title is needed" });

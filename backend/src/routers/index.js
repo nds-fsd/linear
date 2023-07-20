@@ -12,7 +12,7 @@ const notificationRouter = require("./notification.router")
 const { jwtMiddleware, authRouter } = require("../security/jwt");
 
 generalRouter.use("/", authRouter);
-generalRouter.use("/tasks", taskRoutes);
+generalRouter.use("/tasks", jwtMiddleware, taskRoutes);
 generalRouter.use("/projects", jwtMiddleware, projectRoutes);
 generalRouter.use("/users", jwtMiddleware, userRoutes);
 generalRouter.use("/cycles", jwtMiddleware, cycleRouter);
