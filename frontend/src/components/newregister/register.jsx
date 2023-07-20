@@ -43,7 +43,6 @@ const Register = () => {
             return;
           }
           setValidationMessage("");
-          console.log(data)
           registerUser(data);
         })}
       >
